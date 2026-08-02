@@ -31,7 +31,12 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
 
         composable(Routes.WELCOME) {
             WelcomeScreen(
-                onStartClick = {
+                onContinueAsReturningUser = {
+                    navController.navigate(Routes.MASCOT_SELECT) {
+                        popUpTo(Routes.WELCOME) { inclusive = true }
+                    }
+                },
+                onStartAsNewUser = {
                     navController.navigate(Routes.NAME_INPUT) {
                         popUpTo(Routes.WELCOME) { inclusive = true }
                     }
