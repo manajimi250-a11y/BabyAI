@@ -129,7 +129,9 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(columns),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(bottom = 110.dp),
+            modifier = Modifier.weight(1f)
         ) {
             items(category.words) { word ->
                 WordTile(

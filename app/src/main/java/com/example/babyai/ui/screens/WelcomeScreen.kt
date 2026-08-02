@@ -36,8 +36,9 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
         language = prefs.language.first()
     }
 
-    val bgResId = remember {
-        context.resources.getIdentifier("welcome_bg", "drawable", context.packageName)
+    val bgResId = remember(language) {
+        val name = if (language == "fa") "welcome_bg_fa" else "welcome_bg"
+        context.resources.getIdentifier(name, "drawable", context.packageName)
     }
 
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
