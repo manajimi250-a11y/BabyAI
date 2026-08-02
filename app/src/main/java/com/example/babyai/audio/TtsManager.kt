@@ -8,18 +8,19 @@ import androidx.compose.runtime.setValue
 import java.util.Locale
 
 /**
- * مدیریت پخش صدای واژه‌ها با Text-to-Speech دستگاه
- * با تنظیم pitch/rate برای صدای گرم‌تر و کمتر رباتیک
+ * مدیریت پخش صدای واژه‌ها با Text-to-Speech دستگاه.
  *
- * نکته مهم: بسیاری از گوشی‌ها موتور TTS پیش‌فرض گوگل رو دارن که از
- * زبان فارسی پشتیبانی نمی‌کنه. برای همین isCurrentLanguageSupported رو
- * قبل از تکیه‌کردن به TTS چک کنید؛ اگه false بود، باید از
- * قابلیت «ضبط صدای والدین» به‌جای TTS استفاده بشه.
+ * نکته مهم درباره زمان‌بندی: راه‌اندازی موتور TTS ناهمگام (async) است — یعنی
+ * بلافاصله بعد از ساختن TextToSpeech، موتور هنوز آماده نیست. برای همین
+ * setLanguage ممکنه زودتر از موقع صدا زده بشه؛ این نسخه زبان درخواستی رو
+ * نگه می‌داره (pending) و همین که موتور آماده شد، خودش اعمالش می‌کنه.
  */
 class TtsManager(context: Context) {
 
     private var tts: TextToSpeech? = null
     private var isReady = false
+    private var pendingLanguageCode: String? = null
+
     var isCurrentLanguageSupported by mutableStateOf(true)
         private set
 
@@ -27,23 +28,30 @@ class TtsManager(context: Context) {
         tts = TextToSpeech(context.applicationContext) { status ->
             isReady = status == TextToSpeech.SUCCESS
             if (isReady) {
-                tts?.setPitch(1.15f)   // کمی زیرتر و گرم‌تر از صدای پیش‌فرض
-                tts?.setSpeechRate(0.85f) // کمی آهسته‌تر برای وضوح بیشتر برای بچه‌ها
+                tts?.setPitch(1.15f)
+                tts?.setSpeechRate(0.85f)
+                pendingLanguageCode?.let { applyLanguage(it) }
             }
         }
     }
 
     fun setLanguage(languageCode: String) {
-        val locale = if (languageCode == "fa") Locale("fa", "IR") else Locale.ENGLISH
-        val availability = tts?.isLanguageAvailable(locale) ?: TextToSpeech.LANG_NOT_SUPPORTED
-        isCurrentLanguageSupported = availability >= TextToSpeech.LANG_AVAILABLE
-        if (isCurrentLanguageSupported) {
-            tts?.setLanguage(locale)
+        pendingLanguageCode = languageCode
+        if (isReady) {
+            applyLanguage(languageCode)
         }
     }
 
+    private fun applyLanguage(languageCode: String) {
+        val locale = if (languageCode == "fa") Locale("fa", "IR") else Locale.ENGLISH
+        val availability = tts?.isLanguageAvailable(locale) ?: TextToSpeech.LANG_NOT_SUPPORTED
+        isCurrentLanguageSupported = availability >= TextToSpeech.LANG_AVAILABLE
+        // همیشه سعی می‌کنیم زبان رو تنظیم کنیم؛ فقط برای نمایش هشدار از availability استفاده می‌کنیم
+        tts?.setLanguage(locale)
+    }
+
     fun speak(text: String) {
-        if (!isReady || !isCurrentLanguageSupported) return
+        if (!isReady) return
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "baby_ai_utterance")
     }
 
