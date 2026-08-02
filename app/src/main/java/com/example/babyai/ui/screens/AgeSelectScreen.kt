@@ -8,22 +8,28 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.UserPreferences
+import com.example.babyai.ui.theme.BabyGreen
+import com.example.babyai.ui.theme.BabyOrange
+import com.example.babyai.ui.theme.BabyPurple
+import com.example.babyai.ui.theme.BabyYellow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-private data class AgeOption(val age: Int, val emoji: String)
+private data class AgeOption(val age: Int, val emoji: String, val color: androidx.compose.ui.graphics.Color)
 
 private val ageOptions = listOf(
-    AgeOption(2, "👶"),
-    AgeOption(3, "😊"),
-    AgeOption(4, "😄"),
-    AgeOption(5, "🤩"),
-    AgeOption(6, "🚀"),
+    AgeOption(2, "👶", BabyYellow),
+    AgeOption(3, "😊", BabyOrange),
+    AgeOption(4, "😄", BabyGreen),
+    AgeOption(5, "🤩", com.example.babyai.ui.theme.BabyBlue),
+    AgeOption(6, "🚀", BabyPurple),
 )
 
 @Composable
@@ -38,78 +44,86 @@ fun AgeSelectScreen(onDone: () -> Unit) {
         language = prefs.language.first()
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(
+                Brush.verticalGradient(listOf(BabyPurple, BabyOrange, BabyYellow))
+            )
     ) {
-        Spacer(Modifier.height(40.dp))
-
-        Text(
-            text = if (language == "fa") "چند سالته؟" else "How old are you?",
-            fontSize = 26.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(Modifier.height(32.dp))
-
         Column(
-            verticalArrangement = Arrangement.spacedBy(14.dp),
-            modifier = Modifier.weight(1f)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ageOptions.forEach { option ->
-                val isSelected = selectedAge == option.age
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { selectedAge = option.age },
-                    shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = if (isSelected)
-                            MaterialTheme.colorScheme.primary
-                        else
-                            MaterialTheme.colorScheme.surface
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) 8.dp else 2.dp)
-                ) {
-                    Row(
+            Spacer(Modifier.height(32.dp))
+
+            Text(
+                text = if (language == "fa") "چند سالته؟ 🎂" else "How old are you? 🎂",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.White
+            )
+
+            Spacer(Modifier.height(28.dp))
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(14.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                ageOptions.forEach { option ->
+                    val isSelected = selectedAge == option.age
+                    Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 14.dp, horizontal = 20.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                            .clickable { selectedAge = option.age },
+                        shape = RoundedCornerShape(24.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = if (isSelected) option.color else Color.White
+                        ),
+                        elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) 10.dp else 3.dp)
                     ) {
-                        Text(option.emoji, fontSize = 28.sp)
-                        Spacer(Modifier.width(16.dp))
-                        Text(
-                            text = if (language == "fa") "${option.age} سال" else "${option.age} years old",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Medium
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp, horizontal = 22.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(option.emoji, fontSize = 32.sp)
+                            Spacer(Modifier.width(16.dp))
+                            Text(
+                                text = if (language == "fa") "${option.age} سال" else "${option.age} years old",
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (isSelected) Color.White else Color.Black
+                            )
+                        }
                     }
                 }
             }
-        }
 
-        Button(
-            onClick = {
-                scope.launch {
-                    selectedAge?.let { prefs.setChildAge(it) }
-                    onDone()
-                }
-            },
-            enabled = selectedAge != null,
-            modifier = Modifier.fillMaxWidth().height(56.dp),
-            shape = RoundedCornerShape(28.dp)
-        ) {
-            Text(
-                text = if (language == "fa") "ادامه →" else "Continue →",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
+            Button(
+                onClick = {
+                    scope.launch {
+                        selectedAge?.let { prefs.setChildAge(it) }
+                        onDone()
+                    }
+                },
+                enabled = selectedAge != null,
+                modifier = Modifier.fillMaxWidth().height(60.dp),
+                shape = RoundedCornerShape(30.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White)
+            ) {
+                Text(
+                    text = if (language == "fa") "ادامه →" else "Continue →",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = BabyPurple
+                )
+            }
 
-        Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(16.dp))
+        }
     }
 }

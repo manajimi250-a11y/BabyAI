@@ -42,8 +42,8 @@ fun MascotCompanion(modifier: Modifier = Modifier) {
 
     Box(
         modifier = modifier
-            .size(64.dp)
-            .shadow(4.dp, CircleShape)
+            .size(128.dp)
+            .shadow(6.dp, CircleShape)
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.Center

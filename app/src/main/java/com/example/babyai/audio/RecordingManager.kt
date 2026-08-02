@@ -26,11 +26,14 @@ class RecordingManager(private val context: Context) {
     fun startRecording(wordId: String, lang: String) {
         val file = fileFor(wordId, lang)
         recorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
+            // VOICE_COMMUNICATION روی اکثر گوشی‌ها noise suppression و
+            // echo cancellation خودکار داره، برای صدای انسان واضح‌تره از MIC خام
+            setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION)
             setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
             setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            setAudioChannels(1)
             setAudioSamplingRate(44100)
-            setAudioEncodingBitRate(128000)
+            setAudioEncodingBitRate(192000)
             setOutputFile(file.absolutePath)
             prepare()
             start()

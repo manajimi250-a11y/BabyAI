@@ -87,13 +87,16 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
 
         Spacer(Modifier.height(12.dp))
 
-        if (language == "fa" && !ttsManager.isCurrentLanguageSupported) {
+        if (ttsManager.lastSpeakFailed) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "صدای فارسی روی این گوشی پشتیبانی نمی‌شه. برای هر کلمه، انگشتتون رو نگه دارید تا صدای خودتون رو ضبط کنید 🎙️",
+                    text = if (language == "fa")
+                        "صدای این زبان روی این گوشی پشتیبانی نمی‌شه. برای هر کلمه، انگشتتون رو نگه دارید تا صدای خودتون رو ضبط کنید 🎙️"
+                    else
+                        "Voice for this language isn't supported on this phone. Long-press any word to record your own voice 🎙️",
                     modifier = Modifier.padding(12.dp),
                     fontSize = 13.sp
                 )
@@ -147,6 +150,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
     MascotCompanion(
         modifier = Modifier
             .align(Alignment.BottomEnd)
+            .windowInsetsPadding(WindowInsets.navigationBars)
             .padding(20.dp)
     )
 

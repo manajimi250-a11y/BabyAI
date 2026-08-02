@@ -95,6 +95,7 @@ fun CategoryMenuScreen(
     MascotCompanion(
         modifier = Modifier
             .align(Alignment.BottomEnd)
+            .windowInsetsPadding(WindowInsets.navigationBars)
             .padding(20.dp)
     )
     }
