@@ -1,6 +1,6 @@
 package com.example.babyai.ui.screens
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibility as ComposeAnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
@@ -175,7 +175,7 @@ private fun MemoryCardTile(photoResName: String, isFaceUp: Boolean, onClick: () 
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            AnimatedVisibility(visible = isFaceUp, enter = fadeIn(), exit = fadeOut()) {
+            ComposeAnimatedVisibility(visible = isFaceUp, enter = fadeIn(), exit = fadeOut()) {
                 if (resId != 0) {
                     Image(
                         painter = painterResource(id = resId),
@@ -184,7 +184,7 @@ private fun MemoryCardTile(photoResName: String, isFaceUp: Boolean, onClick: () 
                     )
                 }
             }
-            AnimatedVisibility(visible = !isFaceUp, enter = fadeIn(), exit = fadeOut()) {
+            ComposeAnimatedVisibility(visible = !isFaceUp, enter = fadeIn(), exit = fadeOut()) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
