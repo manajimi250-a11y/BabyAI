@@ -3,7 +3,9 @@ package com.example.babyai.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,19 +18,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.theme.BabyBlue
+import com.example.babyai.ui.theme.BabyGreen
 import com.example.babyai.ui.theme.BabyOrange
+import com.example.babyai.ui.theme.BabyPink
 import com.example.babyai.ui.theme.BabyPurple
 import kotlinx.coroutines.flow.first
 
 /**
  * صفحه‌ی «چی می‌خوای بکنی؟» — بین انتخاب ماسکات و بقیه‌ی اپ.
- * الان دوتا گزینه داره (یادگیری هوشمند، بازی‌ها)، ولی طوری طراحی شده
- * که بعداً بشه گزینه‌های بیشتر (داستان، آهنگ، ...) بدون به‌هم‌ریختن اضافه کرد.
  */
 @Composable
 fun ActivityHubScreen(
     onLearnClick: () -> Unit,
-    onGamesClick: () -> Unit
+    onGamesClick: () -> Unit,
+    onStoriesClick: () -> Unit
 ) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
@@ -42,7 +45,8 @@ fun ActivityHubScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
+            .padding(24.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -70,6 +74,16 @@ fun ActivityHubScreen(
             subtitle = if (language == "fa") "بازی حافظه و بازی‌های بیشتر" else "Memory match & more games",
             colors = listOf(BabyBlue, BabyPurple),
             onClick = onGamesClick
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        HubCard(
+            emoji = "📖",
+            title = if (language == "fa") "داستان‌ها" else "Stories",
+            subtitle = if (language == "fa") "داستان‌های تعاملی و بامزه" else "Fun interactive stories",
+            colors = listOf(BabyGreen, BabyPink),
+            onClick = onStoriesClick
         )
     }
 }

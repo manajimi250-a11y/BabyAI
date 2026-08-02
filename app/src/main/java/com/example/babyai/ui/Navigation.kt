@@ -19,6 +19,8 @@ import com.example.babyai.ui.screens.ParentDashboardScreen
 import com.example.babyai.ui.screens.ProfileSelectScreen
 import com.example.babyai.ui.screens.SettingsScreen
 import com.example.babyai.ui.screens.SortingGameScreen
+import com.example.babyai.ui.screens.StoriesMenuScreen
+import com.example.babyai.ui.screens.StoryScreen
 import com.example.babyai.ui.screens.WelcomeScreen
 import com.example.babyai.data.UserPreferences
 import androidx.compose.ui.platform.LocalContext
@@ -39,11 +41,14 @@ object Routes {
     const val ODD_ONE_OUT = "odd_one_out"
     const val SORTING_GAME = "sorting_game"
     const val COUNTING_GAME = "counting_game"
+    const val STORIES_MENU = "stories_menu"
+    const val STORY = "story/{storyId}"
     const val GAME = "game/{categoryId}"
     const val SETTINGS = "settings"
     const val PARENT_DASHBOARD = "parent_dashboard"
 
     fun gameRoute(categoryId: String) = "game/$categoryId"
+    fun storyRoute(storyId: String) = "story/$storyId"
 }
 
 @Composable
@@ -117,7 +122,27 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
                 },
                 onGamesClick = {
                     navController.navigate(Routes.GAMES_MENU)
+                },
+                onStoriesClick = {
+                    navController.navigate(Routes.STORIES_MENU)
                 }
+            )
+        }
+
+        composable(Routes.STORIES_MENU) {
+            StoriesMenuScreen(
+                onBack = { navController.popBackStack() },
+                onStoryClick = { storyId ->
+                    navController.navigate(Routes.storyRoute(storyId))
+                }
+            )
+        }
+
+        composable(Routes.STORY) { backStackEntry ->
+            val storyId = backStackEntry.arguments?.getString("storyId") ?: return@composable
+            StoryScreen(
+                storyId = storyId,
+                onBack = { navController.popBackStack(Routes.STORIES_MENU, inclusive = false) }
             )
         }
 

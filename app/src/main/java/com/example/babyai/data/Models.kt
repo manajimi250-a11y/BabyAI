@@ -106,4 +106,6 @@ object WordRepository {
     val allCategories: List<Category> = listOf(animals, colors, shapes, people)
 
     fun categoryById(id: String): Category? = allCategories.find { it.id == id }
+
+    fun wordById(id: String): Word? = allCategories.flatMap { it.words }.find { it.id == id }
 }
