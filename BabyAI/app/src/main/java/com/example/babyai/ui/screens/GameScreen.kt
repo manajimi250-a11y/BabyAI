@@ -74,16 +74,30 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBackToMenu) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "برگشت")
+                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
             }
             Text(
-                text = category.nameFa,
+                text = if (language == "fa") category.nameFa else category.nameEn,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
         }
 
         Spacer(Modifier.height(12.dp))
+
+        if (language == "fa" && !ttsManager.isCurrentLanguageSupported) {
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "صدای فارسی روی این گوشی پشتیبانی نمی‌شه. برای هر کلمه، انگشتتون رو نگه دارید تا صدای خودتون رو ضبط کنید 🎙️",
+                    modifier = Modifier.padding(12.dp),
+                    fontSize = 13.sp
+                )
+            }
+            Spacer(Modifier.height(12.dp))
+        }
 
         val columns = when (photoSize) {
             PhotoSize.SMALL -> 4
@@ -99,6 +113,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
             items(category.words) { word ->
                 WordTile(
                     word = word,
+                    language = language,
                     isDiscovered = discovered.contains(word.id),
                     onTap = {
                         activeWord = word
@@ -161,13 +176,13 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
                 TextButton(onClick = {
                     showCelebration = false
                     discovered = setOf()
-                }) { Text("دوباره بازی کن") }
+                }) { Text(if (language == "fa") "دوباره بازی کن" else "Play again") }
             },
             dismissButton = {
-                TextButton(onClick = onBackToMenu) { Text("برگشت به منو") }
+                TextButton(onClick = onBackToMenu) { Text(if (language == "fa") "برگشت به منو" else "Back to menu") }
             },
-            title = { Text("عالی بود! 🌟") },
-            text = { Text("همه‌ی کلمه‌های این دسته رو یاد گرفتی!") }
+            title = { Text(if (language == "fa") "عالی بود! 🌟" else "Great job! 🌟") },
+            text = { Text(if (language == "fa") "همه‌ی کلمه‌های این دسته رو یاد گرفتی!" else "You learned all the words in this category!") }
         )
     }
     recordingWord?.let { word ->
@@ -184,6 +199,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
 @Composable
 private fun WordTile(
     word: Word,
+    language: String,
     isDiscovered: Boolean,
     onTap: () -> Unit,
     onLongPress: () -> Unit
@@ -193,6 +209,7 @@ private fun WordTile(
     val resId = remember(photoName) {
         context.resources.getIdentifier(photoName, "drawable", context.packageName)
     }
+    val displayName = if (language == "fa") word.nameFa else word.nameEn
 
     Card(
         modifier = Modifier
@@ -205,11 +222,11 @@ private fun WordTile(
             if (resId != 0) {
                 Image(
                     painter = painterResource(id = resId),
-                    contentDescription = word.nameFa,
+                    contentDescription = displayName,
                     modifier = Modifier.fillMaxSize()
                 )
             } else {
-                Text(text = word.nameFa, modifier = Modifier.padding(8.dp))
+                Text(text = displayName, modifier = Modifier.padding(8.dp))
             }
         }
     }

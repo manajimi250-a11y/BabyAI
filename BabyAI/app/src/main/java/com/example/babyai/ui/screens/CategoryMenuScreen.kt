@@ -41,6 +41,11 @@ fun CategoryMenuScreen(
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
     var showGate by remember { mutableStateOf(false) }
+    var language by remember { mutableStateOf("en") }
+
+    LaunchedEffect(Unit) {
+        language = prefs.language.first()
+    }
 
     Column(
         modifier = Modifier
@@ -54,14 +59,14 @@ fun CategoryMenuScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "چی یاد بگیریم؟",
+                text = if (language == "fa") "چی یاد بگیریم؟" else "What shall we learn?",
                 fontSize = 26.sp,
                 fontWeight = FontWeight.Bold
             )
             IconButton(onClick = {
                 showGate = true
             }) {
-                Icon(Icons.Filled.Settings, contentDescription = "تنظیمات")
+                Icon(Icons.Filled.Settings, contentDescription = "Settings")
             }
         }
 
@@ -73,7 +78,7 @@ fun CategoryMenuScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(WordRepository.allCategories) { category ->
-                CategoryCard(category) { onCategoryChosen(category.id) }
+                CategoryCard(category, language) { onCategoryChosen(category.id) }
             }
         }
     }
@@ -101,7 +106,7 @@ fun CategoryMenuScreen(
 }
 
 @Composable
-private fun CategoryCard(category: Category, onClick: () -> Unit) {
+private fun CategoryCard(category: Category, language: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .aspectRatio(1f)
@@ -112,7 +117,7 @@ private fun CategoryCard(category: Category, onClick: () -> Unit) {
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                text = category.nameFa,
+                text = if (language == "fa") category.nameFa else category.nameEn,
                 color = Color.White,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
