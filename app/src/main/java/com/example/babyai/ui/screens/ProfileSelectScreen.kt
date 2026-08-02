@@ -1,13 +1,13 @@
 package com.example.babyai.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.PersonAdd
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -15,24 +15,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.data.MascotRepository
 import com.example.babyai.data.Profile
 import com.example.babyai.data.UserPreferences
-import com.example.babyai.ui.theme.BabyBlue
-import com.example.babyai.ui.theme.BabyGreen
 import com.example.babyai.ui.theme.BabyOrange
-import com.example.babyai.ui.theme.BabyPink
-import com.example.babyai.ui.theme.BabyPurple
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-private val profileColors = listOf(BabyOrange, BabyBlue, BabyGreen, BabyPink, BabyPurple)
+private const val MAX_PROFILES = 2
 
 /**
- * صفحه‌ی انتخاب بازیکن — اسم هر بازیکن توی یه مستطیل رنگی وسط صفحه،
- * با گزینه‌ی حذف کنار هر اسم، و دکمه‌ی «افزودن بازیکن جدید» پایین.
+ * صفحه‌ی انتخاب بازیکن — همیشه بعد از «Let's Start» میاد.
+ * حداکثر ۲ تا بازیکن مجازه؛ هر کدوم یه آیکون دایره‌ای بامزه (عکس ماسکاتش) + اسم زیرش.
+ * جای خالی = آیکون «+ افزودن». پر که شد، دیگه گزینه‌ی افزودن سوم نمیاد.
  */
 @Composable
 fun ProfileSelectScreen(
@@ -57,82 +56,39 @@ fun ProfileSelectScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Spacer(Modifier.height(24.dp))
-
         Text(
             text = if (language == "fa") "کی بازی می‌کنه؟" else "Who's playing?",
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(Modifier.height(28.dp))
+        Spacer(Modifier.height(36.dp))
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(14.dp),
-            modifier = Modifier.weight(1f, fill = false)
-        ) {
-            profiles.forEachIndexed { index, profile ->
-                val color = profileColors[index % profileColors.size]
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(color)
-                        .clickable {
+        Row(horizontalArrangement = Arrangement.spacedBy(28.dp)) {
+            for (slot in 0 until MAX_PROFILES) {
+                val profile = profiles.getOrNull(slot)
+                if (profile != null) {
+                    PlayerSlot(
+                        profile = profile,
+                        onClick = {
                             scope.launch {
                                 prefs.switchToProfile(profile.id)
                                 onProfileChosen()
                             }
-                        }
-                        .padding(horizontal = 20.dp, vertical = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = profile.name,
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
+                        },
+                        onDelete = { profileToDelete = profile }
                     )
-                    IconButton(onClick = { profileToDelete = profile }) {
-                        Icon(Icons.Filled.Delete, contentDescription = "Delete", tint = Color.White)
-                    }
+                } else {
+                    AddPlayerSlot(
+                        language = language,
+                        onClick = onAddNewProfile
+                    )
                 }
             }
         }
-
-        Spacer(Modifier.height(16.dp))
-
-        // دکمه‌ی «افزودن بازیکن جدید» - آیکون رنگی مخصوص
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color.White)
-                .clickable { onAddNewProfile() }
-                .padding(horizontal = 20.dp, vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(36.dp)
-                    .clip(CircleShape)
-                    .background(BabyOrange),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.Filled.PersonAdd, contentDescription = null, tint = Color.White, modifier = Modifier.size(20.dp))
-            }
-            Spacer(Modifier.width(14.dp))
-            Text(
-                text = if (language == "fa") "شخص دیگه‌ای هستم" else "I'm someone else",
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        Spacer(Modifier.height(16.dp))
     }
 
     profileToDelete?.let { profile ->
@@ -159,6 +115,82 @@ fun ProfileSelectScreen(
                     Text(if (language == "fa") "انصراف" else "Cancel")
                 }
             }
+        )
+    }
+}
+
+@Composable
+private fun PlayerSlot(profile: Profile, onClick: () -> Unit, onDelete: () -> Unit) {
+    val context = LocalContext.current
+    val mascot = remember(profile.mascotId) {
+        MascotRepository.all.find { it.id == profile.mascotId }
+    }
+    val resId = remember(mascot) {
+        mascot?.let { context.resources.getIdentifier(it.drawableName, "drawable", context.packageName) } ?: 0
+    }
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(
+            modifier = Modifier
+                .size(110.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.surface)
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            if (resId != 0) {
+                Image(
+                    painter = painterResource(id = resId),
+                    contentDescription = profile.name,
+                    modifier = Modifier.fillMaxSize(0.85f)
+                )
+            } else {
+                Text("🙂", fontSize = 42.sp)
+            }
+
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(28.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.error)
+                    .clickable { onDelete() },
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(Icons.Filled.Close, contentDescription = "Delete", tint = Color.White, modifier = Modifier.size(16.dp))
+            }
+        }
+        Spacer(Modifier.height(8.dp))
+        Text(profile.name, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+private fun AddPlayerSlot(language: String, onClick: () -> Unit) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(
+            modifier = Modifier
+                .size(110.dp)
+                .clip(CircleShape)
+                .background(BabyOrange.copy(alpha = 0.15f))
+                .clickable { onClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(BabyOrange),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(Icons.Filled.Add, contentDescription = null, tint = Color.White, modifier = Modifier.size(28.dp))
+            }
+        }
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = if (language == "fa") "افزودن" else "Add",
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Medium
         )
     }
 }
