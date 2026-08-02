@@ -35,6 +35,7 @@ import com.example.babyai.ui.theme.BabyPink
 import com.example.babyai.ui.theme.BabyPurple
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 private data class Balloon(val id: Int, val word: Word, val photo: String, val isTarget: Boolean, val color: Color)
 private val balloonColors = listOf(BabyPink, BabyBlue, BabyOrange, BabyPurple, BabyGreen)
@@ -59,6 +60,7 @@ private fun buildBalloons(gridSize: Int, targetCount: Int): Pair<Word, List<Ball
 fun BalloonPopScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
+    val scope = rememberCoroutineScope()
     val ttsManager = remember { TtsManager(context) }
 
     var language by remember { mutableStateOf("en") }
@@ -153,7 +155,7 @@ fun BalloonPopScreen(onBack: () -> Unit) {
                                     if (balloon.isTarget) {
                                         poppedIds = poppedIds + balloon.id
                                         if (poppedIds.size >= targetCount) {
-                                            prefs.addBonusStars(targetCount)
+                                            scope.launch { prefs.addBonusStars(targetCount) }
                                             showCelebration = true
                                         }
                                     }
@@ -182,6 +184,13 @@ fun BalloonPopScreen(onBack: () -> Unit) {
                 }
             }
         }
+
+        com.example.babyai.ui.components.BackgroundMusicController(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(20.dp)
+        )
 
         MascotCompanion(
             modifier = Modifier

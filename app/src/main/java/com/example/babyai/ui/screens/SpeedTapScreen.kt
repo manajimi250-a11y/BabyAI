@@ -31,6 +31,7 @@ import com.example.babyai.ui.components.MascotCompanion
 import com.example.babyai.ui.theme.BabyOrange
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 private data class SpeedCell(val cellId: Int, val word: Word, val photo: String, val isTarget: Boolean)
 
@@ -54,6 +55,7 @@ private fun buildSpeedRound(gridSize: Int, targetCount: Int): Pair<Word, List<Sp
 fun SpeedTapScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
+    val scope = rememberCoroutineScope()
     val ttsManager = remember { TtsManager(context) }
 
     var language by remember { mutableStateOf("en") }
@@ -183,7 +185,7 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                                 if (cell.isTarget) {
                                     foundIds = foundIds + cell.cellId
                                     if (foundIds.size >= targetCount) {
-                                        prefs.addBonusStars(targetCount)
+                                        scope.launch { prefs.addBonusStars(targetCount) }
                                         showCelebration = true
                                     }
                                 }
@@ -213,6 +215,13 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                 }
             }
         }
+
+        com.example.babyai.ui.components.BackgroundMusicController(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(20.dp)
+        )
 
         MascotCompanion(
             modifier = Modifier

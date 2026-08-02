@@ -28,6 +28,7 @@ import com.example.babyai.ui.components.CelebrationOverlay
 import com.example.babyai.ui.components.MascotCompanion
 import com.example.babyai.ui.theme.BabyGreen
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 private fun pickPuzzleWord(): Pair<Word, String> {
     val allWords = WordRepository.allCategories.flatMap { it.words }
@@ -39,6 +40,7 @@ private fun pickPuzzleWord(): Pair<Word, String> {
 fun PuzzleScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
+    val scope = rememberCoroutineScope()
 
     var language by remember { mutableStateOf("en") }
     var pieceCount by remember { mutableStateOf(4) }
@@ -127,7 +129,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
                                         arrangement = newArrangement
                                         selectedIndex = null
                                         if (newArrangement == (0 until pieceCount).toList()) {
-                                            prefs.addBonusStars(3)
+                                            scope.launch { prefs.addBonusStars(3) }
                                             showCelebration = true
                                         }
                                     }
@@ -153,6 +155,13 @@ fun PuzzleScreen(onBack: () -> Unit) {
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
         }
+
+        com.example.babyai.ui.components.BackgroundMusicController(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(20.dp)
+        )
 
         MascotCompanion(
             modifier = Modifier
