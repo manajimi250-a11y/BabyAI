@@ -8,14 +8,17 @@ import androidx.navigation.compose.rememberNavController
 import com.example.babyai.ui.screens.ActivityHubScreen
 import com.example.babyai.ui.screens.AgeSelectScreen
 import com.example.babyai.ui.screens.CategoryMenuScreen
+import com.example.babyai.ui.screens.CountingGameScreen
 import com.example.babyai.ui.screens.GameScreen
 import com.example.babyai.ui.screens.GamesMenuScreen
 import com.example.babyai.ui.screens.MascotSelectScreen
 import com.example.babyai.ui.screens.MemoryGameScreen
 import com.example.babyai.ui.screens.NameInputScreen
+import com.example.babyai.ui.screens.OddOneOutScreen
 import com.example.babyai.ui.screens.ParentDashboardScreen
 import com.example.babyai.ui.screens.ProfileSelectScreen
 import com.example.babyai.ui.screens.SettingsScreen
+import com.example.babyai.ui.screens.SortingGameScreen
 import com.example.babyai.ui.screens.WelcomeScreen
 import com.example.babyai.data.UserPreferences
 import androidx.compose.ui.platform.LocalContext
@@ -33,6 +36,9 @@ object Routes {
     const val CATEGORY_MENU = "category_menu"
     const val GAMES_MENU = "games_menu"
     const val MEMORY_GAME = "memory_game"
+    const val ODD_ONE_OUT = "odd_one_out"
+    const val SORTING_GAME = "sorting_game"
+    const val COUNTING_GAME = "counting_game"
     const val GAME = "game/{categoryId}"
     const val SETTINGS = "settings"
     const val PARENT_DASHBOARD = "parent_dashboard"
@@ -133,12 +139,39 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
                 onBack = { navController.popBackStack() },
                 onMemoryGameClick = {
                     navController.navigate(Routes.MEMORY_GAME)
+                },
+                onOddOneOutClick = {
+                    navController.navigate(Routes.ODD_ONE_OUT)
+                },
+                onSortingGameClick = {
+                    navController.navigate(Routes.SORTING_GAME)
+                },
+                onCountingGameClick = {
+                    navController.navigate(Routes.COUNTING_GAME)
                 }
             )
         }
 
         composable(Routes.MEMORY_GAME) {
             MemoryGameScreen(
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Routes.ODD_ONE_OUT) {
+            OddOneOutScreen(
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Routes.SORTING_GAME) {
+            SortingGameScreen(
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Routes.COUNTING_GAME) {
+            CountingGameScreen(
                 onBack = { navController.popBackStack() }
             )
         }

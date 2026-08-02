@@ -16,13 +16,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.UserPreferences
+import com.example.babyai.ui.theme.BabyBlue
 import com.example.babyai.ui.theme.BabyGreen
+import com.example.babyai.ui.theme.BabyOrange
+import com.example.babyai.ui.theme.BabyPurple
 import kotlinx.coroutines.flow.first
 
 @Composable
 fun GamesMenuScreen(
     onBack: () -> Unit,
-    onMemoryGameClick: () -> Unit
+    onMemoryGameClick: () -> Unit,
+    onOddOneOutClick: () -> Unit,
+    onSortingGameClick: () -> Unit,
+    onCountingGameClick: () -> Unit
 ) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
@@ -49,30 +55,56 @@ fun GamesMenuScreen(
             )
         }
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(20.dp))
 
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(120.dp)
-                .clickable { onMemoryGameClick() },
-            shape = RoundedCornerShape(24.dp),
-            colors = CardDefaults.cardColors(containerColor = BabyGreen),
-            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        GameCard(
+            emoji = "🧠",
+            title = if (language == "fa") "بازی حافظه" else "Memory Match",
+            color = BabyGreen,
+            onClick = onMemoryGameClick
+        )
+        Spacer(Modifier.height(14.dp))
+        GameCard(
+            emoji = "🔍",
+            title = if (language == "fa") "پیدا کن فرقشه" else "Odd One Out",
+            color = BabyOrange,
+            onClick = onOddOneOutClick
+        )
+        Spacer(Modifier.height(14.dp))
+        GameCard(
+            emoji = "🗂️",
+            title = if (language == "fa") "دسته‌بندی کن" else "Sort it out",
+            color = BabyBlue,
+            onClick = onSortingGameClick
+        )
+        Spacer(Modifier.height(14.dp))
+        GameCard(
+            emoji = "🔢",
+            title = if (language == "fa") "بشمار چندتا!" else "Count them!",
+            color = BabyPurple,
+            onClick = onCountingGameClick
+        )
+    }
+}
+
+@Composable
+private fun GameCard(emoji: String, title: String, color: Color, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(22.dp),
+        colors = CardDefaults.cardColors(containerColor = color),
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize().padding(18.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier.fillMaxSize().padding(20.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("🧠", fontSize = 44.sp)
-                Spacer(Modifier.width(16.dp))
-                Text(
-                    text = if (language == "fa") "بازی حافظه" else "Memory Match",
-                    color = Color.White,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            Text(emoji, fontSize = 38.sp)
+            Spacer(Modifier.width(16.dp))
+            Text(title, color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
