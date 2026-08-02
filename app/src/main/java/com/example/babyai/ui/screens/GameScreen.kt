@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.audio.RecordingManager
 import com.example.babyai.audio.TtsManager
-import com.example.babyai.audio.VoiceSource
+import com.example.babyai.data.VoiceSource
 import com.example.babyai.data.PhotoSize
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
