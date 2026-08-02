@@ -3,9 +3,10 @@ package com.example.babyai.ui.screens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -31,6 +32,7 @@ import com.example.babyai.data.PhotoSize
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
+import com.example.babyai.ui.components.RecordWordDialog
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -44,6 +46,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
 
     var discovered by remember { mutableStateOf(setOf<String>()) }
     var activeWord by remember { mutableStateOf<Word?>(null) }
+    var recordingWord by remember { mutableStateOf<Word?>(null) }
     var showCelebration by remember { mutableStateOf(false) }
     var photoSize by remember { mutableStateOf(PhotoSize.MEDIUM) }
     var language by remember { mutableStateOf("fa") }
@@ -71,16 +74,30 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBackToMenu) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "برگشت")
+                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
             }
             Text(
-                text = category.nameFa,
+                text = if (language == "fa") category.nameFa else category.nameEn,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
         }
 
         Spacer(Modifier.height(12.dp))
+
+        if (language == "fa" && !ttsManager.isCurrentLanguageSupported) {
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "صدای فارسی روی این گوشی پشتیبانی نمی‌شه. برای هر کلمه، انگشتتون رو نگه دارید تا صدای خودتون رو ضبط کنید 🎙️",
+                    modifier = Modifier.padding(12.dp),
+                    fontSize = 13.sp
+                )
+            }
+            Spacer(Modifier.height(12.dp))
+        }
 
         val columns = when (photoSize) {
             PhotoSize.SMALL -> 4
@@ -96,6 +113,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
             items(category.words) { word ->
                 WordTile(
                     word = word,
+                    language = language,
                     isDiscovered = discovered.contains(word.id),
                     onTap = {
                         activeWord = word
@@ -117,7 +135,8 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
                         if (discovered.size == category.words.size) {
                             showCelebration = true
                         }
-                    }
+                    },
+                    onLongPress = { recordingWord = word }
                 )
             }
         }
@@ -157,41 +176,57 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
                 TextButton(onClick = {
                     showCelebration = false
                     discovered = setOf()
-                }) { Text("دوباره بازی کن") }
+                }) { Text(if (language == "fa") "دوباره بازی کن" else "Play again") }
             },
             dismissButton = {
-                TextButton(onClick = onBackToMenu) { Text("برگشت به منو") }
+                TextButton(onClick = onBackToMenu) { Text(if (language == "fa") "برگشت به منو" else "Back to menu") }
             },
-            title = { Text("عالی بود! 🌟") },
-            text = { Text("همه‌ی کلمه‌های این دسته رو یاد گرفتی!") }
+            title = { Text(if (language == "fa") "عالی بود! 🌟" else "Great job! 🌟") },
+            text = { Text(if (language == "fa") "همه‌ی کلمه‌های این دسته رو یاد گرفتی!" else "You learned all the words in this category!") }
+        )
+    }
+    recordingWord?.let { word ->
+        RecordWordDialog(
+            word = word,
+            recordingManager = recordingManager,
+            prefs = prefs,
+            onDismiss = { recordingWord = null }
         )
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun WordTile(word: Word, isDiscovered: Boolean, onTap: () -> Unit) {
+private fun WordTile(
+    word: Word,
+    language: String,
+    isDiscovered: Boolean,
+    onTap: () -> Unit,
+    onLongPress: () -> Unit
+) {
     val context = LocalContext.current
     val photoName = remember(word) { word.photoFileNames().random().removeSuffix(".jpg") }
     val resId = remember(photoName) {
         context.resources.getIdentifier(photoName, "drawable", context.packageName)
     }
+    val displayName = if (language == "fa") word.nameFa else word.nameEn
 
     Card(
         modifier = Modifier
             .aspectRatio(1f)
             .clip(RoundedCornerShape(20.dp))
-            .clickable { onTap() },
+            .combinedClickable(onClick = onTap, onLongClick = onLongPress),
         elevation = CardDefaults.cardElevation(defaultElevation = if (isDiscovered) 8.dp else 2.dp)
     ) {
         Box(contentAlignment = Alignment.Center) {
             if (resId != 0) {
                 Image(
                     painter = painterResource(id = resId),
-                    contentDescription = word.nameFa,
+                    contentDescription = displayName,
                     modifier = Modifier.fillMaxSize()
                 )
             } else {
-                Text(text = word.nameFa, modifier = Modifier.padding(8.dp))
+                Text(text = displayName, modifier = Modifier.padding(8.dp))
             }
         }
     }

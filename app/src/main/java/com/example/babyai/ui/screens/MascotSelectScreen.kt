@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.example.babyai.data.Mascot
 import com.example.babyai.data.MascotRepository
 import com.example.babyai.data.UserPreferences
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
@@ -25,6 +26,11 @@ fun MascotSelectScreen(onMascotChosen: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
     val scope = rememberCoroutineScope()
+    var language by remember { mutableStateOf("en") }
+
+    LaunchedEffect(Unit) {
+        language = prefs.language.first()
+    }
 
     Column(
         modifier = Modifier
@@ -35,7 +41,7 @@ fun MascotSelectScreen(onMascotChosen: () -> Unit) {
     ) {
         Spacer(Modifier.height(32.dp))
         Text(
-            text = "دوستت رو انتخاب کن!",
+            text = if (language == "fa") "دوستت رو انتخاب کن!" else "Choose your friend!",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
@@ -49,7 +55,7 @@ fun MascotSelectScreen(onMascotChosen: () -> Unit) {
             modifier = Modifier.weight(1f)
         ) {
             items(MascotRepository.all) { mascot ->
-                MascotCard(mascot = mascot) {
+                MascotCard(mascot = mascot, language = language) {
                     scope.launch {
                         prefs.setMascotId(mascot.id)
                         onMascotChosen()
@@ -61,11 +67,12 @@ fun MascotSelectScreen(onMascotChosen: () -> Unit) {
 }
 
 @Composable
-private fun MascotCard(mascot: Mascot, onClick: () -> Unit) {
+private fun MascotCard(mascot: Mascot, language: String, onClick: () -> Unit) {
     val context = LocalContext.current
     val resId = remember(mascot.drawableName) {
         context.resources.getIdentifier(mascot.drawableName, "drawable", context.packageName)
     }
+    val displayName = if (language == "fa") mascot.nameFa else mascot.nameEn
 
     Card(
         modifier = Modifier
@@ -82,12 +89,12 @@ private fun MascotCard(mascot: Mascot, onClick: () -> Unit) {
             if (resId != 0) {
                 androidx.compose.foundation.Image(
                     painter = androidx.compose.ui.res.painterResource(id = resId),
-                    contentDescription = mascot.nameFa,
+                    contentDescription = displayName,
                     modifier = Modifier.fillMaxSize(0.8f)
                 )
             } else {
                 // اگه هنوز عکس ماسکات اضافه نشده، فقط اسمش رو نشون بده
-                Text(text = mascot.nameFa, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text(text = displayName, fontSize = 20.sp, fontWeight = FontWeight.Bold)
             }
         }
     }
