@@ -1,26 +1,28 @@
 package com.example.babyai.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.babyai.data.UserPreferences
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
  * اولین صفحه‌ای که با باز کردن اپ دیده می‌شه.
- * عکس بچه‌ها و خورشید، تمام‌صفحه به‌عنوان پس‌زمینه؛
- * دکمه‌ی انتخاب زبان بالای صفحه و دکمه‌ی واقعی «شروع» پایین صفحه، هر دو روی عکس.
+ * عکس (بچه‌ها+خورشید+متن انگلیسی پخته‌شده) تمام‌صفحه به‌عنوان پس‌زمینه.
+ * چون متن داخل عکسه، فقط یه دکمه‌ی واقعی و شفاف دقیقاً روی محل دکمه‌ی
+ * «Let's Start!» عکس می‌ذاریم که قابل‌لمس باشه؛ دکمه‌ی زبان هم گوشه‌ی بالا.
  */
 @Composable
 fun WelcomeScreen(onStartClick: () -> Unit) {
@@ -38,7 +40,9 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
         context.resources.getIdentifier("welcome_bg", "drawable", context.packageName)
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        val screenHeight = maxHeight
+
         if (bgResId != 0) {
             Image(
                 painter = painterResource(id = bgResId),
@@ -48,12 +52,12 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
             )
         }
 
-        // انتخاب زبان - بالای صفحه، روی عکس
+        // انتخاب زبان - گوشه‌ی بالا-راست، روی عکس
         Row(
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 40.dp)
+                .align(Alignment.TopEnd)
+                .padding(top = 16.dp, end = 16.dp)
         ) {
             FilterChip(
                 selected = language == "fa",
@@ -61,7 +65,10 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
                     language = "fa"
                     scope.launch { prefs.setLanguage("fa") }
                 },
-                label = { Text("فارسی") }
+                label = { Text("فارسی") },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color.White.copy(alpha = 0.85f)
+                )
             )
             FilterChip(
                 selected = language == "en",
@@ -69,25 +76,22 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
                     language = "en"
                     scope.launch { prefs.setLanguage("en") }
                 },
-                label = { Text("English") }
+                label = { Text("English") },
+                colors = FilterChipDefaults.filterChipColors(
+                    containerColor = Color.White.copy(alpha = 0.85f)
+                )
             )
         }
 
-        // دکمه‌ی واقعی شروع - پایین صفحه، روی عکس
-        Button(
-            onClick = onStartClick,
+        // دکمه‌ی واقعی و شفاف، دقیقاً روی محل دکمه‌ی «Let's Start!» عکس
+        Box(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(horizontal = 32.dp, vertical = 36.dp)
-                .fillMaxWidth()
-                .height(58.dp),
-            shape = RoundedCornerShape(29.dp)
-        ) {
-            Text(
-                text = if (language == "fa") "شروع کن! →" else "Let's Start! →",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
+                .align(Alignment.TopCenter)
+                .padding(top = screenHeight * 0.79f)
+                .fillMaxWidth(0.82f)
+                .height(screenHeight * 0.055f)
+                .clip(RoundedCornerShape(50))
+                .clickable { onStartClick() }
+        )
     }
 }
