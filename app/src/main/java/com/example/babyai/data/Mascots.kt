@@ -15,7 +15,6 @@ object MascotRepository {
         Mascot("bunny", "Bunny", "خرگوش", "mascot_bunny"),
         Mascot("bear", "Bear", "خرس", "mascot_bear"),
         Mascot("dragonling", "Dragonling", "اژدهای کوچولو", "mascot_dragonling"),
-        Mascot("star_sprite", "Star Sprite", "پری ستاره", "mascot_star_sprite"),
         Mascot("puppy", "Puppy", "توله سگ", "mascot_puppy"),
         Mascot("kitten", "Kitten", "بچه‌گربه", "mascot_kitten"),
         Mascot("babydeer", "Baby Deer", "بچه‌آهو", "mascot_babydeer"),
