@@ -46,6 +46,7 @@ class UserPreferences(private val context: Context) {
         val LAST_USAGE_DATE = stringPreferencesKey("last_usage_date") // yyyy-MM-dd
         val PROFILES_LIST = stringPreferencesKey("profiles_list")
         val ACTIVE_PROFILE_ID = stringPreferencesKey("active_profile_id")
+        val MUSIC_ENABLED = booleanPreferencesKey("music_enabled")
         fun voiceSourceKey(wordId: String) = stringPreferencesKey("voice_source_$wordId")
     }
 
@@ -57,6 +58,11 @@ class UserPreferences(private val context: Context) {
         (it[Keys.DISCOVERED_WORDS] ?: "").split(",").filter { id -> id.isNotBlank() }.toSet()
     }
     val totalUsageSeconds: Flow<Int> = context.dataStore.data.map { it[Keys.TOTAL_USAGE_SECONDS] ?: 0 }
+    val musicEnabled: Flow<Boolean> = context.dataStore.data.map { it[Keys.MUSIC_ENABLED] ?: true }
+
+    suspend fun setMusicEnabled(enabled: Boolean) {
+        context.dataStore.edit { it[Keys.MUSIC_ENABLED] = enabled }
+    }
     val todayUsageSeconds: Flow<Int> = context.dataStore.data.map { prefs ->
         val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
         if (prefs[Keys.LAST_USAGE_DATE] == today) prefs[Keys.TODAY_USAGE_SECONDS] ?: 0 else 0
