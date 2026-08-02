@@ -13,8 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.babyai.data.UserPreferences
+import com.example.babyai.ui.theme.BabyOrange
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -65,9 +67,12 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
                     language = "fa"
                     scope.launch { prefs.setLanguage("fa") }
                 },
-                label = { Text("فارسی") },
+                label = { Text("فارسی", fontWeight = if (language == "fa") FontWeight.Bold else FontWeight.Normal) },
                 colors = FilterChipDefaults.filterChipColors(
-                    containerColor = Color.White.copy(alpha = 0.85f)
+                    containerColor = Color.White.copy(alpha = 0.9f),
+                    labelColor = Color.DarkGray,
+                    selectedContainerColor = BabyOrange,
+                    selectedLabelColor = Color.White
                 )
             )
             FilterChip(
@@ -76,9 +81,12 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
                     language = "en"
                     scope.launch { prefs.setLanguage("en") }
                 },
-                label = { Text("English") },
+                label = { Text("English", fontWeight = if (language == "en") FontWeight.Bold else FontWeight.Normal) },
                 colors = FilterChipDefaults.filterChipColors(
-                    containerColor = Color.White.copy(alpha = 0.85f)
+                    containerColor = Color.White.copy(alpha = 0.9f),
+                    labelColor = Color.DarkGray,
+                    selectedContainerColor = BabyOrange,
+                    selectedLabelColor = Color.White
                 )
             )
         }
