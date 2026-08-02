@@ -157,6 +157,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
         }
 
         com.example.babyai.ui.components.BackgroundMusicController(
+            trackName = "music_thinking_games",
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .windowInsetsPadding(WindowInsets.navigationBars)

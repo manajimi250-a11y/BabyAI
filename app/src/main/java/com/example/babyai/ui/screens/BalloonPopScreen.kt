@@ -186,6 +186,7 @@ fun BalloonPopScreen(onBack: () -> Unit) {
         }
 
         com.example.babyai.ui.components.BackgroundMusicController(
+            trackName = "music_speed_games",
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .windowInsetsPadding(WindowInsets.navigationBars)

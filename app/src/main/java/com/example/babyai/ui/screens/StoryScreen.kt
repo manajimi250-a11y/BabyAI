@@ -172,6 +172,14 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
             }
         }
 
+        com.example.babyai.ui.components.BackgroundMusicController(
+            trackName = "music_story",
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(20.dp)
+        )
+
         MascotCompanion(
             modifier = Modifier
                 .align(Alignment.TopEnd)
