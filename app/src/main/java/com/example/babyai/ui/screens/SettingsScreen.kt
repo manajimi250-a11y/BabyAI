@@ -1,5 +1,6 @@
 package com.example.babyai.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,6 +10,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -18,6 +21,11 @@ import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.theme.BabyGreen
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+
+// آبی آسمونی: پایین تیره‌تر، بالا روشن‌تر (تقریبا سفید)
+private val SkyBlueDark = Color(0xFF4FA3E3)
+private val SkyBlueLight = Color(0xFFF0F8FF)
+private val SelectedBlue = Color(0xFF2979FF)
 
 @Composable
 fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
@@ -37,17 +45,29 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
         childAge = prefs.childAge.first()
     }
 
-    Column(modifier = Modifier.fillMaxSize().padding(20.dp)) {
+    val chipColors = FilterChipDefaults.filterChipColors(
+        selectedContainerColor = SelectedBlue,
+        selectedLabelColor = Color.White
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(listOf(SkyBlueLight, SkyBlueDark))
+            )
+            .padding(20.dp)
+    ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = "برگشت")
             }
-            Text("تنظیمات", fontSize = 24.sp)
+            Text("تنظیمات", fontSize = 26.sp, fontWeight = FontWeight.Bold)
         }
 
         Spacer(Modifier.height(24.dp))
 
-        Text("زبان", fontSize = 18.sp)
+        Text("زبان", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             FilterChip(
                 selected = language == "fa",
@@ -55,7 +75,8 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
                     language = "fa"
                     scope.launch { prefs.setLanguage("fa") }
                 },
-                label = { Text("فارسی") }
+                label = { Text("فارسی", fontWeight = FontWeight.Bold, fontSize = 16.sp) },
+                colors = chipColors
             )
             FilterChip(
                 selected = language == "en",
@@ -63,13 +84,14 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
                     language = "en"
                     scope.launch { prefs.setLanguage("en") }
                 },
-                label = { Text("English") }
+                label = { Text("English", fontWeight = FontWeight.Bold, fontSize = 16.sp) },
+                colors = chipColors
             )
         }
 
         Spacer(Modifier.height(24.dp))
 
-        Text("سایز عکس‌ها", fontSize = 18.sp)
+        Text("سایز عکس‌ها", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             listOf(
                 PhotoSize.SMALL to "کوچک",
@@ -82,14 +104,15 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
                         photoSize = size
                         scope.launch { prefs.setPhotoSize(size) }
                     },
-                    label = { Text(label) }
+                    label = { Text(label, fontWeight = FontWeight.Bold, fontSize = 16.sp) },
+                    colors = chipColors
                 )
             }
         }
 
         Spacer(Modifier.height(24.dp))
 
-        Text("سن فرزندتون", fontSize = 18.sp)
+        Text("سن فرزندتون", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Row(verticalAlignment = Alignment.CenterVertically) {
             Slider(
                 value = childAge.toFloat(),
@@ -101,9 +124,10 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
                 },
                 valueRange = 1f..4f,
                 steps = 2,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                colors = SliderDefaults.colors(thumbColor = SelectedBlue, activeTrackColor = SelectedBlue)
             )
-            Text("$childAge سال", modifier = Modifier.padding(start = 12.dp))
+            Text("$childAge سال", fontWeight = FontWeight.Bold, fontSize = 17.sp, modifier = Modifier.padding(start = 12.dp))
         }
 
         Spacer(Modifier.height(24.dp))
@@ -113,13 +137,14 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("قفل والدین (Parental Gate)", fontSize = 18.sp)
+            Text("قفل والدین (Parental Gate)", fontSize = 18.sp, fontWeight = FontWeight.Bold)
             Switch(
                 checked = parentalGateEnabled,
                 onCheckedChange = {
                     parentalGateEnabled = it
                     scope.launch { prefs.setParentalGateEnabled(it) }
-                }
+                },
+                colors = SwitchDefaults.colors(checkedTrackColor = SelectedBlue)
             )
         }
 
@@ -140,8 +165,8 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
                 Spacer(Modifier.width(12.dp))
                 Text(
                     text = if (language == "fa") "داشبورد والدین" else "Parent Dashboard",
-                    color = androidx.compose.ui.graphics.Color.White,
-                    fontSize = 17.sp,
+                    color = Color.White,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -150,7 +175,8 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
         Spacer(Modifier.height(24.dp))
         Text(
             text = "برای ضبط صدای خودتون برای هر کلمه، وارد همون کلمه بشید و روی آیکون میکروفون بزنید.",
-            fontSize = 14.sp
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Medium
         )
     }
 }

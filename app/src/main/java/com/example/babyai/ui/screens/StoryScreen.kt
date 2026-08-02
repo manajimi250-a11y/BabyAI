@@ -72,7 +72,14 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+                .background(
+                    androidx.compose.ui.graphics.Brush.verticalGradient(
+                        listOf(
+                            com.example.babyai.ui.theme.BabyYellow.copy(alpha = 0.35f),
+                            com.example.babyai.ui.theme.BabyPink.copy(alpha = 0.35f)
+                        )
+                    )
+                )
                 .padding(20.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -92,6 +99,8 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                 fontSize = 13.sp,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
             )
+
+            Spacer(Modifier.weight(0.3f))
 
             Spacer(Modifier.height(20.dp))
 

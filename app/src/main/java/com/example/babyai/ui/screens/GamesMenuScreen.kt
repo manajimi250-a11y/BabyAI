@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.UserPreferences
+import com.example.babyai.ui.components.SettingsIconButton
 import com.example.babyai.ui.theme.BabyBlue
 import com.example.babyai.ui.theme.BabyGreen
 import com.example.babyai.ui.theme.BabyOrange
@@ -28,7 +29,8 @@ fun GamesMenuScreen(
     onMemoryGameClick: () -> Unit,
     onOddOneOutClick: () -> Unit,
     onSortingGameClick: () -> Unit,
-    onCountingGameClick: () -> Unit
+    onCountingGameClick: () -> Unit,
+    onSettingsClick: () -> Unit
 ) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
@@ -44,15 +46,22 @@ fun GamesMenuScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(20.dp)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack) {
+                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                }
+                Text(
+                    text = if (language == "fa") "بازی‌ها 🎮" else "Games 🎮",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
-            Text(
-                text = if (language == "fa") "بازی‌ها 🎮" else "Games 🎮",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
+            SettingsIconButton(onSettingsClick = onSettingsClick)
         }
 
         Spacer(Modifier.height(20.dp))

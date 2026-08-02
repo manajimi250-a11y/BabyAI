@@ -125,6 +125,9 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
                 },
                 onStoriesClick = {
                     navController.navigate(Routes.STORIES_MENU)
+                },
+                onSettingsClick = {
+                    navController.navigate(Routes.SETTINGS)
                 }
             )
         }
@@ -134,6 +137,9 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
                 onBack = { navController.popBackStack() },
                 onStoryClick = { storyId ->
                     navController.navigate(Routes.storyRoute(storyId))
+                },
+                onSettingsClick = {
+                    navController.navigate(Routes.SETTINGS)
                 }
             )
         }
@@ -160,6 +166,9 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
                 },
                 onCountingGameClick = {
                     navController.navigate(Routes.COUNTING_GAME)
+                },
+                onSettingsClick = {
+                    navController.navigate(Routes.SETTINGS)
                 }
             )
         }

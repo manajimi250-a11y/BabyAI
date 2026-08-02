@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.UserPreferences
+import com.example.babyai.ui.components.SettingsIconButton
 import com.example.babyai.ui.theme.BabyBlue
 import com.example.babyai.ui.theme.BabyGreen
 import com.example.babyai.ui.theme.BabyOrange
@@ -31,7 +32,8 @@ import kotlinx.coroutines.flow.first
 fun ActivityHubScreen(
     onLearnClick: () -> Unit,
     onGamesClick: () -> Unit,
-    onStoriesClick: () -> Unit
+    onStoriesClick: () -> Unit,
+    onSettingsClick: () -> Unit
 ) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
@@ -41,6 +43,7 @@ fun ActivityHubScreen(
         language = prefs.language.first()
     }
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,6 +88,15 @@ fun ActivityHubScreen(
             colors = listOf(BabyGreen, BabyPink),
             onClick = onStoriesClick
         )
+    }
+
+    SettingsIconButton(
+        modifier = Modifier
+            .align(Alignment.TopEnd)
+            .windowInsetsPadding(WindowInsets.statusBars)
+            .padding(12.dp),
+        onSettingsClick = onSettingsClick
+    )
     }
 }
 
