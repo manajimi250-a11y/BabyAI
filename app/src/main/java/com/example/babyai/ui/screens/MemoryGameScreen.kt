@@ -1,0 +1,199 @@
+package com.example.babyai.ui.screens
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.babyai.data.UserPreferences
+import com.example.babyai.data.WordRepository
+import com.example.babyai.ui.components.CelebrationOverlay
+import com.example.babyai.ui.components.MascotCompanion
+import com.example.babyai.ui.theme.BabyGreen
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+
+private data class MemoryCard(val cardId: Int, val wordId: String, val photoResName: String)
+
+private fun pairCountForAge(age: Int): Int = when {
+    age <= 2 -> 3
+    age == 3 -> 4
+    age == 4 -> 5
+    age == 5 -> 6
+    else -> 8
+}
+
+private fun buildShuffledCards(pairCount: Int): List<MemoryCard> {
+    val allWords = WordRepository.allCategories.flatMap { it.words }
+    val chosenWords = allWords.shuffled().take(pairCount)
+    return chosenWords.flatMap { word ->
+        val photo = word.photoFileNames().random().removeSuffix(".jpg")
+        listOf(
+            MemoryCard(cardId = 0, wordId = word.id, photoResName = photo),
+            MemoryCard(cardId = 0, wordId = word.id, photoResName = photo)
+        )
+    }.shuffled().mapIndexed { index, c -> c.copy(cardId = index) }
+}
+
+@Composable
+fun MemoryGameScreen(onBack: () -> Unit) {
+    val context = LocalContext.current
+    val prefs = remember { UserPreferences(context) }
+    val scope = rememberCoroutineScope()
+
+    var language by remember { mutableStateOf("en") }
+    var cards by remember { mutableStateOf(listOf<MemoryCard>()) }
+    var flippedIds by remember { mutableStateOf(setOf<Int>()) }
+    var matchedIds by remember { mutableStateOf(setOf<Int>()) }
+    var showCelebration by remember { mutableStateOf(false) }
+    var pairCount by remember { mutableStateOf(4) }
+
+    LaunchedEffect(Unit) {
+        language = prefs.language.first()
+        val age = prefs.childAge.first()
+        pairCount = pairCountForAge(age)
+        cards = buildShuffledCards(pairCount)
+    }
+
+    // چک‌کردن جفت وقتی دوتا کارت باز شدن
+    LaunchedEffect(flippedIds) {
+        if (flippedIds.size == 2) {
+            delay(700)
+            val ids = flippedIds.toList()
+            val c1 = cards.find { it.cardId == ids[0] }
+            val c2 = cards.find { it.cardId == ids[1] }
+            if (c1 != null && c2 != null && c1.wordId == c2.wordId) {
+                matchedIds = matchedIds + ids
+            }
+            flippedIds = setOf()
+        }
+    }
+
+    LaunchedEffect(matchedIds) {
+        if (cards.isNotEmpty() && matchedIds.size == cards.size) {
+            prefs.addBonusStars(pairCount)
+            showCelebration = true
+        }
+    }
+
+    val columns = if (pairCount <= 3) 3 else 4
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(16.dp)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack) {
+                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                }
+                Text(
+                    text = if (language == "fa") "بازی حافظه 🧠" else "Memory Match 🧠",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(Modifier.height(12.dp))
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(columns),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(cards) { card ->
+                    val isFaceUp = card.cardId in flippedIds || card.cardId in matchedIds
+                    MemoryCardTile(
+                        photoResName = card.photoResName,
+                        isFaceUp = isFaceUp,
+                        onClick = {
+                            if (card.cardId !in matchedIds && card.cardId !in flippedIds && flippedIds.size < 2) {
+                                flippedIds = flippedIds + card.cardId
+                            }
+                        }
+                    )
+                }
+            }
+        }
+
+        MascotCompanion(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(20.dp)
+        )
+
+        if (showCelebration) {
+            CelebrationOverlay(
+                language = language,
+                starsEarned = pairCount,
+                onPlayAgain = {
+                    showCelebration = false
+                    matchedIds = setOf()
+                    flippedIds = setOf()
+                    cards = buildShuffledCards(pairCount)
+                },
+                onBackToMenu = onBack
+            )
+        }
+    }
+}
+
+@Composable
+private fun MemoryCardTile(photoResName: String, isFaceUp: Boolean, onClick: () -> Unit) {
+    val context = LocalContext.current
+    val resId = remember(photoResName) {
+        context.resources.getIdentifier(photoResName, "drawable", context.packageName)
+    }
+
+    Card(
+        modifier = Modifier
+            .aspectRatio(1f)
+            .clip(RoundedCornerShape(16.dp))
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+    ) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            AnimatedVisibility(visible = isFaceUp, enter = fadeIn(), exit = fadeOut()) {
+                if (resId != 0) {
+                    Image(
+                        painter = painterResource(id = resId),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
+            AnimatedVisibility(visible = !isFaceUp, enter = fadeIn(), exit = fadeOut()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(BabyGreen),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("❓", fontSize = 28.sp)
+                }
+            }
+        }
+    }
+}
