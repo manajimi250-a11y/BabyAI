@@ -7,18 +7,22 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.babyai.ui.screens.ActivityHubScreen
 import com.example.babyai.ui.screens.AgeSelectScreen
+import com.example.babyai.ui.screens.BalloonPopScreen
 import com.example.babyai.ui.screens.CategoryMenuScreen
 import com.example.babyai.ui.screens.CountingGameScreen
 import com.example.babyai.ui.screens.GameScreen
 import com.example.babyai.ui.screens.GamesMenuScreen
+import com.example.babyai.ui.screens.ListenAndTapScreen
 import com.example.babyai.ui.screens.MascotSelectScreen
 import com.example.babyai.ui.screens.MemoryGameScreen
 import com.example.babyai.ui.screens.NameInputScreen
 import com.example.babyai.ui.screens.OddOneOutScreen
 import com.example.babyai.ui.screens.ParentDashboardScreen
 import com.example.babyai.ui.screens.ProfileSelectScreen
+import com.example.babyai.ui.screens.PuzzleScreen
 import com.example.babyai.ui.screens.SettingsScreen
 import com.example.babyai.ui.screens.SortingGameScreen
+import com.example.babyai.ui.screens.SpeedTapScreen
 import com.example.babyai.ui.screens.StoriesMenuScreen
 import com.example.babyai.ui.screens.StoryScreen
 import com.example.babyai.ui.screens.WelcomeScreen
@@ -41,6 +45,10 @@ object Routes {
     const val ODD_ONE_OUT = "odd_one_out"
     const val SORTING_GAME = "sorting_game"
     const val COUNTING_GAME = "counting_game"
+    const val LISTEN_AND_TAP = "listen_and_tap"
+    const val SPEED_TAP = "speed_tap"
+    const val PUZZLE = "puzzle"
+    const val BALLOON_POP = "balloon_pop"
     const val STORIES_MENU = "stories_menu"
     const val STORY = "story/{storyId}"
     const val GAME = "game/{categoryId}"
@@ -167,10 +175,38 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
                 onCountingGameClick = {
                     navController.navigate(Routes.COUNTING_GAME)
                 },
+                onListenAndTapClick = {
+                    navController.navigate(Routes.LISTEN_AND_TAP)
+                },
+                onSpeedTapClick = {
+                    navController.navigate(Routes.SPEED_TAP)
+                },
+                onPuzzleClick = {
+                    navController.navigate(Routes.PUZZLE)
+                },
+                onBalloonPopClick = {
+                    navController.navigate(Routes.BALLOON_POP)
+                },
                 onSettingsClick = {
                     navController.navigate(Routes.SETTINGS)
                 }
             )
+        }
+
+        composable(Routes.LISTEN_AND_TAP) {
+            ListenAndTapScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.SPEED_TAP) {
+            SpeedTapScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.PUZZLE) {
+            PuzzleScreen(onBack = { navController.popBackStack() })
+        }
+
+        composable(Routes.BALLOON_POP) {
+            BalloonPopScreen(onBack = { navController.popBackStack() })
         }
 
         composable(Routes.MEMORY_GAME) {

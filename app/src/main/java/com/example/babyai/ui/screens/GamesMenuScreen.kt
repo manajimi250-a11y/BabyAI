@@ -3,7 +3,9 @@ package com.example.babyai.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -20,7 +22,9 @@ import com.example.babyai.ui.components.SettingsIconButton
 import com.example.babyai.ui.theme.BabyBlue
 import com.example.babyai.ui.theme.BabyGreen
 import com.example.babyai.ui.theme.BabyOrange
+import com.example.babyai.ui.theme.BabyPink
 import com.example.babyai.ui.theme.BabyPurple
+import com.example.babyai.ui.theme.BabyYellow
 import kotlinx.coroutines.flow.first
 
 @Composable
@@ -30,6 +34,10 @@ fun GamesMenuScreen(
     onOddOneOutClick: () -> Unit,
     onSortingGameClick: () -> Unit,
     onCountingGameClick: () -> Unit,
+    onListenAndTapClick: () -> Unit,
+    onSpeedTapClick: () -> Unit,
+    onPuzzleClick: () -> Unit,
+    onBalloonPopClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
     val context = LocalContext.current
@@ -45,6 +53,7 @@ fun GamesMenuScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(20.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -92,6 +101,34 @@ fun GamesMenuScreen(
             title = if (language == "fa") "بشمار چندتا!" else "Count them!",
             color = BabyPurple,
             onClick = onCountingGameClick
+        )
+        Spacer(Modifier.height(14.dp))
+        GameCard(
+            emoji = "🎧",
+            title = if (language == "fa") "گوش کن و لمس کن" else "Listen & Tap",
+            color = BabyPink,
+            onClick = onListenAndTapClick
+        )
+        Spacer(Modifier.height(14.dp))
+        GameCard(
+            emoji = "⚡",
+            title = if (language == "fa") "لمس سریع" else "Speed Tap",
+            color = BabyYellow,
+            onClick = onSpeedTapClick
+        )
+        Spacer(Modifier.height(14.dp))
+        GameCard(
+            emoji = "🧩",
+            title = if (language == "fa") "پازل کوچولو" else "Little Puzzle",
+            color = BabyGreen,
+            onClick = onPuzzleClick
+        )
+        Spacer(Modifier.height(14.dp))
+        GameCard(
+            emoji = "🎈",
+            title = if (language == "fa") "بادکنک‌ها" else "Balloons",
+            color = BabyOrange,
+            onClick = onBalloonPopClick
         )
     }
 }
