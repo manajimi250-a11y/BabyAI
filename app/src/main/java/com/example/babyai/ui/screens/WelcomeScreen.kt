@@ -4,7 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,16 +27,16 @@ import kotlinx.coroutines.launch
 
 /**
  * اولین صفحه‌ای که با باز کردن اپ دیده می‌شه.
- * عکس (بچه‌ها+خورشید+متن انگلیسی پخته‌شده) تمام‌صفحه به‌عنوان پس‌زمینه.
  *
- * اگه قبلاً اسم بچه ذخیره شده باشه:
- *   - دکمه‌ی اصلی («Let's Start!» روی عکس) = ادامه به‌عنوان همون بچه، مستقیم می‌ره داخل اپ
- *   - یه دکمه‌ی کوچیک «شخص دیگه‌ای هستم» هم نشون داده می‌شه که فلوی کامل (اسم+سن) رو دوباره شروع می‌کنه
- * اگه اسمی ذخیره نشده باشه (اولین بار): دکمه‌ی اصلی می‌ره به فلوی وارد کردن اسم.
+ * اگه پروفایل فعال (اسم ذخیره‌شده) وجود داشته باشه:
+ *   - دکمه‌ی اصلی = ادامه به‌عنوان همون بازیکن، مستقیم می‌ره داخل اپ
+ *   - دکمه‌ی کوچیک با آیکون رنگی «شخص دیگه‌ای هستم» = می‌ره صفحه‌ی انتخاب/افزودن بازیکن
+ * اگه هیچ پروفایلی نباشه (اولین‌بار مطلق): مستقیم می‌ره به فلوی وارد کردن اسم.
  */
 @Composable
 fun WelcomeScreen(
     onContinueAsReturningUser: () -> Unit,
+    onGoToProfileSelect: () -> Unit,
     onStartAsNewUser: () -> Unit
 ) {
     val context = LocalContext.current
@@ -42,10 +45,12 @@ fun WelcomeScreen(
 
     var language by remember { mutableStateOf("en") }
     var savedName by remember { mutableStateOf("") }
+    var hasAnyProfiles by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         language = prefs.language.first()
         savedName = prefs.childName.first()
+        hasAnyProfiles = prefs.profilesList.first().isNotEmpty()
     }
 
     val bgResId = remember {
@@ -110,20 +115,40 @@ fun WelcomeScreen(
                 .height(screenHeight * 0.055f)
                 .clip(RoundedCornerShape(50))
                 .clickable {
-                    if (savedName.isNotBlank()) onContinueAsReturningUser() else onStartAsNewUser()
+                    when {
+                        savedName.isNotBlank() -> onContinueAsReturningUser()
+                        hasAnyProfiles -> onGoToProfileSelect()
+                        else -> onStartAsNewUser()
+                    }
                 }
         )
 
-        // اگه اسم ذخیره‌شده وجود داره، دکمه‌ی کوچیک «شخص دیگه‌ای هستم» رو نشون بده
+        // اگه پروفایلی وجود داره، دکمه‌ی کوچیک با آیکون رنگی «شخص دیگه‌ای هستم»
         if (savedName.isNotBlank()) {
-            Box(
+            Row(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .padding(top = screenHeight * 0.855f)
-                    .background(Color.White.copy(alpha = 0.85f), RoundedCornerShape(20.dp))
-                    .clickable { onStartAsNewUser() }
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .background(Color.White.copy(alpha = 0.9f), RoundedCornerShape(24.dp))
+                    .clickable { onGoToProfileSelect() }
+                    .padding(horizontal = 14.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                Box(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clip(CircleShape)
+                        .background(BabyOrange),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Filled.PersonAdd,
+                        contentDescription = null,
+                        tint = Color.White,
+                        modifier = Modifier.size(14.dp)
+                    )
+                }
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = if (language == "fa") "شخص دیگه‌ای هستم" else "I'm someone else",
                     fontSize = 14.sp,

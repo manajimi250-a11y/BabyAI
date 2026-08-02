@@ -14,11 +14,18 @@ import com.example.babyai.ui.screens.MascotSelectScreen
 import com.example.babyai.ui.screens.MemoryGameScreen
 import com.example.babyai.ui.screens.NameInputScreen
 import com.example.babyai.ui.screens.ParentDashboardScreen
+import com.example.babyai.ui.screens.ProfileSelectScreen
 import com.example.babyai.ui.screens.SettingsScreen
 import com.example.babyai.ui.screens.WelcomeScreen
+import com.example.babyai.data.UserPreferences
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 object Routes {
     const val WELCOME = "welcome"
+    const val PROFILE_SELECT = "profile_select"
     const val NAME_INPUT = "name_input"
     const val AGE_SELECT = "age_select"
     const val MASCOT_SELECT = "mascot_select"
@@ -35,6 +42,10 @@ object Routes {
 
 @Composable
 fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
+    val context = LocalContext.current
+    val prefs = remember { UserPreferences(context) }
+    val scope = rememberCoroutineScope()
+
     NavHost(navController = navController, startDestination = Routes.WELCOME) {
 
         composable(Routes.WELCOME) {
@@ -44,9 +55,35 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
                         popUpTo(Routes.WELCOME) { inclusive = true }
                     }
                 },
+                onGoToProfileSelect = {
+                    scope.launch {
+                        prefs.saveCurrentAsProfile()
+                        navController.navigate(Routes.PROFILE_SELECT) {
+                            popUpTo(Routes.WELCOME) { inclusive = true }
+                        }
+                    }
+                },
                 onStartAsNewUser = {
                     navController.navigate(Routes.NAME_INPUT) {
                         popUpTo(Routes.WELCOME) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(Routes.PROFILE_SELECT) {
+            ProfileSelectScreen(
+                onProfileChosen = {
+                    navController.navigate(Routes.MASCOT_SELECT) {
+                        popUpTo(Routes.PROFILE_SELECT) { inclusive = true }
+                    }
+                },
+                onAddNewProfile = {
+                    scope.launch {
+                        prefs.startNewProfile()
+                        navController.navigate(Routes.NAME_INPUT) {
+                            popUpTo(Routes.PROFILE_SELECT) { inclusive = true }
+                        }
                     }
                 }
             )
@@ -63,6 +100,7 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
         composable(Routes.AGE_SELECT) {
             AgeSelectScreen(
                 onDone = {
+                    scope.launch { prefs.saveCurrentAsProfile() }
                     navController.navigate(Routes.MASCOT_SELECT) {
                         popUpTo(Routes.NAME_INPUT) { inclusive = true }
                     }
@@ -73,6 +111,7 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
         composable(Routes.MASCOT_SELECT) {
             MascotSelectScreen(
                 onMascotChosen = {
+                    scope.launch { prefs.saveCurrentAsProfile() }
                     navController.navigate(Routes.ACTIVITY_HUB)
                 }
             )

@@ -18,6 +18,18 @@ enum class PhotoSize { SMALL, MEDIUM, LARGE }
  */
 enum class VoiceSource { DEVICE_TTS, PARENT_RECORDING }
 
+/**
+ * یک پروفایل بازیکن (بچه) با پیشرفت جدا
+ */
+data class Profile(
+    val id: String,
+    val name: String,
+    val age: Int,
+    val mascotId: String,
+    val stars: Int,
+    val discoveredWordsCsv: String
+)
+
 class UserPreferences(private val context: Context) {
 
     private object Keys {
@@ -32,6 +44,8 @@ class UserPreferences(private val context: Context) {
         val TOTAL_USAGE_SECONDS = intPreferencesKey("total_usage_seconds")
         val TODAY_USAGE_SECONDS = intPreferencesKey("today_usage_seconds")
         val LAST_USAGE_DATE = stringPreferencesKey("last_usage_date") // yyyy-MM-dd
+        val PROFILES_LIST = stringPreferencesKey("profiles_list")
+        val ACTIVE_PROFILE_ID = stringPreferencesKey("active_profile_id")
         fun voiceSourceKey(wordId: String) = stringPreferencesKey("voice_source_$wordId")
     }
 
@@ -119,5 +133,98 @@ class UserPreferences(private val context: Context) {
 
     suspend fun setVoiceSourceFor(wordId: String, source: VoiceSource) {
         context.dataStore.edit { it[Keys.voiceSourceKey(wordId)] = source.name }
+    }
+
+    // ---------- سیستم چندپروفایلی ----------
+
+    private fun parseProfiles(raw: String): List<Profile> =
+        raw.split("||").filter { it.isNotBlank() }.mapNotNull { entry ->
+            val parts = entry.split("::")
+            if (parts.size < 6) return@mapNotNull null
+            Profile(
+                id = parts[0],
+                name = parts[1],
+                age = parts[2].toIntOrNull() ?: 2,
+                mascotId = parts[3],
+                stars = parts[4].toIntOrNull() ?: 0,
+                discoveredWordsCsv = parts[5]
+            )
+        }
+
+    private fun serializeProfiles(profiles: List<Profile>): String =
+        profiles.joinToString("||") { p ->
+            listOf(p.id, p.name, p.age.toString(), p.mascotId, p.stars.toString(), p.discoveredWordsCsv)
+                .joinToString("::")
+        }
+
+    val profilesList: Flow<List<Profile>> =
+        context.dataStore.data.map { parseProfiles(it[Keys.PROFILES_LIST] ?: "") }
+
+    val activeProfileId: Flow<String?> = context.dataStore.data.map { it[Keys.ACTIVE_PROFILE_ID] }
+
+    /** پیشرفت زنده‌ی فعلی (اسم/سن/ماسکات/ستاره/کلمات) رو توی لیست پروفایل‌ها ذخیره یا آپدیت می‌کنه */
+    suspend fun saveCurrentAsProfile() {
+        context.dataStore.edit { prefs ->
+            val name = prefs[Keys.CHILD_NAME] ?: ""
+            if (name.isBlank()) return@edit // پروفایل بی‌اسم رو ذخیره نکن
+
+            var id = prefs[Keys.ACTIVE_PROFILE_ID]
+            if (id == null) {
+                id = "profile_${System.currentTimeMillis()}"
+                prefs[Keys.ACTIVE_PROFILE_ID] = id
+            }
+
+            val current = Profile(
+                id = id,
+                name = name,
+                age = prefs[Keys.CHILD_AGE] ?: 2,
+                mascotId = prefs[Keys.MASCOT_ID] ?: "",
+                stars = prefs[Keys.TOTAL_STARS] ?: 0,
+                discoveredWordsCsv = prefs[Keys.DISCOVERED_WORDS] ?: ""
+            )
+
+            val existing = parseProfiles(prefs[Keys.PROFILES_LIST] ?: "").toMutableList()
+            val index = existing.indexOfFirst { it.id == id }
+            if (index >= 0) existing[index] = current else existing.add(current)
+            prefs[Keys.PROFILES_LIST] = serializeProfiles(existing)
+        }
+    }
+
+    /** پیشرفت یه پروفایل ذخیره‌شده رو برمی‌گردونه توی وضعیت فعلی (سوییچ‌کردن) */
+    suspend fun switchToProfile(id: String) {
+        context.dataStore.edit { prefs ->
+            val profiles = parseProfiles(prefs[Keys.PROFILES_LIST] ?: "")
+            val profile = profiles.find { it.id == id } ?: return@edit
+            prefs[Keys.ACTIVE_PROFILE_ID] = profile.id
+            prefs[Keys.CHILD_NAME] = profile.name
+            prefs[Keys.CHILD_AGE] = profile.age
+            prefs[Keys.MASCOT_ID] = profile.mascotId
+            prefs[Keys.TOTAL_STARS] = profile.stars
+            prefs[Keys.DISCOVERED_WORDS] = profile.discoveredWordsCsv
+        }
+    }
+
+    /** یه پروفایل رو کامل حذف می‌کنه */
+    suspend fun deleteProfile(id: String) {
+        context.dataStore.edit { prefs ->
+            val profiles = parseProfiles(prefs[Keys.PROFILES_LIST] ?: "").filter { it.id != id }
+            prefs[Keys.PROFILES_LIST] = serializeProfiles(profiles)
+            if (prefs[Keys.ACTIVE_PROFILE_ID] == id) {
+                prefs.remove(Keys.ACTIVE_PROFILE_ID)
+                prefs[Keys.CHILD_NAME] = ""
+            }
+        }
+    }
+
+    /** شروع یه پروفایل کاملاً تازه (برای «شخص دیگه‌ای هستم» → افزودن بازیکن جدید) */
+    suspend fun startNewProfile() {
+        context.dataStore.edit { prefs ->
+            prefs.remove(Keys.ACTIVE_PROFILE_ID)
+            prefs[Keys.CHILD_NAME] = ""
+            prefs[Keys.CHILD_AGE] = 2
+            prefs.remove(Keys.MASCOT_ID)
+            prefs[Keys.TOTAL_STARS] = 0
+            prefs[Keys.DISCOVERED_WORDS] = ""
+        }
     }
 }
