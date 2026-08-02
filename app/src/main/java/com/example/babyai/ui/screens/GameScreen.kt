@@ -32,6 +32,7 @@ import com.example.babyai.data.PhotoSize
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
+import com.example.babyai.ui.components.CelebrationOverlay
 import com.example.babyai.ui.components.MascotCompanion
 import com.example.babyai.ui.components.RecordWordDialog
 import kotlinx.coroutines.flow.first
@@ -49,6 +50,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
     var activeWord by remember { mutableStateOf<Word?>(null) }
     var recordingWord by remember { mutableStateOf<Word?>(null) }
     var showCelebration by remember { mutableStateOf(false) }
+    var starsEarnedThisRound by remember { mutableStateOf(0) }
     var photoSize by remember { mutableStateOf(PhotoSize.MEDIUM) }
     var language by remember { mutableStateOf("fa") }
     val scope = rememberCoroutineScope()
@@ -135,10 +137,15 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
                                 val text = if (language == "fa") word.nameFa else word.nameEn
                                 ttsManager.speak(text)
                             }
-                        }
 
-                        if (discovered.size == category.words.size) {
-                            showCelebration = true
+                            val wasNew = prefs.markWordDiscovered(word.id)
+                            if (wasNew) starsEarnedThisRound += 1
+
+                            if (discovered.size == category.words.size) {
+                                prefs.addBonusStars(5)
+                                starsEarnedThisRound += 5
+                                showCelebration = true
+                            }
                         }
                     },
                     onLongPress = { recordingWord = word }
@@ -182,19 +189,15 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
     }
 
     if (showCelebration && allDiscovered) {
-        AlertDialog(
-            onDismissRequest = { },
-            confirmButton = {
-                TextButton(onClick = {
-                    showCelebration = false
-                    discovered = setOf()
-                }) { Text(if (language == "fa") "دوباره بازی کن" else "Play again") }
+        CelebrationOverlay(
+            language = language,
+            starsEarned = starsEarnedThisRound,
+            onPlayAgain = {
+                showCelebration = false
+                discovered = setOf()
+                starsEarnedThisRound = 0
             },
-            dismissButton = {
-                TextButton(onClick = onBackToMenu) { Text(if (language == "fa") "برگشت به منو" else "Back to menu") }
-            },
-            title = { Text(if (language == "fa") "عالی بود! 🌟" else "Great job! 🌟") },
-            text = { Text(if (language == "fa") "همه‌ی کلمه‌های این دسته رو یاد گرفتی!" else "You learned all the words in this category!") }
+            onBackToMenu = onBackToMenu
         )
     }
     recordingWord?.let { word ->

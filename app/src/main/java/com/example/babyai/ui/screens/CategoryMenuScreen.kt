@@ -44,10 +44,12 @@ fun CategoryMenuScreen(
     var showGate by remember { mutableStateOf(false) }
     var language by remember { mutableStateOf("en") }
     var childName by remember { mutableStateOf("") }
+    var totalStars by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
         language = prefs.language.first()
         childName = prefs.childName.first()
+        totalStars = prefs.totalStars.first()
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -69,9 +71,25 @@ fun CategoryMenuScreen(
                     }
                     append(if (language == "fa") "چی یاد بگیریم؟" else "What shall we learn?")
                 },
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.weight(1f)
             )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .background(BabyYellow, RoundedCornerShape(20.dp))
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
+            ) {
+                Text("⭐", fontSize = 18.sp)
+                Spacer(Modifier.width(4.dp))
+                Text(
+                    text = "$totalStars",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            Spacer(Modifier.width(4.dp))
             IconButton(onClick = {
                 showGate = true
             }) {

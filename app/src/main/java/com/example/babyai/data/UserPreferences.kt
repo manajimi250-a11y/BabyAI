@@ -27,12 +27,39 @@ class UserPreferences(private val context: Context) {
         val MASCOT_ID = stringPreferencesKey("mascot_id")
         val PHOTO_SIZE = stringPreferencesKey("photo_size")
         val PARENTAL_GATE_ENABLED = booleanPreferencesKey("parental_gate_enabled")
+        val TOTAL_STARS = intPreferencesKey("total_stars")
+        val DISCOVERED_WORDS = stringPreferencesKey("discovered_words") // comma-separated word ids
         fun voiceSourceKey(wordId: String) = stringPreferencesKey("voice_source_$wordId")
     }
 
     val language: Flow<String> = context.dataStore.data.map { it[Keys.LANGUAGE] ?: "en" }
     val childAge: Flow<Int> = context.dataStore.data.map { it[Keys.CHILD_AGE] ?: 2 }
     val childName: Flow<String> = context.dataStore.data.map { it[Keys.CHILD_NAME] ?: "" }
+    val totalStars: Flow<Int> = context.dataStore.data.map { it[Keys.TOTAL_STARS] ?: 0 }
+    val discoveredWords: Flow<Set<String>> = context.dataStore.data.map {
+        (it[Keys.DISCOVERED_WORDS] ?: "").split(",").filter { id -> id.isNotBlank() }.toSet()
+    }
+
+    /** اگه کلمه برای اولین‌بار کشف شده باشه، ۱ ستاره اضافه می‌کنه و true برمی‌گردونه */
+    suspend fun markWordDiscovered(wordId: String): Boolean {
+        var wasNew = false
+        context.dataStore.edit { prefs ->
+            val current = (prefs[Keys.DISCOVERED_WORDS] ?: "").split(",").filter { it.isNotBlank() }.toMutableSet()
+            if (!current.contains(wordId)) {
+                current.add(wordId)
+                prefs[Keys.DISCOVERED_WORDS] = current.joinToString(",")
+                prefs[Keys.TOTAL_STARS] = (prefs[Keys.TOTAL_STARS] ?: 0) + 1
+                wasNew = true
+            }
+        }
+        return wasNew
+    }
+
+    suspend fun addBonusStars(amount: Int) {
+        context.dataStore.edit { prefs ->
+            prefs[Keys.TOTAL_STARS] = (prefs[Keys.TOTAL_STARS] ?: 0) + amount
+        }
+    }
     val mascotId: Flow<String?> = context.dataStore.data.map { it[Keys.MASCOT_ID] }
     val photoSize: Flow<PhotoSize> = context.dataStore.data.map {
         PhotoSize.valueOf(it[Keys.PHOTO_SIZE] ?: PhotoSize.MEDIUM.name)
