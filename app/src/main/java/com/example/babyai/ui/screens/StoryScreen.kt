@@ -53,11 +53,17 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
     if (story == null) return
     val page = story.pages.getOrNull(pageIndex) ?: return
 
-    // هر بار صفحه عوض شد، متن رو با صدا بخون
+    // هر بار صفحه عوض شد، متن رو با صدا بخون (اول صدای آماده، بعد TTS)
     LaunchedEffect(pageIndex) {
         answeredCorrectly = false
-        val text = if (language == "fa") page.textFa else page.textEn
-        ttsManager.speak(text)
+        if (language == "fa") {
+            val played = ttsManager.playBundledAudio("story_${story.id}_page${pageIndex + 1}")
+            if (!played) {
+                ttsManager.speak(page.textFa)
+            }
+        } else {
+            ttsManager.speak(page.textEn)
+        }
     }
 
     val choiceWords = remember(pageIndex) {
