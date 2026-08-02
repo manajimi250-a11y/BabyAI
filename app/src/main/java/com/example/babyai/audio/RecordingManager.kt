@@ -44,7 +44,7 @@ class RecordingManager(private val context: Context) {
             setOutputFile(file.absolutePath)
             prepare()
 
-            val sessionId = audioSessionId
+            val sessionId = getAudioSessionId()
             try {
                 if (NoiseSuppressor.isAvailable()) {
                     noiseSuppressor = NoiseSuppressor.create(sessionId)?.apply { enabled = true }
