@@ -89,6 +89,20 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
 
         Spacer(Modifier.height(12.dp))
 
+        ttsManager.lastBundledError?.let { err ->
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "DEBUG: $err",
+                    modifier = Modifier.padding(12.dp),
+                    fontSize = 11.sp
+                )
+            }
+            Spacer(Modifier.height(8.dp))
+        }
+
         if (ttsManager.lastSpeakFailed) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
@@ -133,6 +147,10 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
                                 recordingManager.hasRecording(word.id, language)
                             ) {
                                 recordingManager.play(word.id, language)
+                            } else if (language == "fa" &&
+                                ttsManager.playBundledAudio("${word.categoryId}_${word.id}")
+                            ) {
+                                // صدای فارسی از پیش‌ضبط‌شده پخش شد، نیازی به TTS نیست
                             } else {
                                 val text = if (language == "fa") word.nameFa else word.nameEn
                                 ttsManager.speak(text)

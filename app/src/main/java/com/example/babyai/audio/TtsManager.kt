@@ -1,6 +1,7 @@
 package com.example.babyai.audio
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import androidx.compose.runtime.getValue
@@ -14,12 +15,16 @@ import java.util.Locale
  * به‌جای حدس‌زدن از قبل که آیا زبان پشتیبانی می‌شه یا نه (که غیرقابل‌اعتماد بود)،
  * این نسخه واقعاً speak رو امتحان می‌کنه و از طریق UtteranceProgressListener
  * می‌فهمه که آیا واقعاً صدایی پخش شد یا با خطا مواجه شد.
+ *
+ * برای فارسی: قبل از تکیه به TTS، اول سراغ فایل‌های صوتی از پیش ضبط‌شده
+ * (res/raw، اسمشون مثل animals_dog) می‌ریم که همیشه درست کار کنن.
  */
-class TtsManager(context: Context) {
+class TtsManager(private val context: Context) {
 
     private var tts: TextToSpeech? = null
     private var isReady = false
     private var pendingLanguageCode: String? = null
+    private var bundledPlayer: MediaPlayer? = null
 
     /** هر بار که یه speak با خطا مواجه بشه (یعنی احتمالاً زبان پشتیبانی نمی‌شه)، true می‌شه */
     var lastSpeakFailed by mutableStateOf(false)
@@ -60,6 +65,35 @@ class TtsManager(context: Context) {
         tts?.setLanguage(locale)
     }
 
+    /**
+     * سعی می‌کنه فایل صوتی از پیش‌ضبط‌شده رو پخش کنه (مثلاً "animals_dog").
+     * اگه پیدا شد و پخش شد، true برمی‌گردونه؛ اگه نبود، false (باید از TTS استفاده کنیم).
+     */
+    var lastBundledError by mutableStateOf<String?>(null)
+        private set
+
+    fun playBundledAudio(resourceName: String): Boolean {
+        val resId = context.resources.getIdentifier(resourceName, "raw", context.packageName)
+        if (resId == 0) {
+            lastBundledError = "resource not found: $resourceName"
+            return false
+        }
+        return try {
+            bundledPlayer?.release()
+            bundledPlayer = MediaPlayer.create(context, resId)
+            if (bundledPlayer == null) {
+                lastBundledError = "MediaPlayer.create returned null for $resourceName"
+                return false
+            }
+            bundledPlayer?.start()
+            lastBundledError = null
+            true
+        } catch (e: Exception) {
+            lastBundledError = "${e.javaClass.simpleName}: ${e.message}"
+            false
+        }
+    }
+
     fun speak(text: String) {
         if (!isReady) {
             lastSpeakFailed = true
@@ -75,5 +109,7 @@ class TtsManager(context: Context) {
         tts?.stop()
         tts?.shutdown()
         tts = null
+        bundledPlayer?.release()
+        bundledPlayer = null
     }
 }
