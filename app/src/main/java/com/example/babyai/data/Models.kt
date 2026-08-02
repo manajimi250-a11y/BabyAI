@@ -43,6 +43,11 @@ object WordRepository {
             Word("sheep", "animals", "Sheep", "گوسفند", 6),
             Word("fish", "animals", "Fish", "ماهی", 6),
             Word("elephant", "animals", "Elephant", "فیل", 6),
+            Word("turtle", "animals", "Turtle", "لاک‌پشت", 6),
+            Word("horse", "animals", "Horse", "اسب", 6),
+            Word("goat", "animals", "Goat", "بز", 6),
+            Word("rabbit", "animals", "Rabbit", "خرگوش", 6),
+            Word("pig", "animals", "Pig", "خوک", 6),
         )
     )
 
@@ -57,6 +62,10 @@ object WordRepository {
             Word("green", "colors", "Green", "سبز", 4),
             Word("orange", "colors", "Orange", "نارنجی", 4),
             Word("purple", "colors", "Purple", "بنفش", 4),
+            Word("brown", "colors", "Brown", "قهوه‌ای", 1),
+            Word("black", "colors", "Black", "مشکی", 1),
+            Word("white", "colors", "White", "سفید", 1),
+            Word("gray", "colors", "Gray", "خاکستری", 1),
         )
     )
 
@@ -69,6 +78,10 @@ object WordRepository {
             Word("square", "shapes", "Square", "مربع", 4),
             Word("triangle", "shapes", "Triangle", "مثلث", 4),
             Word("star", "shapes", "Star", "ستاره", 4),
+            Word("diamond", "shapes", "Diamond", "لوزی", 1),
+            Word("oval", "shapes", "Oval", "بیضی", 1),
+            Word("rectangle", "shapes", "Rectangle", "مستطیل", 1),
+            Word("crescent", "shapes", "Crescent", "هلال ماه", 1),
         )
     )
 
@@ -83,6 +96,10 @@ object WordRepository {
             Word("grandma", "people", "Grandma", "مادربزرگ", 1),
             Word("grandpa", "people", "Grandpa", "پدربزرگ", 1),
             Word("sibling", "people", "Sibling", "خواهر/برادر", 2),
+            Word("police", "people", "Police Officer", "پلیس", 1),
+            Word("doctor", "people", "Doctor", "دکتر", 1),
+            Word("nurse", "people", "Nurse", "پرستار", 1),
+            Word("aunt", "people", "Aunt", "خاله", 1),
         )
     )
 
