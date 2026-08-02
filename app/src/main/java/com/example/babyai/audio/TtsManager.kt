@@ -34,10 +34,12 @@ class TtsManager(context: Context) {
     }
 
     fun setLanguage(languageCode: String) {
-        val locale = if (languageCode == "fa") Locale("fa", "IR") else Locale.US
-        val result = tts?.setLanguage(locale) ?: TextToSpeech.LANG_NOT_SUPPORTED
-        isCurrentLanguageSupported =
-            result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED
+        val locale = if (languageCode == "fa") Locale("fa", "IR") else Locale.ENGLISH
+        val availability = tts?.isLanguageAvailable(locale) ?: TextToSpeech.LANG_NOT_SUPPORTED
+        isCurrentLanguageSupported = availability >= TextToSpeech.LANG_AVAILABLE
+        if (isCurrentLanguageSupported) {
+            tts?.setLanguage(locale)
+        }
     }
 
     fun speak(text: String) {

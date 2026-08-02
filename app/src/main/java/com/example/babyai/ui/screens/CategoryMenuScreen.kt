@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.example.babyai.data.Category
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.WordRepository
+import com.example.babyai.ui.components.MascotCompanion
 import com.example.babyai.ui.components.ParentalGateDialog
 import com.example.babyai.ui.theme.*
 import kotlinx.coroutines.flow.first
@@ -47,6 +48,7 @@ fun CategoryMenuScreen(
         language = prefs.language.first()
     }
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,6 +83,13 @@ fun CategoryMenuScreen(
                 CategoryCard(category, language) { onCategoryChosen(category.id) }
             }
         }
+    }
+
+    MascotCompanion(
+        modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .padding(20.dp)
+    )
     }
 
     if (showGate) {

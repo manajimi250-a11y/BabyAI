@@ -32,6 +32,7 @@ import com.example.babyai.data.PhotoSize
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
+import com.example.babyai.ui.components.MascotCompanion
 import com.example.babyai.ui.components.RecordWordDialog
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -66,6 +67,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
 
     val allDiscovered = discovered.size == category.words.size
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -142,6 +144,12 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
         }
     }
 
+    MascotCompanion(
+        modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .padding(20.dp)
+    )
+
     // انیمیشن جشن کوچیک وقتی یه کلمه لمس میشه
     AnimatedVisibility(
         visible = activeWord != null,
@@ -193,6 +201,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
             onDismiss = { recordingWord = null }
         )
     }
+    } // end Box
 }
 
 @OptIn(ExperimentalFoundationApi::class)

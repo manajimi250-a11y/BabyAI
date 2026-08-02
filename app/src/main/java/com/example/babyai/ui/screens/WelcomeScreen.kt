@@ -1,13 +1,13 @@
 package com.example.babyai.ui.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -19,7 +19,8 @@ import kotlinx.coroutines.launch
 
 /**
  * اولین صفحه‌ای که با باز کردن اپ دیده می‌شه.
- * شامل خوش‌آمدگویی، معرفی کوتاه، و دکمه‌ی انتخاب زبان (که همینجا قابل تغییره).
+ * عکس بچه‌ها و خورشید، تمام‌صفحه به‌عنوان پس‌زمینه؛
+ * دکمه‌ی انتخاب زبان بالای صفحه و دکمه‌ی واقعی «شروع» پایین صفحه، هر دو روی عکس.
  */
 @Composable
 fun WelcomeScreen(onStartClick: () -> Unit) {
@@ -33,21 +34,27 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
         language = prefs.language.first()
     }
 
-    val iconResId = remember {
-        context.resources.getIdentifier("ic_launcher", "drawable", context.packageName)
+    val bgResId = remember {
+        context.resources.getIdentifier("welcome_bg", "drawable", context.packageName)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(Modifier.height(24.dp))
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (bgResId != 0) {
+            Image(
+                painter = painterResource(id = bgResId),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
 
-        // انتخاب زبان - همیشه بالای همین صفحه در دسترسه
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        // انتخاب زبان - بالای صفحه، روی عکس
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 40.dp)
+        ) {
             FilterChip(
                 selected = language == "fa",
                 onClick = {
@@ -66,45 +73,15 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
             )
         }
 
-        Spacer(Modifier.height(32.dp))
-
-        if (iconResId != 0) {
-            Image(
-                painter = painterResource(id = iconResId),
-                contentDescription = "Baby AI",
-                modifier = Modifier
-                    .size(120.dp)
-            )
-        }
-
-        Spacer(Modifier.height(16.dp))
-
-        Text(
-            text = if (language == "fa") "به بی‌بی‌ای‌آی خوش اومدی!" else "Welcome to Baby AI!",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        Spacer(Modifier.height(8.dp))
-
-        Text(
-            text = if (language == "fa")
-                "یادبگیر، بازی کن و هر روز رشد کن!"
-            else
-                "Learn, play and grow every day!",
-            fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-
-        Spacer(Modifier.weight(1f))
-
+        // دکمه‌ی واقعی شروع - پایین صفحه، روی عکس
         Button(
             onClick = onStartClick,
             modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(horizontal = 32.dp, vertical = 36.dp)
                 .fillMaxWidth()
-                .height(56.dp),
-            shape = androidx.compose.foundation.shape.RoundedCornerShape(28.dp)
+                .height(58.dp),
+            shape = RoundedCornerShape(29.dp)
         ) {
             Text(
                 text = if (language == "fa") "شروع کن! →" else "Let's Start! →",
@@ -112,7 +89,5 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
                 fontWeight = FontWeight.Bold
             )
         }
-
-        Spacer(Modifier.height(16.dp))
     }
 }
