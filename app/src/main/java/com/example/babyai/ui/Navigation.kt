@@ -13,6 +13,7 @@ import com.example.babyai.ui.screens.GamesMenuScreen
 import com.example.babyai.ui.screens.MascotSelectScreen
 import com.example.babyai.ui.screens.MemoryGameScreen
 import com.example.babyai.ui.screens.NameInputScreen
+import com.example.babyai.ui.screens.ParentDashboardScreen
 import com.example.babyai.ui.screens.SettingsScreen
 import com.example.babyai.ui.screens.WelcomeScreen
 
@@ -27,6 +28,7 @@ object Routes {
     const val MEMORY_GAME = "memory_game"
     const val GAME = "game/{categoryId}"
     const val SETTINGS = "settings"
+    const val PARENT_DASHBOARD = "parent_dashboard"
 
     fun gameRoute(categoryId: String) = "game/$categoryId"
 }
@@ -123,6 +125,15 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
 
         composable(Routes.SETTINGS) {
             SettingsScreen(
+                onBack = { navController.popBackStack() },
+                onParentDashboardClick = {
+                    navController.navigate(Routes.PARENT_DASHBOARD)
+                }
+            )
+        }
+
+        composable(Routes.PARENT_DASHBOARD) {
+            ParentDashboardScreen(
                 onBack = { navController.popBackStack() }
             )
         }

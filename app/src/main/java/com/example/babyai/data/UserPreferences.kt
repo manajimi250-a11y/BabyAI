@@ -29,6 +29,9 @@ class UserPreferences(private val context: Context) {
         val PARENTAL_GATE_ENABLED = booleanPreferencesKey("parental_gate_enabled")
         val TOTAL_STARS = intPreferencesKey("total_stars")
         val DISCOVERED_WORDS = stringPreferencesKey("discovered_words") // comma-separated word ids
+        val TOTAL_USAGE_SECONDS = intPreferencesKey("total_usage_seconds")
+        val TODAY_USAGE_SECONDS = intPreferencesKey("today_usage_seconds")
+        val LAST_USAGE_DATE = stringPreferencesKey("last_usage_date") // yyyy-MM-dd
         fun voiceSourceKey(wordId: String) = stringPreferencesKey("voice_source_$wordId")
     }
 
@@ -38,6 +41,23 @@ class UserPreferences(private val context: Context) {
     val totalStars: Flow<Int> = context.dataStore.data.map { it[Keys.TOTAL_STARS] ?: 0 }
     val discoveredWords: Flow<Set<String>> = context.dataStore.data.map {
         (it[Keys.DISCOVERED_WORDS] ?: "").split(",").filter { id -> id.isNotBlank() }.toSet()
+    }
+    val totalUsageSeconds: Flow<Int> = context.dataStore.data.map { it[Keys.TOTAL_USAGE_SECONDS] ?: 0 }
+    val todayUsageSeconds: Flow<Int> = context.dataStore.data.map { prefs ->
+        val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
+        if (prefs[Keys.LAST_USAGE_DATE] == today) prefs[Keys.TODAY_USAGE_SECONDS] ?: 0 else 0
+    }
+
+    /** باید هر چند ده ثانیه یک‌بار، وقتی اپ باز و فعاله، صدا زده بشه */
+    suspend fun addUsageSeconds(seconds: Int) {
+        val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
+        context.dataStore.edit { prefs ->
+            val isNewDay = prefs[Keys.LAST_USAGE_DATE] != today
+            val currentToday = if (isNewDay) 0 else (prefs[Keys.TODAY_USAGE_SECONDS] ?: 0)
+            prefs[Keys.TODAY_USAGE_SECONDS] = currentToday + seconds
+            prefs[Keys.LAST_USAGE_DATE] = today
+            prefs[Keys.TOTAL_USAGE_SECONDS] = (prefs[Keys.TOTAL_USAGE_SECONDS] ?: 0) + seconds
+        }
     }
 
     /** اگه کلمه برای اولین‌بار کشف شده باشه، ۱ ستاره اضافه می‌کنه و true برمی‌گردونه */

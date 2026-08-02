@@ -1,6 +1,8 @@
 package com.example.babyai.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -8,15 +10,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.PhotoSize
 import com.example.babyai.data.UserPreferences
+import com.example.babyai.ui.theme.BabyGreen
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(onBack: () -> Unit) {
+fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
     val scope = rememberCoroutineScope()
@@ -117,6 +121,30 @@ fun SettingsScreen(onBack: () -> Unit) {
                     scope.launch { prefs.setParentalGateEnabled(it) }
                 }
             )
+        }
+
+        Spacer(Modifier.height(24.dp))
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onParentDashboardClick() },
+            shape = RoundedCornerShape(18.dp),
+            colors = CardDefaults.cardColors(containerColor = BabyGreen)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("📊", fontSize = 28.sp)
+                Spacer(Modifier.width(12.dp))
+                Text(
+                    text = if (language == "fa") "داشبورد والدین" else "Parent Dashboard",
+                    color = androidx.compose.ui.graphics.Color.White,
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
 
         Spacer(Modifier.height(24.dp))
