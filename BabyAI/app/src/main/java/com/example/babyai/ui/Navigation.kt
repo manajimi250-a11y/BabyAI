@@ -9,8 +9,10 @@ import com.example.babyai.ui.screens.CategoryMenuScreen
 import com.example.babyai.ui.screens.GameScreen
 import com.example.babyai.ui.screens.MascotSelectScreen
 import com.example.babyai.ui.screens.SettingsScreen
+import com.example.babyai.ui.screens.WelcomeScreen
 
 object Routes {
+    const val WELCOME = "welcome"
     const val MASCOT_SELECT = "mascot_select"
     const val CATEGORY_MENU = "category_menu"
     const val GAME = "game/{categoryId}"
@@ -21,7 +23,17 @@ object Routes {
 
 @Composable
 fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
-    NavHost(navController = navController, startDestination = Routes.MASCOT_SELECT) {
+    NavHost(navController = navController, startDestination = Routes.WELCOME) {
+
+        composable(Routes.WELCOME) {
+            WelcomeScreen(
+                onStartClick = {
+                    navController.navigate(Routes.MASCOT_SELECT) {
+                        popUpTo(Routes.WELCOME) { inclusive = true }
+                    }
+                }
+            )
+        }
 
         composable(Routes.MASCOT_SELECT) {
             MascotSelectScreen(
