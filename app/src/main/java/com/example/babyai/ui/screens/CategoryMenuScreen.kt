@@ -43,9 +43,11 @@ fun CategoryMenuScreen(
     val prefs = remember { UserPreferences(context) }
     var showGate by remember { mutableStateOf(false) }
     var language by remember { mutableStateOf("en") }
+    var childName by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         language = prefs.language.first()
+        childName = prefs.childName.first()
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -61,8 +63,13 @@ fun CategoryMenuScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = if (language == "fa") "چی یاد بگیریم؟" else "What shall we learn?",
-                fontSize = 26.sp,
+                text = buildString {
+                    if (childName.isNotBlank()) {
+                        append(if (language == "fa") "سلام $childName! " else "Hi $childName! ")
+                    }
+                    append(if (language == "fa") "چی یاد بگیریم؟" else "What shall we learn?")
+                },
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
             IconButton(onClick = {

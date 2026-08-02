@@ -5,14 +5,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.babyai.ui.screens.AgeSelectScreen
 import com.example.babyai.ui.screens.CategoryMenuScreen
 import com.example.babyai.ui.screens.GameScreen
 import com.example.babyai.ui.screens.MascotSelectScreen
+import com.example.babyai.ui.screens.NameInputScreen
 import com.example.babyai.ui.screens.SettingsScreen
 import com.example.babyai.ui.screens.WelcomeScreen
 
 object Routes {
     const val WELCOME = "welcome"
+    const val NAME_INPUT = "name_input"
+    const val AGE_SELECT = "age_select"
     const val MASCOT_SELECT = "mascot_select"
     const val CATEGORY_MENU = "category_menu"
     const val GAME = "game/{categoryId}"
@@ -28,8 +32,26 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
         composable(Routes.WELCOME) {
             WelcomeScreen(
                 onStartClick = {
-                    navController.navigate(Routes.MASCOT_SELECT) {
+                    navController.navigate(Routes.NAME_INPUT) {
                         popUpTo(Routes.WELCOME) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(Routes.NAME_INPUT) {
+            NameInputScreen(
+                onDone = {
+                    navController.navigate(Routes.AGE_SELECT)
+                }
+            )
+        }
+
+        composable(Routes.AGE_SELECT) {
+            AgeSelectScreen(
+                onDone = {
+                    navController.navigate(Routes.MASCOT_SELECT) {
+                        popUpTo(Routes.NAME_INPUT) { inclusive = true }
                     }
                 }
             )

@@ -23,6 +23,7 @@ class UserPreferences(private val context: Context) {
     private object Keys {
         val LANGUAGE = stringPreferencesKey("language")           // "en" or "fa"
         val CHILD_AGE = intPreferencesKey("child_age")
+        val CHILD_NAME = stringPreferencesKey("child_name")
         val MASCOT_ID = stringPreferencesKey("mascot_id")
         val PHOTO_SIZE = stringPreferencesKey("photo_size")
         val PARENTAL_GATE_ENABLED = booleanPreferencesKey("parental_gate_enabled")
@@ -31,6 +32,7 @@ class UserPreferences(private val context: Context) {
 
     val language: Flow<String> = context.dataStore.data.map { it[Keys.LANGUAGE] ?: "en" }
     val childAge: Flow<Int> = context.dataStore.data.map { it[Keys.CHILD_AGE] ?: 2 }
+    val childName: Flow<String> = context.dataStore.data.map { it[Keys.CHILD_NAME] ?: "" }
     val mascotId: Flow<String?> = context.dataStore.data.map { it[Keys.MASCOT_ID] }
     val photoSize: Flow<PhotoSize> = context.dataStore.data.map {
         PhotoSize.valueOf(it[Keys.PHOTO_SIZE] ?: PhotoSize.MEDIUM.name)
@@ -44,6 +46,10 @@ class UserPreferences(private val context: Context) {
 
     suspend fun setChildAge(age: Int) {
         context.dataStore.edit { it[Keys.CHILD_AGE] = age }
+    }
+
+    suspend fun setChildName(name: String) {
+        context.dataStore.edit { it[Keys.CHILD_NAME] = name }
     }
 
     suspend fun setMascotId(id: String) {
