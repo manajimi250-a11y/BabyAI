@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.BabyAI" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
