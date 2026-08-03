@@ -138,27 +138,37 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
             Spacer(Modifier.height(20.dp))
 
             if (choiceWords.isNotEmpty()) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(14.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(14.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
                 ) {
-                    choiceWords.forEach { word ->
-                        StoryChoiceCard(
-                            word = word,
-                            modifier = Modifier
-                                .weight(1f)
-                                .aspectRatio(1f),
-                            enabled = !answeredCorrectly,
-                            onClick = {
-                                if (word.id == page.targetWordId) {
-                                    answeredCorrectly = true
-                                    starsEarned += 1
-                                }
+                    choiceWords.chunked(2).forEach { rowWords ->
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(14.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            rowWords.forEach { word ->
+                                StoryChoiceCard(
+                                    word = word,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .aspectRatio(1f),
+                                    enabled = !answeredCorrectly,
+                                    onClick = {
+                                        if (word.id == page.targetWordId) {
+                                            answeredCorrectly = true
+                                            starsEarned += 1
+                                        }
+                                    }
+                                )
                             }
-                        )
+                            // اگه ردیف آخر فقط یه دونه بود، جای خالی نگه دار که وسط بمونه
+                            if (rowWords.size == 1) {
+                                Spacer(modifier = Modifier.weight(1f))
+                            }
+                        }
                     }
                 }
                 Spacer(Modifier.height(12.dp))
