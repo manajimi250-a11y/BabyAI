@@ -99,6 +99,7 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                     )
                 )
                 .windowInsetsPadding(WindowInsets.navigationBars)
+                .windowInsetsPadding(WindowInsets.statusBars)
                 .padding(20.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -108,7 +109,8 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                 Text(
                     text = if (language == "fa") story.titleFa else story.titleEn,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(end = 72.dp)
                 )
             }
 
@@ -120,6 +122,8 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
             )
 
             Spacer(Modifier.height(16.dp))
+
+            Spacer(Modifier.height(70.dp))
 
             // حباب متن روایت داستان
             Card(
