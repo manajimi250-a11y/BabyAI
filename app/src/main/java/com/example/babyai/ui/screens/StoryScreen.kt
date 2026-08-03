@@ -140,6 +140,7 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
             if (choiceWords.isNotEmpty()) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(14.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
@@ -149,7 +150,7 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                             word = word,
                             modifier = Modifier
                                 .weight(1f)
-                                .fillMaxHeight(),
+                                .aspectRatio(1f),
                             enabled = !answeredCorrectly,
                             onClick = {
                                 if (word.id == page.targetWordId) {
