@@ -62,7 +62,7 @@ fun CategoryMenuScreen(
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Top
         ) {
             Text(
                 text = buildString {
@@ -73,7 +73,7 @@ fun CategoryMenuScreen(
                 },
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f).padding(top = 6.dp)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
