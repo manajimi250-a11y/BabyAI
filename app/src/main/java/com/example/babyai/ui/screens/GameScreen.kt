@@ -89,37 +89,6 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
 
         Spacer(Modifier.height(12.dp))
 
-        ttsManager.lastBundledError?.let { err ->
-            Card(
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "DEBUG: $err",
-                    modifier = Modifier.padding(12.dp),
-                    fontSize = 11.sp
-                )
-            }
-            Spacer(Modifier.height(8.dp))
-        }
-
-        if (ttsManager.lastSpeakFailed) {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = if (language == "fa")
-                        "صدای این زبان روی این گوشی پشتیبانی نمی‌شه. برای هر کلمه، انگشتتون رو نگه دارید تا صدای خودتون رو ضبط کنید 🎙️"
-                    else
-                        "Voice for this language isn't supported on this phone. Long-press any word to record your own voice 🎙️",
-                    modifier = Modifier.padding(12.dp),
-                    fontSize = 13.sp
-                )
-            }
-            Spacer(Modifier.height(12.dp))
-        }
-
         val columns = when (photoSize) {
             PhotoSize.SMALL -> 4
             PhotoSize.MEDIUM -> 3
@@ -267,7 +236,9 @@ private fun WordTile(
                 Image(
                     painter = painterResource(id = resId),
                     contentDescription = displayName,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize(0.88f)
+                        .clip(RoundedCornerShape(14.dp))
                 )
             } else {
                 Text(text = displayName, modifier = Modifier.padding(8.dp))

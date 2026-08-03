@@ -95,7 +95,7 @@ object WordRepository {
             Word("baby", "people", "Baby", "بچه", 2),
             Word("grandma", "people", "Grandma", "مادربزرگ", 1),
             Word("grandpa", "people", "Grandpa", "پدربزرگ", 1),
-            Word("sibling", "people", "Sibling", "خواهر/برادر", 2),
+            Word("sibling", "people", "Sibling", "خواهر/برادر", 1),
             Word("police", "people", "Police Officer", "پلیس", 1),
             Word("doctor", "people", "Doctor", "دکتر", 1),
             Word("nurse", "people", "Nurse", "پرستار", 1),

@@ -97,7 +97,7 @@ fun CategoryMenuScreen(
             }
         }
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(36.dp))
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),

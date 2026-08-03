@@ -149,7 +149,9 @@ fun ListenAndTapScreen(onBack: () -> Unit) {
                             Image(
                                 painter = painterResource(id = resId),
                                 contentDescription = null,
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier
+                                    .fillMaxSize(0.88f)
+                                    .clip(RoundedCornerShape(14.dp))
                             )
                         }
                     }

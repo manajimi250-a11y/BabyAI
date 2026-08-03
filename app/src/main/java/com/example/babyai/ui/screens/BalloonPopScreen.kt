@@ -85,6 +85,7 @@ fun BalloonPopScreen(onBack: () -> Unit) {
         val age = prefs.childAge.first()
         gridSize = AgeScale.speedGridSizeForAge(age)
         targetCount = AgeScale.speedTargetsForAge(age)
+        debugLog = "age=$age grid=$gridSize target=$targetCount"
         startRound()
     }
 
@@ -158,7 +159,7 @@ fun BalloonPopScreen(onBack: () -> Unit) {
                                 .clip(CircleShape)
                                 .background(if (isPopped) Color.LightGray.copy(alpha = 0.4f) else balloon.color)
                                 .clickable(enabled = !isPopped && !showCelebration) {
-                                    debugLog = "tap id=${balloon.id} isTarget=${balloon.isTarget} popped_before=$isPopped total=${poppedIds.size}"
+                                    debugLog = "cfg:grid=$gridSize,target=$targetCount | tap id=${balloon.id} isTarget=${balloon.isTarget} total_before=${poppedIds.size}"
                                     if (balloon.isTarget) {
                                         poppedIds = poppedIds + balloon.id
                                         if (poppedIds.size >= targetCount) {
@@ -215,5 +216,15 @@ fun BalloonPopScreen(onBack: () -> Unit) {
                 onBackToMenu = onBack
             )
         }
+
+        Text(
+            text = "DBG: $debugLog",
+            fontSize = 11.sp,
+            color = Color.Yellow,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .background(Color.Black)
+                .padding(4.dp)
+        )
     }
 }
