@@ -181,9 +181,9 @@ fun CountingGameScreen(onBack: () -> Unit) {
 
         MascotCompanion(
             modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(20.dp)
+                .align(Alignment.TopEnd)
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .padding(top = 8.dp, end = 8.dp)
         )
 
         feedback?.let { correct ->

@@ -37,13 +37,17 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
     var photoSize by remember { mutableStateOf(PhotoSize.MEDIUM) }
     var parentalGateEnabled by remember { mutableStateOf(false) }
     var childAge by remember { mutableStateOf(2) }
+    var musicEnabled by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         language = prefs.language.first()
         photoSize = prefs.photoSize.first()
         parentalGateEnabled = prefs.parentalGateEnabled.first()
         childAge = prefs.childAge.first()
+        musicEnabled = prefs.musicEnabled.first()
     }
+
+    val isFa = language == "fa"
 
     val chipColors = FilterChipDefaults.filterChipColors(
         selectedContainerColor = SelectedBlue,
@@ -60,14 +64,14 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "برگشت")
+                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
             }
-            Text("تنظیمات", fontSize = 26.sp, fontWeight = FontWeight.Bold)
+            Text(if (isFa) "تنظیمات" else "Settings", fontSize = 26.sp, fontWeight = FontWeight.Bold)
         }
 
         Spacer(Modifier.height(24.dp))
 
-        Text("زبان", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text(if (isFa) "زبان" else "Language", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             FilterChip(
                 selected = language == "fa",
@@ -91,12 +95,12 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
 
         Spacer(Modifier.height(24.dp))
 
-        Text("سایز عکس‌ها", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text(if (isFa) "سایز عکس‌ها" else "Photo Size", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             listOf(
-                PhotoSize.SMALL to "کوچک",
-                PhotoSize.MEDIUM to "متوسط",
-                PhotoSize.LARGE to "بزرگ"
+                PhotoSize.SMALL to (if (isFa) "کوچک" else "Small"),
+                PhotoSize.MEDIUM to (if (isFa) "متوسط" else "Medium"),
+                PhotoSize.LARGE to (if (isFa) "بزرگ" else "Large")
             ).forEach { (size, label) ->
                 FilterChip(
                     selected = photoSize == size,
@@ -112,7 +116,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
 
         Spacer(Modifier.height(24.dp))
 
-        Text("سن فرزندتون", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text(if (isFa) "سن فرزندتون" else "Child's Age", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Row(verticalAlignment = Alignment.CenterVertically) {
             Slider(
                 value = childAge.toFloat(),
@@ -127,7 +131,12 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
                 modifier = Modifier.weight(1f),
                 colors = SliderDefaults.colors(thumbColor = SelectedBlue, activeTrackColor = SelectedBlue)
             )
-            Text("$childAge سال", fontWeight = FontWeight.Bold, fontSize = 17.sp, modifier = Modifier.padding(start = 12.dp))
+            Text(
+                text = if (isFa) "$childAge سال" else "$childAge yrs",
+                fontWeight = FontWeight.Bold,
+                fontSize = 17.sp,
+                modifier = Modifier.padding(start = 12.dp)
+            )
         }
 
         Spacer(Modifier.height(24.dp))
@@ -137,12 +146,38 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("قفل والدین (Parental Gate)", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = if (isFa) "قفل والدین" else "Parental Gate",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
             Switch(
                 checked = parentalGateEnabled,
                 onCheckedChange = {
                     parentalGateEnabled = it
                     scope.launch { prefs.setParentalGateEnabled(it) }
+                },
+                colors = SwitchDefaults.colors(checkedTrackColor = SelectedBlue)
+            )
+        }
+
+        Spacer(Modifier.height(24.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = if (isFa) "موزیک پس‌زمینه" else "Background Music",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Switch(
+                checked = musicEnabled,
+                onCheckedChange = {
+                    musicEnabled = it
+                    scope.launch { prefs.setMusicEnabled(it) }
                 },
                 colors = SwitchDefaults.colors(checkedTrackColor = SelectedBlue)
             )
@@ -164,7 +199,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
                 Text("📊", fontSize = 28.sp)
                 Spacer(Modifier.width(12.dp))
                 Text(
-                    text = if (language == "fa") "داشبورد والدین" else "Parent Dashboard",
+                    text = if (isFa) "داشبورد والدین" else "Parent Dashboard",
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
@@ -174,7 +209,10 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
 
         Spacer(Modifier.height(24.dp))
         Text(
-            text = "برای ضبط صدای خودتون برای هر کلمه، وارد همون کلمه بشید و روی آیکون میکروفون بزنید.",
+            text = if (isFa)
+                "برای ضبط صدای خودتون برای هر کلمه، وارد همون کلمه بشید و روی آیکون میکروفون بزنید."
+            else
+                "To record your own voice for a word, open that word and tap the microphone icon.",
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium
         )

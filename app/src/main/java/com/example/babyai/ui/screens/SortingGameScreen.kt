@@ -78,7 +78,7 @@ fun SortingGameScreen(onBack: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+                .background(androidx.compose.ui.graphics.Color(0xFFE3F2FD))
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

@@ -1,6 +1,7 @@
 package com.example.babyai.ui.screens
 
-import androidx.compose.foundation.Image
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,10 +13,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -72,6 +75,10 @@ fun PuzzleScreen(onBack: () -> Unit) {
         context.resources.getIdentifier(puzzleWord.second, "drawable", context.packageName)
     }
 
+    val bitmap = remember(resId) {
+        if (resId != 0) BitmapFactory.decodeResource(context.resources, resId)?.asImageBitmap() else null
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -94,26 +101,62 @@ fun PuzzleScreen(onBack: () -> Unit) {
             Spacer(Modifier.height(20.dp))
 
             val puzzleSize: Dp = 300.dp
-            val pieceSize = puzzleSize / gridDim
 
-            if (resId != 0 && arrangement.isNotEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .size(puzzleSize)
-                        .clip(RoundedCornerShape(20.dp))
-                ) {
-                    arrangement.forEachIndexed { positionIndex, originalIndex ->
+            if (bitmap != null && arrangement.isNotEmpty()) {
+                val imgW = bitmap.width
+                val imgH = bitmap.height
+                val srcPieceW = imgW / gridDim
+                val srcPieceH = imgH / gridDim
+
+                Box(modifier = Modifier.size(puzzleSize)) {
+                    Canvas(
+                        modifier = Modifier
+                            .size(puzzleSize)
+                            .clip(RoundedCornerShape(20.dp))
+                    ) {
+                        val pieceSizePx = size.width / gridDim
+                        arrangement.forEachIndexed { positionIndex, originalIndex ->
+                            val posRow = positionIndex / gridDim
+                            val posCol = positionIndex % gridDim
+                            val origRow = originalIndex / gridDim
+                            val origCol = originalIndex % gridDim
+
+                            drawImage(
+                                image = bitmap,
+                                srcOffset = androidx.compose.ui.unit.IntOffset(origCol * srcPieceW, origRow * srcPieceH),
+                                srcSize = androidx.compose.ui.unit.IntSize(srcPieceW, srcPieceH),
+                                dstOffset = androidx.compose.ui.unit.IntOffset(
+                                    (posCol * pieceSizePx).toInt(),
+                                    (posRow * pieceSizePx).toInt()
+                                ),
+                                dstSize = androidx.compose.ui.unit.IntSize(pieceSizePx.toInt(), pieceSizePx.toInt())
+                            )
+
+                            drawRect(
+                                color = Color.White.copy(alpha = 0.6f),
+                                topLeft = Offset(posCol * pieceSizePx, posRow * pieceSizePx),
+                                size = Size(pieceSizePx, pieceSizePx),
+                                style = androidx.compose.ui.graphics.drawscope.Stroke(width = 2f)
+                            )
+
+                            if (selectedIndex == positionIndex) {
+                                drawRect(
+                                    color = Color(0xFF4CD964).copy(alpha = 0.35f),
+                                    topLeft = Offset(posCol * pieceSizePx, posRow * pieceSizePx),
+                                    size = Size(pieceSizePx, pieceSizePx)
+                                )
+                            }
+                        }
+                    }
+
+                    val pieceDp = puzzleSize / gridDim
+                    for (positionIndex in 0 until pieceCount) {
                         val posRow = positionIndex / gridDim
                         val posCol = positionIndex % gridDim
-                        val origRow = originalIndex / gridDim
-                        val origCol = originalIndex % gridDim
-
                         Box(
                             modifier = Modifier
-                                .offset(x = pieceSize * posCol, y = pieceSize * posRow)
-                                .size(pieceSize)
-                                .clip(RoundedCornerShape(4.dp))
-                                .background(if (selectedIndex == positionIndex) BabyGreen else Color.Transparent)
+                                .offset(x = pieceDp * posCol, y = pieceDp * posRow)
+                                .size(pieceDp)
                                 .clickable {
                                     if (selectedIndex == null) {
                                         selectedIndex = positionIndex
@@ -134,16 +177,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
                                         }
                                     }
                                 }
-                        ) {
-                            Box(modifier = Modifier.size(puzzleSize).offset(x = -pieceSize * origCol, y = -pieceSize * origRow)) {
-                                Image(
-                                    painter = painterResource(id = resId),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.FillBounds,
-                                    modifier = Modifier.size(puzzleSize)
-                                )
-                            }
-                        }
+                        )
                     }
                 }
             }

@@ -70,6 +70,7 @@ fun BalloonPopScreen(onBack: () -> Unit) {
     var balloons by remember { mutableStateOf(listOf<Balloon>()) }
     var poppedIds by remember { mutableStateOf(setOf<Int>()) }
     var showCelebration by remember { mutableStateOf(false) }
+    var debugLog by remember { mutableStateOf("no taps yet") }
 
     fun startRound() {
         val (t, b) = buildBalloons(gridSize, targetCount)
@@ -129,6 +130,11 @@ fun BalloonPopScreen(onBack: () -> Unit) {
                 fontSize = 13.sp,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
             )
+            Text(
+                text = "DEBUG: $debugLog",
+                fontSize = 10.sp,
+                color = Color.Red
+            )
 
             Spacer(Modifier.height(16.dp))
 
@@ -152,6 +158,7 @@ fun BalloonPopScreen(onBack: () -> Unit) {
                                 .clip(CircleShape)
                                 .background(if (isPopped) Color.LightGray.copy(alpha = 0.4f) else balloon.color)
                                 .clickable(enabled = !isPopped && !showCelebration) {
+                                    debugLog = "tap id=${balloon.id} isTarget=${balloon.isTarget} popped_before=$isPopped total=${poppedIds.size}"
                                     if (balloon.isTarget) {
                                         poppedIds = poppedIds + balloon.id
                                         if (poppedIds.size >= targetCount) {

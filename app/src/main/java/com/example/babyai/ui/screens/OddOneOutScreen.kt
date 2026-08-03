@@ -72,7 +72,7 @@ fun OddOneOutScreen(onBack: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+                .background(androidx.compose.ui.graphics.Color(0xFFF5F9C8))
                 .padding(16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
