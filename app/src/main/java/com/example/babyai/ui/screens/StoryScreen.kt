@@ -74,6 +74,18 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
         } ?: emptyList()
     }
 
+    // اگه جواب درست بود، خودکار بعد از یه لحظه بره صفحه بعد
+    LaunchedEffect(answeredCorrectly) {
+        if (answeredCorrectly) {
+            kotlinx.coroutines.delay(700)
+            if (pageIndex + 1 >= story.pages.size) {
+                showCelebration = true
+            } else {
+                pageIndex += 1
+            }
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -86,6 +98,7 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                         )
                     )
                 )
+                .windowInsetsPadding(WindowInsets.navigationBars)
                 .padding(20.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -106,9 +119,7 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
             )
 
-            Spacer(Modifier.weight(0.3f))
-
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(16.dp))
 
             // حباب متن روایت داستان
             Card(
@@ -124,17 +135,21 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                 )
             }
 
-            Spacer(Modifier.height(28.dp))
+            Spacer(Modifier.height(20.dp))
 
             if (choiceWords.isNotEmpty()) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(14.dp),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
                 ) {
                     choiceWords.forEach { word ->
                         StoryChoiceCard(
                             word = word,
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
                             enabled = !answeredCorrectly,
                             onClick = {
                                 if (word.id == page.targetWordId) {
@@ -145,30 +160,27 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                         )
                     }
                 }
+                Spacer(Modifier.height(12.dp))
             } else {
                 Spacer(Modifier.weight(1f))
-            }
 
-            Spacer(Modifier.weight(1f))
-
-            val canProceed = choiceWords.isEmpty() || answeredCorrectly
-            Button(
-                onClick = {
-                    if (pageIndex + 1 >= story.pages.size) {
-                        showCelebration = true
-                    } else {
-                        pageIndex += 1
-                    }
-                },
-                enabled = canProceed,
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                shape = RoundedCornerShape(28.dp)
-            ) {
-                Text(
-                    text = if (language == "fa") "بعدی →" else "Next →",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Button(
+                    onClick = {
+                        if (pageIndex + 1 >= story.pages.size) {
+                            showCelebration = true
+                        } else {
+                            pageIndex += 1
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth().height(56.dp),
+                    shape = RoundedCornerShape(28.dp)
+                ) {
+                    Text(
+                        text = if (language == "fa") "بعدی →" else "Next →",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
 
@@ -212,7 +224,6 @@ private fun StoryChoiceCard(word: Word, modifier: Modifier = Modifier, enabled: 
 
     Card(
         modifier = modifier
-            .aspectRatio(1f)
             .clip(RoundedCornerShape(18.dp))
             .clickable(enabled = enabled) { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
@@ -221,7 +232,8 @@ private fun StoryChoiceCard(word: Word, modifier: Modifier = Modifier, enabled: 
             Image(
                 painter = painterResource(id = resId),
                 contentDescription = word.nameEn,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                contentScale = androidx.compose.ui.layout.ContentScale.Crop
             )
         }
     }
