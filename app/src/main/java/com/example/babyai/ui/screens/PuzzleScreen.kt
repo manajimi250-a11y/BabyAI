@@ -166,13 +166,22 @@ fun PuzzleScreen(onBack: () -> Unit) {
                                         val newArrangement = arrangement.toMutableList()
                                         val a = selectedIndex!!
                                         val b = positionIndex
+                                        val correctBeforeA = arrangement[a] == a
+                                        val correctBeforeB = arrangement[b] == b
                                         val tmp = newArrangement[a]
                                         newArrangement[a] = newArrangement[b]
                                         newArrangement[b] = tmp
                                         arrangement = newArrangement
                                         selectedIndex = null
+                                        val correctAfterA = newArrangement[a] == a
+                                        val correctAfterB = newArrangement[b] == b
+                                        var newlyCorrect = 0
+                                        if (!correctBeforeA && correctAfterA) newlyCorrect++
+                                        if (!correctBeforeB && correctAfterB) newlyCorrect++
+                                        if (newlyCorrect > 0) {
+                                            scope.launch { prefs.addBonusStars(newlyCorrect) }
+                                        }
                                         if (newArrangement == (0 until pieceCount).toList()) {
-                                            scope.launch { prefs.addBonusStars(3) }
                                             showCelebration = true
                                         }
                                     }

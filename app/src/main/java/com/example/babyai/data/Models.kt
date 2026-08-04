@@ -62,10 +62,11 @@ object WordRepository {
             Word("green", "colors", "Green", "سبز", 4),
             Word("orange", "colors", "Orange", "نارنجی", 4),
             Word("purple", "colors", "Purple", "بنفش", 4),
-            Word("brown", "colors", "Brown", "قهوه‌ای", 1),
-            Word("black", "colors", "Black", "مشکی", 1),
-            Word("white", "colors", "White", "سفید", 1),
-            Word("gray", "colors", "Gray", "خاکستری", 1),
+            Word("brown", "colors", "Brown", "قهوه‌ای", 5),
+            Word("black", "colors", "Black", "مشکی", 5),
+            Word("white", "colors", "White", "سفید", 5),
+            Word("gray", "colors", "Gray", "خاکستری", 5),
+            Word("pink", "colors", "Pink", "صورتی", 4),
         )
     )
 
@@ -78,10 +79,11 @@ object WordRepository {
             Word("square", "shapes", "Square", "مربع", 4),
             Word("triangle", "shapes", "Triangle", "مثلث", 4),
             Word("star", "shapes", "Star", "ستاره", 4),
-            Word("diamond", "shapes", "Diamond", "لوزی", 1),
-            Word("oval", "shapes", "Oval", "بیضی", 1),
-            Word("rectangle", "shapes", "Rectangle", "مستطیل", 1),
-            Word("crescent", "shapes", "Crescent", "هلال ماه", 1),
+            Word("diamond", "shapes", "Diamond", "لوزی", 5),
+            Word("oval", "shapes", "Oval", "بیضی", 5),
+            Word("rectangle", "shapes", "Rectangle", "مستطیل", 5),
+            Word("crescent", "shapes", "Crescent", "هلال ماه", 5),
+            Word("heart", "shapes", "Heart", "قلب", 4),
         )
     )
 

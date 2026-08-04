@@ -80,6 +80,7 @@ fun MemoryGameScreen(onBack: () -> Unit) {
             val c2 = cards.find { it.cardId == ids[1] }
             if (c1 != null && c2 != null && c1.wordId == c2.wordId) {
                 matchedIds = matchedIds + ids
+                prefs.addBonusStars(1)
             }
             flippedIds = setOf()
         }
@@ -87,7 +88,6 @@ fun MemoryGameScreen(onBack: () -> Unit) {
 
     LaunchedEffect(matchedIds) {
         if (cards.isNotEmpty() && matchedIds.size == cards.size) {
-            prefs.addBonusStars(pairCount)
             showCelebration = true
         }
     }

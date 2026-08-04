@@ -154,8 +154,8 @@ fun BalloonPopScreen(onBack: () -> Unit) {
                                 .clickable(enabled = !isPopped && !showCelebration) {
                                     if (balloon.isTarget) {
                                         poppedIds = poppedIds + balloon.id
+                                        scope.launch { prefs.addBonusStars(1) }
                                         if (poppedIds.size >= targetCount) {
-                                            scope.launch { prefs.addBonusStars(targetCount) }
                                             showCelebration = true
                                         }
                                     }

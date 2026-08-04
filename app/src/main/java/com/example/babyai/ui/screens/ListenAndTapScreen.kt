@@ -178,8 +178,8 @@ fun ListenAndTapScreen(onBack: () -> Unit) {
             LaunchedEffect(correct) {
                 delay(800)
                 if (correct) {
+                    prefs.addBonusStars(1)
                     if (currentRoundIndex + 1 >= totalRounds) {
-                        prefs.addBonusStars(totalRounds)
                         showCelebration = true
                     } else {
                         currentRoundIndex += 1

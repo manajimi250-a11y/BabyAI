@@ -184,8 +184,8 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                             .clickable(enabled = !isFound && !timeUp && !showCelebration) {
                                 if (cell.isTarget) {
                                     foundIds = foundIds + cell.cellId
+                                    scope.launch { prefs.addBonusStars(1) }
                                     if (foundIds.size >= targetCount) {
-                                        scope.launch { prefs.addBonusStars(targetCount) }
                                         showCelebration = true
                                     }
                                 }
