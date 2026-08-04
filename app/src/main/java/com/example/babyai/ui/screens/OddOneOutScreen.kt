@@ -70,11 +70,23 @@ fun OddOneOutScreen(onBack: () -> Unit) {
         language = prefs.language.first()
         totalRounds = roundsForAge(prefs.childAge.first())
         ttsManager.setLanguage(language)
+
+        suspend fun speakWithRetry(text: String) {
+            var attempt = 0
+            while (attempt < 6) {
+                ttsManager.speak(text)
+                delay(250)
+                if (!ttsManager.lastSpeakFailed) break
+                attempt++
+            }
+        }
+
         delay(300)
         if (language == "fa") {
-            ttsManager.speak("ببین چه فرقی دارن")
+            val played = ttsManager.playBundledAudio("odd_one_out_prompt")
+            if (!played) speakWithRetry("ببین چه فرقی دارن")
         } else {
-            ttsManager.speak("Let's see what's different")
+            speakWithRetry("Let's see what's different")
         }
     }
 
