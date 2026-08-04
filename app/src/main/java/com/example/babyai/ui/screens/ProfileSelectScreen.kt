@@ -151,13 +151,13 @@ private fun PlayerSlot(profile: Profile, onClick: () -> Unit, onDelete: () -> Un
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .size(28.dp)
+                    .size(40.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.error)
                     .clickable { onDelete() },
                 contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Filled.Close, contentDescription = "Delete", tint = Color.White, modifier = Modifier.size(16.dp))
+                Icon(Icons.Filled.Close, contentDescription = "Delete", tint = Color.White, modifier = Modifier.size(24.dp))
             }
         }
         Spacer(Modifier.height(8.dp))

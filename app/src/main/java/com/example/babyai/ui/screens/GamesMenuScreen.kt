@@ -70,7 +70,11 @@ fun GamesMenuScreen(
                     fontWeight = FontWeight.Bold
                 )
             }
-            SettingsIconButton(onSettingsClick = onSettingsClick)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                com.example.babyai.ui.components.StarBadge()
+                Spacer(Modifier.width(4.dp))
+                SettingsIconButton(onSettingsClick = onSettingsClick)
+            }
         }
 
         Spacer(Modifier.height(20.dp))
