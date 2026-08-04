@@ -73,7 +73,7 @@ private fun MascotCard(mascot: Mascot, language: String, onClick: () -> Unit) {
     val resId = remember(mascot.drawableName) {
         context.resources.getIdentifier(mascot.drawableName, "drawable", context.packageName)
     }
-    val displayName = if (language == "fa") mascot.nameFa else mascot.nameEn
+    val displayName = mascot.name(language)
 
     Card(
         modifier = Modifier
