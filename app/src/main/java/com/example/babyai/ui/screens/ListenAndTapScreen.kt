@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.audio.TtsManager
 import com.example.babyai.data.AgeScale
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
@@ -68,7 +69,7 @@ fun ListenAndTapScreen(onBack: () -> Unit) {
             val played = ttsManager.playBundledAudio("${target.categoryId}_${target.id}")
             if (!played) ttsManager.speak(target.nameFa)
         } else {
-            ttsManager.speak(target.nameEn)
+            ttsManager.speak(target.name(language))
         }
     }
 
@@ -95,7 +96,7 @@ fun ListenAndTapScreen(onBack: () -> Unit) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "گوش کن و لمس کن 🎧" else "Listen & Tap 🎧",
+                    text = UiStrings.t("listen_tap_title", language),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -195,8 +196,8 @@ fun ListenAndTapScreen(onBack: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = if (correct) (if (language == "fa") "آفرین! ✅" else "Correct! ✅")
-                    else (if (language == "fa") "دوباره گوش کن 🎧" else "Listen again 🎧"),
+                    text = if (correct) UiStrings.t("feedback_correct", language)
+                    else UiStrings.t("feedback_listen_again", language),
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
                     color = androidx.compose.ui.graphics.Color.White

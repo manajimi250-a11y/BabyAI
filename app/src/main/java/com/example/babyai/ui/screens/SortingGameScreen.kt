@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.Category
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
@@ -90,7 +91,7 @@ fun SortingGameScreen(onBack: () -> Unit) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "دسته‌بندی کن 🗂️" else "Sort it out 🗂️",
+                    text = UiStrings.t("sorting_title", language),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -175,8 +176,8 @@ fun SortingGameScreen(onBack: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = if (correct) (if (language == "fa") "آفرین! ✅" else "Correct! ✅")
-                    else (if (language == "fa") "بیا این یکی رو ببینیم 🙂" else "Let's see this one 🙂"),
+                    text = if (correct) UiStrings.t("feedback_correct", language)
+                    else UiStrings.t("feedback_next", language),
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -216,7 +217,7 @@ private fun CategoryButton(
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                text = if (language == "fa") category.nameFa else category.nameEn,
+                text = category.name(language),
                 color = Color.White,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold

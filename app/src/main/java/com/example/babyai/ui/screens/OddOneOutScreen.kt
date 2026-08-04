@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.audio.TtsManager
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
@@ -84,9 +85,9 @@ fun OddOneOutScreen(onBack: () -> Unit) {
         delay(300)
         if (language == "fa") {
             val played = ttsManager.playBundledAudio("odd_one_out_prompt")
-            if (!played) speakWithRetry("ببین چه فرقی دارن")
+            if (!played) speakWithRetry(UiStrings.t("odd_one_out_prompt_speech", language))
         } else {
-            speakWithRetry("Let's see what's different")
+            speakWithRetry(UiStrings.t("odd_one_out_prompt_speech", language))
         }
     }
 
@@ -104,7 +105,7 @@ fun OddOneOutScreen(onBack: () -> Unit) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "پیدا کن فرقشه 🔍" else "Odd One Out 🔍",
+                    text = UiStrings.t("odd_one_out_title", language),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -185,8 +186,8 @@ fun OddOneOutScreen(onBack: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = if (correct) (if (language == "fa") "آفرین! ✅" else "Correct! ✅")
-                    else (if (language == "fa") "بیا این یکی رو ببینیم 🙂" else "Let's see this one 🙂"),
+                    text = if (correct) UiStrings.t("feedback_correct", language)
+                    else UiStrings.t("feedback_next", language),
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White

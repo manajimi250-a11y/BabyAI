@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.audio.TtsManager
 import com.example.babyai.data.AgeScale
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
@@ -94,7 +95,7 @@ fun BalloonPopScreen(onBack: () -> Unit) {
                 val played = ttsManager.playBundledAudio("${t.categoryId}_${t.id}")
                 if (!played) ttsManager.speak(t.nameFa)
             } else {
-                ttsManager.speak(t.nameEn)
+                ttsManager.speak(t.name(language))
             }
         }
     }
@@ -113,14 +114,14 @@ fun BalloonPopScreen(onBack: () -> Unit) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "بادکنک‌ها 🎈" else "Balloons 🎈",
+                    text = UiStrings.t("balloons_title", language),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
 
             Text(
-                text = if (language == "fa") "پیدا کن: ${target?.nameFa ?: ""}" else "Find: ${target?.nameEn ?: ""}",
+                text = UiStrings.t("find_prefix", language) + (target?.name(language) ?: ""),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )

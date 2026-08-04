@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.audio.TtsManager
 import com.example.babyai.data.AgeScale
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
@@ -95,7 +96,7 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                 val played = ttsManager.playBundledAudio("${t.categoryId}_${t.id}")
                 if (!played) ttsManager.speak(t.nameFa)
             } else {
-                ttsManager.speak(t.nameEn)
+                ttsManager.speak(t.name(language))
             }
         }
     }
@@ -133,7 +134,7 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "لمس سریع ⚡" else "Speed Tap ⚡",
+                    text = UiStrings.t("speed_tap_title", language),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -144,7 +145,7 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = if (language == "fa") "پیدا کن: ${target?.nameFa ?: ""}" else "Find: ${target?.nameEn ?: ""}",
+                    text = UiStrings.t("find_prefix", language) + (target?.name(language) ?: ""),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -244,13 +245,13 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = if (language == "fa") "وقت تموم شد! ⏰" else "Time's up! ⏰",
+                            text = UiStrings.t("time_up", language),
                             fontSize = 22.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(Modifier.height(16.dp))
                         Button(onClick = { startRound() }) {
-                            Text(if (language == "fa") "دوباره امتحان کن" else "Try again")
+                            Text(UiStrings.t("try_again", language))
                         }
                     }
                 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.example.babyai.audio.RecordingManager
 import com.example.babyai.audio.TtsManager
 import com.example.babyai.data.AgeScale
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.VoiceSource
 import com.example.babyai.data.Word
@@ -89,7 +90,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
         } else if (language == "fa" && ttsManager.playBundledAudio("${word.categoryId}_${word.id}")) {
             // صدای فارسی از پیش‌ضبط‌شده پخش شد
         } else {
-            val text = if (language == "fa") word.nameFa else word.nameEn
+            val text = word.name(language)
             ttsManager.speak(text)
         }
     }
@@ -122,7 +123,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "پازل کوچولو 🧩" else "Little Puzzle 🧩",
+                    text = UiStrings.t("puzzle_title", language),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
@@ -227,7 +228,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
 
             Spacer(Modifier.height(20.dp))
             Text(
-                text = if (language == "fa") "دو تیکه رو لمس کن تا جاشون عوض بشه" else "Tap two pieces to swap them",
+                text = UiStrings.t("puzzle_instruction", language),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )

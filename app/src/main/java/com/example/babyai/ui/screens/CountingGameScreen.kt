@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.WordRepository
 import com.example.babyai.ui.components.CelebrationOverlay
@@ -101,7 +102,7 @@ fun CountingGameScreen(onBack: () -> Unit) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "بشمار چندتا! 🔢" else "Count them! 🔢",
+                    text = UiStrings.t("counting_title", language),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -143,7 +144,7 @@ fun CountingGameScreen(onBack: () -> Unit) {
             Spacer(Modifier.height(16.dp))
 
             Text(
-                text = if (language == "fa") "چندتا عکس می‌بینی؟" else "How many do you see?",
+                text = UiStrings.t("counting_question", language),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium
             )
@@ -205,8 +206,8 @@ fun CountingGameScreen(onBack: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = if (correct) (if (language == "fa") "آفرین! ✅" else "Correct! ✅")
-                    else (if (language == "fa") "بیا این یکی رو ببینیم 🙂" else "Let's see this one 🙂"),
+                    text = if (correct) UiStrings.t("feedback_correct", language)
+                    else UiStrings.t("feedback_next", language),
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White

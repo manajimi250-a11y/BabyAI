@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.audio.RecordingManager
 import com.example.babyai.audio.TtsManager
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.VoiceSource
 import com.example.babyai.data.WordRepository
@@ -97,7 +98,7 @@ fun MemoryGameScreen(onBack: () -> Unit) {
         } else if (language == "fa" && ttsManager.playBundledAudio("${word.categoryId}_${word.id}")) {
             // صدای فارسی از پیش‌ضبط‌شده پخش شد
         } else {
-            val text = if (language == "fa") word.nameFa else word.nameEn
+            val text = word.name(language)
             ttsManager.speak(text)
         }
     }
@@ -137,7 +138,7 @@ fun MemoryGameScreen(onBack: () -> Unit) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "بازی حافظه 🧠" else "Memory Match 🧠",
+                    text = UiStrings.t("memory_title", language),
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
