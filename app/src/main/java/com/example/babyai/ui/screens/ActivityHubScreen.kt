@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.components.SettingsIconButton
 import com.example.babyai.ui.theme.BabyBlue
@@ -54,7 +55,7 @@ fun ActivityHubScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = if (language == "fa") "چی می‌خوای بکنی؟" else "What do you want to do?",
+            text = UiStrings.t("hub_title", language),
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold
         )
@@ -63,8 +64,8 @@ fun ActivityHubScreen(
 
         HubCard(
             emoji = "📚",
-            title = if (language == "fa") "یادگیری هوشمند" else "Smart Learning",
-            subtitle = if (language == "fa") "حیوانات، رنگ‌ها، شکل‌ها و خانواده" else "Animals, colors, shapes & family",
+            title = UiStrings.t("hub_learn_title", language),
+            subtitle = UiStrings.t("hub_learn_subtitle", language),
             colors = listOf(BabyOrange, BabyPurple),
             onClick = onLearnClick
         )
@@ -73,8 +74,8 @@ fun ActivityHubScreen(
 
         HubCard(
             emoji = "🎮",
-            title = if (language == "fa") "بازی‌ها" else "Games",
-            subtitle = if (language == "fa") "بازی حافظه و بازی‌های بیشتر" else "Memory match & more games",
+            title = UiStrings.t("hub_games_title", language),
+            subtitle = UiStrings.t("hub_games_subtitle", language),
             colors = listOf(BabyBlue, BabyPurple),
             onClick = onGamesClick
         )
@@ -83,8 +84,8 @@ fun ActivityHubScreen(
 
         HubCard(
             emoji = "📖",
-            title = if (language == "fa") "داستان‌ها" else "Stories",
-            subtitle = if (language == "fa") "داستان‌های تعاملی و بامزه" else "Fun interactive stories",
+            title = UiStrings.t("hub_stories_title", language),
+            subtitle = UiStrings.t("hub_stories_subtitle", language),
             colors = listOf(BabyGreen, BabyPink),
             onClick = onStoriesClick
         )

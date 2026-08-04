@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.SupportedLanguages
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.theme.BabyOrange
 import kotlinx.coroutines.flow.first
@@ -77,7 +78,7 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
             ) {
                 Text("🌐", fontSize = 18.sp)
                 Spacer(Modifier.width(6.dp))
-                Text("زبان", fontWeight = FontWeight.Bold)
+                Text(UiStrings.t("language_button", language), fontWeight = FontWeight.Bold)
             }
 
             DropdownMenu(
