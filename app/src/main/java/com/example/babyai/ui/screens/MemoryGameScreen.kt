@@ -1,8 +1,10 @@
 package com.example.babyai.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -20,10 +22,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.audio.RecordingManager
+import com.example.babyai.audio.TtsManager
 import com.example.babyai.data.UserPreferences
+import com.example.babyai.data.VoiceSource
 import com.example.babyai.data.WordRepository
 import com.example.babyai.ui.components.CelebrationOverlay
 import com.example.babyai.ui.components.MascotCompanion
+import com.example.babyai.ui.components.RecordWordDialog
 import com.example.babyai.ui.theme.BabyGreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -56,6 +62,8 @@ fun MemoryGameScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
     val scope = rememberCoroutineScope()
+    val ttsManager = remember { TtsManager(context) }
+    val recordingManager = remember { RecordingManager(context) }
 
     var language by remember { mutableStateOf("en") }
     var cards by remember { mutableStateOf(listOf<MemoryCard>()) }
@@ -63,12 +71,35 @@ fun MemoryGameScreen(onBack: () -> Unit) {
     var matchedIds by remember { mutableStateOf(setOf<Int>()) }
     var showCelebration by remember { mutableStateOf(false) }
     var pairCount by remember { mutableStateOf(4) }
+    var recordingWordId by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
         language = prefs.language.first()
         val age = prefs.childAge.first()
         pairCount = pairCountForAge(age)
         cards = buildShuffledCards(pairCount)
+        ttsManager.setLanguage(language)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            ttsManager.shutdown()
+            recordingManager.release()
+        }
+    }
+
+    // پخش صدای کلمه‌ی کارتی که تازه رو شده
+    suspend fun playCardSound(wordId: String) {
+        val word = WordRepository.wordById(wordId) ?: return
+        val source = prefs.voiceSourceFor(word.id).first()
+        if (source == VoiceSource.PARENT_RECORDING && recordingManager.hasRecording(word.id, language)) {
+            recordingManager.play(word.id, language)
+        } else if (language == "fa" && ttsManager.playBundledAudio("${word.categoryId}_${word.id}")) {
+            // صدای فارسی از پیش‌ضبط‌شده پخش شد
+        } else {
+            val text = if (language == "fa") word.nameFa else word.nameEn
+            ttsManager.speak(text)
+        }
     }
 
     // چک‌کردن جفت وقتی دوتا کارت باز شدن
@@ -127,8 +158,10 @@ fun MemoryGameScreen(onBack: () -> Unit) {
                         onClick = {
                             if (card.cardId !in matchedIds && card.cardId !in flippedIds && flippedIds.size < 2) {
                                 flippedIds = flippedIds + card.cardId
+                                scope.launch { playCardSound(card.wordId) }
                             }
-                        }
+                        },
+                        onLongPress = { recordingWordId = card.wordId }
                     )
                 }
             }
@@ -162,11 +195,28 @@ fun MemoryGameScreen(onBack: () -> Unit) {
                 onBackToMenu = onBack
             )
         }
+
+        recordingWordId?.let { wordId ->
+            WordRepository.wordById(wordId)?.let { word ->
+                RecordWordDialog(
+                    word = word,
+                    recordingManager = recordingManager,
+                    prefs = prefs,
+                    onDismiss = { recordingWordId = null }
+                )
+            }
+        }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun MemoryCardTile(photoResName: String, isFaceUp: Boolean, onClick: () -> Unit) {
+private fun MemoryCardTile(
+    photoResName: String,
+    isFaceUp: Boolean,
+    onClick: () -> Unit,
+    onLongPress: () -> Unit
+) {
     val context = LocalContext.current
     val resId = remember(photoResName) {
         context.resources.getIdentifier(photoResName, "drawable", context.packageName)
@@ -176,7 +226,7 @@ private fun MemoryCardTile(photoResName: String, isFaceUp: Boolean, onClick: () 
         modifier = Modifier
             .aspectRatio(1f)
             .clip(RoundedCornerShape(16.dp))
-            .clickable { onClick() },
+            .combinedClickable(onClick = onClick, onLongClick = onLongPress),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

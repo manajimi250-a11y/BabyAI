@@ -39,6 +39,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
     var parentalGateEnabled by remember { mutableStateOf(false) }
     var childAge by remember { mutableStateOf(2) }
     var musicEnabled by remember { mutableStateOf(true) }
+    var nightModeEnabled by remember { mutableStateOf(false) }
     var showLullabyGate by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -47,6 +48,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
         parentalGateEnabled = prefs.parentalGateEnabled.first()
         childAge = prefs.childAge.first()
         musicEnabled = prefs.musicEnabled.first()
+        nightModeEnabled = prefs.nightModeEnabled.first()
     }
 
     val isFa = language == "fa"
@@ -180,6 +182,28 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
                 onCheckedChange = {
                     musicEnabled = it
                     scope.launch { prefs.setMusicEnabled(it) }
+                },
+                colors = SwitchDefaults.colors(checkedTrackColor = SelectedBlue)
+            )
+        }
+
+        Spacer(Modifier.height(24.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = if (isFa) "حالت شب 🌙" else "Night Mode 🌙",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Switch(
+                checked = nightModeEnabled,
+                onCheckedChange = {
+                    nightModeEnabled = it
+                    scope.launch { prefs.setNightModeEnabled(it) }
                 },
                 colors = SwitchDefaults.colors(checkedTrackColor = SelectedBlue)
             )

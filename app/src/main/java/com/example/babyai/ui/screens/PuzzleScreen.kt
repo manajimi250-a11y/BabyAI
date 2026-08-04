@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,12 +24,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.audio.RecordingManager
+import com.example.babyai.audio.TtsManager
 import com.example.babyai.data.AgeScale
 import com.example.babyai.data.UserPreferences
+import com.example.babyai.data.VoiceSource
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
 import com.example.babyai.ui.components.CelebrationOverlay
 import com.example.babyai.ui.components.MascotCompanion
+import com.example.babyai.ui.components.RecordWordDialog
 import com.example.babyai.ui.theme.BabyGreen
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -44,6 +49,8 @@ fun PuzzleScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
     val scope = rememberCoroutineScope()
+    val ttsManager = remember { TtsManager(context) }
+    val recordingManager = remember { RecordingManager(context) }
 
     var language by remember { mutableStateOf("en") }
     var pieceCount by remember { mutableStateOf(4) }
@@ -52,6 +59,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
     var arrangement by remember { mutableStateOf(listOf<Int>()) }
     var selectedIndex by remember { mutableStateOf<Int?>(null) }
     var showCelebration by remember { mutableStateOf(false) }
+    var showRecordDialog by remember { mutableStateOf(false) }
 
     fun startPuzzle() {
         puzzleWord = pickPuzzleWord()
@@ -68,7 +76,29 @@ fun PuzzleScreen(onBack: () -> Unit) {
         val age = prefs.childAge.first()
         pieceCount = AgeScale.puzzlePiecesForAge(age)
         gridDim = if (pieceCount <= 4) 2 else 3
+        ttsManager.setLanguage(language)
         startPuzzle()
+    }
+
+    // پخش صدای کلمه‌ی پازل: صدای والد (اگه ضبط شده) یا صدای فارسی آماده یا TTS
+    LaunchedEffect(puzzleWord) {
+        val word = puzzleWord.first
+        val source = prefs.voiceSourceFor(word.id).first()
+        if (source == VoiceSource.PARENT_RECORDING && recordingManager.hasRecording(word.id, language)) {
+            recordingManager.play(word.id, language)
+        } else if (language == "fa" && ttsManager.playBundledAudio("${word.categoryId}_${word.id}")) {
+            // صدای فارسی از پیش‌ضبط‌شده پخش شد
+        } else {
+            val text = if (language == "fa") word.nameFa else word.nameEn
+            ttsManager.speak(text)
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            ttsManager.shutdown()
+            recordingManager.release()
+        }
     }
 
     val resId = remember(puzzleWord) {
@@ -94,8 +124,12 @@ fun PuzzleScreen(onBack: () -> Unit) {
                 Text(
                     text = if (language == "fa") "پازل کوچولو 🧩" else "Little Puzzle 🧩",
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
                 )
+                IconButton(onClick = { showRecordDialog = true }) {
+                    Icon(Icons.Filled.Mic, contentDescription = "Record")
+                }
             }
 
             Spacer(Modifier.height(16.dp))
@@ -223,6 +257,15 @@ fun PuzzleScreen(onBack: () -> Unit) {
                     startPuzzle()
                 },
                 onBackToMenu = onBack
+            )
+        }
+
+        if (showRecordDialog) {
+            RecordWordDialog(
+                word = puzzleWord.first,
+                recordingManager = recordingManager,
+                prefs = prefs,
+                onDismiss = { showRecordDialog = false }
             )
         }
     }

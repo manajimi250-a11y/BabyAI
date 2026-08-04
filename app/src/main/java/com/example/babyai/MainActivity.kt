@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,7 +27,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            BabyAITheme {
+            val context = LocalContext.current
+            val prefs = remember { UserPreferences(context) }
+            val nightMode by prefs.nightModeEnabled.collectAsState(initial = false)
+
+            BabyAITheme(nightMode = nightMode) {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     UsageTracker()
                     BabyAiNavHost()
