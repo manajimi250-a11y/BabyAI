@@ -378,6 +378,60 @@ object UiStrings {
             "en" to "Add", "fa" to "افزودن", "sv" to "Lägg till", "tr" to "Ekle", "de" to "Hinzufügen",
             "fr" to "Ajouter", "es" to "Añadir", "ru" to "Добавить", "zh" to "添加", "hi" to "जोड़ें", "ar" to "إضافة"
         ),
+
+        // ParentDashboardScreen
+        "parent_dashboard_title" to mapOf(
+            "en" to "Parent Dashboard", "fa" to "داشبورد والدین", "sv" to "Föräldrapanel", "tr" to "Ebeveyn Paneli",
+            "de" to "Elterndashboard", "fr" to "Tableau de bord parental", "es" to "Panel de padres", "ru" to "Панель родителей",
+            "zh" to "家长面板", "hi" to "पेरेंट डैशबोर्ड", "ar" to "لوحة الوالدين"
+        ),
+        "progress_report" to mapOf(
+            "en" to "{name}'s progress report", "fa" to "گزارش پیشرفت {name}", "sv" to "{name}s framstegsrapport",
+            "tr" to "{name} ilerleme raporu", "de" to "Fortschrittsbericht von {name}", "fr" to "Rapport de progrès de {name}",
+            "es" to "Informe de progreso de {name}", "ru" to "Отчёт о прогрессе {name}",
+            "zh" to "{name}的进度报告", "hi" to "{name} की प्रगति रिपोर्ट", "ar" to "تقرير تقدم {name}"
+        ),
+        "total_stars" to mapOf(
+            "en" to "Total Stars", "fa" to "کل ستاره‌ها", "sv" to "Totalt antal stjärnor", "tr" to "Toplam Yıldız",
+            "de" to "Sterne gesamt", "fr" to "Total des étoiles", "es" to "Total de estrellas", "ru" to "Всего звёзд",
+            "zh" to "总星数", "hi" to "कुल सितारे", "ar" to "إجمالي النجوم"
+        ),
+        "words_learned" to mapOf(
+            "en" to "Words Learned", "fa" to "کلمات یادگرفته", "sv" to "Inlärda ord", "tr" to "Öğrenilen Kelimeler",
+            "de" to "Gelernte Wörter", "fr" to "Mots appris", "es" to "Palabras aprendidas", "ru" to "Выученные слова",
+            "zh" to "已学单词", "hi" to "सीखे गए शब्द", "ar" to "الكلمات المتعلمة"
+        ),
+        "minutes_suffix" to mapOf(
+            "en" to "min", "fa" to "دقیقه", "sv" to "min", "tr" to "dk", "de" to "Min", "fr" to "min",
+            "es" to "min", "ru" to "мин", "zh" to "分钟", "hi" to "मिनट", "ar" to "دقيقة"
+        ),
+        "today_label" to mapOf(
+            "en" to "Today", "fa" to "امروز", "sv" to "Idag", "tr" to "Bugün", "de" to "Heute",
+            "fr" to "Aujourd'hui", "es" to "Hoy", "ru" to "Сегодня", "zh" to "今天", "hi" to "आज", "ar" to "اليوم"
+        ),
+        "all_time_label" to mapOf(
+            "en" to "All Time", "fa" to "مجموع کل", "sv" to "Totalt", "tr" to "Tüm Zamanlar", "de" to "Insgesamt",
+            "fr" to "Total", "es" to "Total", "ru" to "За всё время", "zh" to "累计", "hi" to "कुल मिलाकर", "ar" to "كل الوقت"
+        ),
+        "progress_by_category" to mapOf(
+            "en" to "Progress by Category", "fa" to "پیشرفت هر دسته", "sv" to "Framsteg per kategori",
+            "tr" to "Kategoriye Göre İlerleme", "de" to "Fortschritt nach Kategorie", "fr" to "Progrès par catégorie",
+            "es" to "Progreso por categoría", "ru" to "Прогресс по категориям", "zh" to "各类别进度",
+            "hi" to "श्रेणी अनुसार प्रगति", "ar" to "التقدم حسب الفئة"
+        ),
+
+        // LullabiesScreen
+        "lullabies_title" to mapOf(
+            "en" to "Golden Dreams 🌙", "fa" to "خواب‌های طلایی 🌙", "sv" to "Gyllene drömmar 🌙",
+            "tr" to "Altın Rüyalar 🌙", "de" to "Goldene Träume 🌙", "fr" to "Rêves dorés 🌙",
+            "es" to "Sueños dorados 🌙", "ru" to "Золотые сны 🌙", "zh" to "黄金梦境 🌙",
+            "hi" to "सुनहरे सपने 🌙", "ar" to "أحلام ذهبية 🌙"
+        ),
+        "sleep_timer_label" to mapOf(
+            "en" to "Sleep Timer", "fa" to "تایمر خواب", "sv" to "Sömntimer", "tr" to "Uyku Zamanlayıcısı",
+            "de" to "Schlaf-Timer", "fr" to "Minuteur de sommeil", "es" to "Temporizador de sueño",
+            "ru" to "Таймер сна", "zh" to "睡眠计时器", "hi" to "स्लीप टाइमर", "ar" to "مؤقت النوم"
+        ),
     )
 
     /** ترجمه‌ی متن با کد کلید؛ اگه زبون پیدا نشد میره سراغ انگلیسی؛ اگه کلید هم پیدا نشد خود کلید برمی‌گرده */

@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.audio.LullabyPlayer
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -86,7 +87,7 @@ fun LullabiesScreen(onBack: () -> Unit) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
             }
             Text(
-                text = if (isFa) "خواب‌های طلایی 🌙" else "Golden Dreams 🌙",
+                text = UiStrings.t("lullabies_title", language),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -96,7 +97,7 @@ fun LullabiesScreen(onBack: () -> Unit) {
         Spacer(Modifier.height(20.dp))
 
         Text(
-            text = if (isFa) "تایمر خواب" else "Sleep Timer",
+            text = UiStrings.t("sleep_timer_label", language),
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White.copy(alpha = 0.85f)
@@ -109,7 +110,7 @@ fun LullabiesScreen(onBack: () -> Unit) {
                     onClick = {
                         sleepTimerMinutes = if (sleepTimerMinutes == minutes) null else minutes
                     },
-                    label = { Text("$minutes ${if (isFa) "دقیقه" else "min"}") },
+                    label = { Text("$minutes ${UiStrings.t("minutes_suffix", language)}") },
                     colors = FilterChipDefaults.filterChipColors(
                         selectedContainerColor = NightAccent,
                         selectedLabelColor = Color.White,

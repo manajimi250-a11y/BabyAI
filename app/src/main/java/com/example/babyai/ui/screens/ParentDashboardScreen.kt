@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.WordRepository
 import com.example.babyai.ui.theme.BabyBlue
@@ -61,7 +62,7 @@ fun ParentDashboardScreen(onBack: () -> Unit) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
             }
             Text(
-                text = if (language == "fa") "داشبورد والدین" else "Parent Dashboard",
+                text = UiStrings.t("parent_dashboard_title", language),
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -71,7 +72,7 @@ fun ParentDashboardScreen(onBack: () -> Unit) {
 
         if (childName.isNotBlank()) {
             Text(
-                text = if (language == "fa") "گزارش پیشرفت $childName" else "$childName's progress report",
+                text = UiStrings.t("progress_report", language).replace("{name}", childName),
                 fontSize = 15.sp,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
@@ -85,14 +86,14 @@ fun ParentDashboardScreen(onBack: () -> Unit) {
                 color = BabyYellow,
                 emoji = "⭐",
                 value = "$totalStars",
-                label = if (language == "fa") "کل ستاره‌ها" else "Total Stars"
+                label = UiStrings.t("total_stars", language)
             )
             StatCard(
                 modifier = Modifier.weight(1f),
                 color = BabyGreen,
                 emoji = "📖",
                 value = "$discoveredCount/$totalWordsCount",
-                label = if (language == "fa") "کلمات یادگرفته" else "Words Learned"
+                label = UiStrings.t("words_learned", language)
             )
         }
 
@@ -103,22 +104,22 @@ fun ParentDashboardScreen(onBack: () -> Unit) {
                 modifier = Modifier.weight(1f),
                 color = BabyBlue,
                 emoji = "⏱️",
-                value = "${formatMinutes(todaySeconds)} " + if (language == "fa") "دقیقه" else "min",
-                label = if (language == "fa") "امروز" else "Today"
+                value = "${formatMinutes(todaySeconds)} " + UiStrings.t("minutes_suffix", language),
+                label = UiStrings.t("today_label", language)
             )
             StatCard(
                 modifier = Modifier.weight(1f),
                 color = BabyOrange,
                 emoji = "📊",
-                value = "${formatMinutes(totalSeconds)} " + if (language == "fa") "دقیقه" else "min",
-                label = if (language == "fa") "مجموع کل" else "All Time"
+                value = "${formatMinutes(totalSeconds)} " + UiStrings.t("minutes_suffix", language),
+                label = UiStrings.t("all_time_label", language)
             )
         }
 
         Spacer(Modifier.height(24.dp))
 
         Text(
-            text = if (language == "fa") "پیشرفت هر دسته" else "Progress by Category",
+            text = UiStrings.t("progress_by_category", language),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
@@ -136,7 +137,7 @@ fun ParentDashboardScreen(onBack: () -> Unit) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = if (language == "fa") category.nameFa else category.nameEn,
+                        text = category.name(language),
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Medium
                     )
