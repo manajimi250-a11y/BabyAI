@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.PhotoSize
 import com.example.babyai.data.UserPreferences
+import com.example.babyai.ui.components.ParentalGateDialog
 import com.example.babyai.ui.theme.BabyGreen
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ private val SkyBlueLight = Color(0xFFF0F8FF)
 private val SelectedBlue = Color(0xFF2979FF)
 
 @Composable
-fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
+fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLullabiesClick: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
     val scope = rememberCoroutineScope()
@@ -38,6 +39,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
     var parentalGateEnabled by remember { mutableStateOf(false) }
     var childAge by remember { mutableStateOf(2) }
     var musicEnabled by remember { mutableStateOf(true) }
+    var showLullabyGate by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         language = prefs.language.first()
@@ -205,6 +207,40 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit) {
                     fontWeight = FontWeight.Bold
                 )
             }
+        }
+
+        Spacer(Modifier.height(24.dp))
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { showLullabyGate = true },
+            shape = RoundedCornerShape(18.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF3A3D8F))
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("🌙", fontSize = 28.sp)
+                Spacer(Modifier.width(12.dp))
+                Text(
+                    text = if (isFa) "خواب‌های طلایی" else "Golden Dreams",
+                    color = Color.White,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+
+        if (showLullabyGate) {
+            ParentalGateDialog(
+                onSuccess = {
+                    showLullabyGate = false
+                    onLullabiesClick()
+                },
+                onDismiss = { showLullabyGate = false }
+            )
         }
 
         Spacer(Modifier.height(24.dp))

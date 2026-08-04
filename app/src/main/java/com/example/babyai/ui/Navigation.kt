@@ -13,6 +13,7 @@ import com.example.babyai.ui.screens.CountingGameScreen
 import com.example.babyai.ui.screens.GameScreen
 import com.example.babyai.ui.screens.GamesMenuScreen
 import com.example.babyai.ui.screens.ListenAndTapScreen
+import com.example.babyai.ui.screens.LullabiesScreen
 import com.example.babyai.ui.screens.MascotSelectScreen
 import com.example.babyai.ui.screens.MemoryGameScreen
 import com.example.babyai.ui.screens.NameInputScreen
@@ -54,6 +55,7 @@ object Routes {
     const val GAME = "game/{categoryId}"
     const val SETTINGS = "settings"
     const val PARENT_DASHBOARD = "parent_dashboard"
+    const val LULLABIES = "lullabies"
 
     fun gameRoute(categoryId: String) = "game/$categoryId"
     fun storyRoute(storyId: String) = "story/$storyId"
@@ -80,7 +82,7 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
         composable(Routes.PROFILE_SELECT) {
             ProfileSelectScreen(
                 onProfileChosen = {
-                    navController.navigate(Routes.ACTIVITY_HUB) {
+                    navController.navigate(Routes.MASCOT_SELECT) {
                         popUpTo(Routes.PROFILE_SELECT) { inclusive = true }
                     }
                 },
@@ -257,7 +259,16 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
                 onBack = { navController.popBackStack() },
                 onParentDashboardClick = {
                     navController.navigate(Routes.PARENT_DASHBOARD)
+                },
+                onLullabiesClick = {
+                    navController.navigate(Routes.LULLABIES)
                 }
+            )
+        }
+
+        composable(Routes.LULLABIES) {
+            LullabiesScreen(
+                onBack = { navController.popBackStack() }
             )
         }
 
