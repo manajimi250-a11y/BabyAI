@@ -68,7 +68,6 @@ fun SpeedTapScreen(onBack: () -> Unit) {
     var foundIds by remember { mutableStateOf(setOf<Int>()) }
     var showCelebration by remember { mutableStateOf(false) }
     var timeUp by remember { mutableStateOf(false) }
-    var debugLog by remember { mutableStateOf("no taps yet") }
 
     fun startRound() {
         val (t, c) = buildSpeedRound(gridSize, targetCount)
@@ -86,7 +85,6 @@ fun SpeedTapScreen(onBack: () -> Unit) {
         gridSize = AgeScale.speedGridSizeForAge(age)
         targetCount = AgeScale.speedTargetsForAge(age)
         timeLimit = AgeScale.speedTimeLimitSeconds(age)
-        debugLog = "age=$age grid=$gridSize target=$targetCount"
         startRound()
     }
 
@@ -164,11 +162,6 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                 fontSize = 13.sp,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
             )
-            Text(
-                text = "DEBUG: $debugLog",
-                fontSize = 10.sp,
-                color = androidx.compose.ui.graphics.Color.Red
-            )
 
             Spacer(Modifier.height(12.dp))
 
@@ -189,7 +182,6 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(16.dp))
                             .clickable(enabled = !isFound && !timeUp && !showCelebration) {
-                                debugLog = "cfg:grid=$gridSize,target=$targetCount | tap id=${cell.cellId} isTarget=${cell.isTarget} total_before=${foundIds.size}"
                                 if (cell.isTarget) {
                                     foundIds = foundIds + cell.cellId
                                     if (foundIds.size >= targetCount) {
@@ -273,15 +265,5 @@ fun SpeedTapScreen(onBack: () -> Unit) {
                 onBackToMenu = onBack
             )
         }
-
-        Text(
-            text = "DBG: $debugLog",
-            fontSize = 11.sp,
-            color = Color.Yellow,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .background(Color.Black)
-                .padding(4.dp)
-        )
     }
 }

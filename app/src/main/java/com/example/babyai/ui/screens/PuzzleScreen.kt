@@ -98,13 +98,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
                 )
             }
 
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = "DBG: resId=$resId bitmapNull=${bitmap == null} word=${puzzleWord.first.id} photo=${puzzleWord.second}",
-                fontSize = 10.sp,
-                color = androidx.compose.ui.graphics.Color.Red
-            )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(16.dp))
 
             val puzzleSize: Dp = 300.dp
 

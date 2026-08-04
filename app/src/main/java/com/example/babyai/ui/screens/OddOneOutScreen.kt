@@ -21,11 +21,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.audio.TtsManager
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
 import com.example.babyai.ui.components.CelebrationOverlay
 import com.example.babyai.ui.components.MascotCompanion
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 
 private data class OddRound(val options: List<Pair<Word, String>>, val oddIndex: Int)
@@ -55,6 +57,7 @@ private fun buildRound(): OddRound {
 fun OddOneOutScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val prefs = remember { UserPreferences(context) }
+    val ttsManager = remember { TtsManager(context) }
 
     var language by remember { mutableStateOf("en") }
     var totalRounds by remember { mutableStateOf(6) }
@@ -66,7 +69,16 @@ fun OddOneOutScreen(onBack: () -> Unit) {
     LaunchedEffect(Unit) {
         language = prefs.language.first()
         totalRounds = roundsForAge(prefs.childAge.first())
+        ttsManager.setLanguage(language)
+        delay(300)
+        if (language == "fa") {
+            ttsManager.speak("ببین چه فرقی دارن")
+        } else {
+            ttsManager.speak("Let's see what's different")
+        }
     }
+
+    DisposableEffect(Unit) { onDispose { ttsManager.shutdown() } }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(

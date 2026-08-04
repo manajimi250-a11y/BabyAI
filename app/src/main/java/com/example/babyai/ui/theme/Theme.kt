@@ -20,7 +20,7 @@ private val BabyAiColorScheme = lightColorScheme(
     secondary = BabyBlue,
     tertiary = BabyPink,
     background = BabyBackground,
-    surface = Color.White,
+    surface = BabyBackground,
 )
 
 @Composable
