@@ -59,6 +59,20 @@ object SupportedLanguages {
         "ar" to "العربية"
     )
 
+    val flags = mapOf(
+        "en" to "🇬🇧",
+        "fa" to "🇮🇷",
+        "sv" to "🇸🇪",
+        "tr" to "🇹🇷",
+        "de" to "🇩🇪",
+        "fr" to "🇫🇷",
+        "es" to "🇪🇸",
+        "ru" to "🇷🇺",
+        "zh" to "🇨🇳",
+        "hi" to "🇮🇳",
+        "ar" to "🇸🇦"
+    )
+
     /** زبان‌هایی که راست‌به‌چپ نوشته می‌شن */
     val rtlLanguages = setOf("fa", "ar")
 }

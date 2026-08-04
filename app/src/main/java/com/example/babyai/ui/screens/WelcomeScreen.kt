@@ -3,8 +3,6 @@ package com.example.babyai.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -17,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.babyai.data.SupportedLanguages
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.theme.BabyOrange
@@ -61,32 +60,48 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
             )
         }
 
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(horizontal = 4.dp),
+        var menuExpanded by remember { mutableStateOf(false) }
+
+        Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(top = 16.dp, end = 16.dp)
-                .fillMaxWidth(0.7f)
         ) {
-            items(SupportedLanguages.codes) { code ->
-                val label = SupportedLanguages.displayNames[code] ?: code
-                FilterChip(
-                    selected = language == code,
-                    onClick = {
-                        language = code
-                        scope.launch { prefs.setLanguage(code) }
-                    },
-                    label = {
-                        Text(label, fontWeight = if (language == code) FontWeight.Bold else FontWeight.Normal)
-                    },
-                    colors = FilterChipDefaults.filterChipColors(
-                        containerColor = Color.White.copy(alpha = 0.9f),
-                        labelColor = Color.DarkGray,
-                        selectedContainerColor = BabyOrange,
-                        selectedLabelColor = Color.White
+            Button(
+                onClick = { menuExpanded = true },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White.copy(alpha = 0.92f),
+                    contentColor = Color.DarkGray
+                ),
+                shape = RoundedCornerShape(50)
+            ) {
+                Text("🌐", fontSize = 18.sp)
+                Spacer(Modifier.width(6.dp))
+                Text("زبان", fontWeight = FontWeight.Bold)
+            }
+
+            DropdownMenu(
+                expanded = menuExpanded,
+                onDismissRequest = { menuExpanded = false }
+            ) {
+                SupportedLanguages.codes.forEach { code ->
+                    val label = SupportedLanguages.displayNames[code] ?: code
+                    val flag = SupportedLanguages.flags[code] ?: ""
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                "$flag  $label",
+                                fontWeight = if (language == code) FontWeight.Bold else FontWeight.Normal,
+                                color = if (language == code) BabyOrange else Color.DarkGray
+                            )
+                        },
+                        onClick = {
+                            language = code
+                            scope.launch { prefs.setLanguage(code) }
+                            menuExpanded = false
+                        }
                     )
-                )
+                }
             }
         }
 
