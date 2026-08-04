@@ -228,6 +228,77 @@ object UiStrings {
             "de" to "Memory-Spiel 🧠", "fr" to "Jeu de mémoire 🧠", "es" to "Juego de memoria 🧠",
             "ru" to "Игра на память 🧠", "zh" to "记忆配对 🧠", "hi" to "मेमोरी गेम 🧠", "ar" to "لعبة الذاكرة 🧠"
         ),
+
+        // SettingsScreen
+        "settings_title" to mapOf(
+            "en" to "Settings", "fa" to "تنظیمات", "sv" to "Inställningar", "tr" to "Ayarlar",
+            "de" to "Einstellungen", "fr" to "Paramètres", "es" to "Ajustes", "ru" to "Настройки",
+            "zh" to "设置", "hi" to "सेटिंग्स", "ar" to "الإعدادات"
+        ),
+        "settings_photo_size" to mapOf(
+            "en" to "Photo Size", "fa" to "سایز عکس‌ها", "sv" to "Bildstorlek", "tr" to "Fotoğraf Boyutu",
+            "de" to "Fotogröße", "fr" to "Taille des photos", "es" to "Tamaño de fotos", "ru" to "Размер фото",
+            "zh" to "图片大小", "hi" to "फ़ोटो का आकार", "ar" to "حجم الصور"
+        ),
+        "photo_small" to mapOf(
+            "en" to "Small", "fa" to "کوچک", "sv" to "Liten", "tr" to "Küçük", "de" to "Klein",
+            "fr" to "Petit", "es" to "Pequeño", "ru" to "Маленький", "zh" to "小", "hi" to "छोटा", "ar" to "صغير"
+        ),
+        "photo_medium" to mapOf(
+            "en" to "Medium", "fa" to "متوسط", "sv" to "Medel", "tr" to "Orta", "de" to "Mittel",
+            "fr" to "Moyen", "es" to "Mediano", "ru" to "Средний", "zh" to "中", "hi" to "मध्यम", "ar" to "متوسط"
+        ),
+        "photo_large" to mapOf(
+            "en" to "Large", "fa" to "بزرگ", "sv" to "Stor", "tr" to "Büyük", "de" to "Groß",
+            "fr" to "Grand", "es" to "Grande", "ru" to "Большой", "zh" to "大", "hi" to "बड़ा", "ar" to "كبير"
+        ),
+        "settings_child_age" to mapOf(
+            "en" to "Child's Age", "fa" to "سن فرزندتون", "sv" to "Barnets ålder", "tr" to "Çocuğunuzun Yaşı",
+            "de" to "Alter des Kindes", "fr" to "Âge de l'enfant", "es" to "Edad del niño", "ru" to "Возраст ребёнка",
+            "zh" to "孩子的年龄", "hi" to "बच्चे की उम्र", "ar" to "عمر الطفل"
+        ),
+        "years_suffix" to mapOf(
+            "en" to "yrs", "fa" to "سال", "sv" to "år", "tr" to "yaş", "de" to "Jahre",
+            "fr" to "ans", "es" to "años", "ru" to "лет", "zh" to "岁", "hi" to "वर्ष", "ar" to "سنوات"
+        ),
+        "settings_parental_gate" to mapOf(
+            "en" to "Parental Gate", "fa" to "قفل والدین", "sv" to "Föräldralås", "tr" to "Ebeveyn Kilidi",
+            "de" to "Elternsperre", "fr" to "Verrou parental", "es" to "Control parental", "ru" to "Родительский контроль",
+            "zh" to "家长锁", "hi" to "पेरेंटल गेट", "ar" to "بوابة الوالدين"
+        ),
+        "settings_music" to mapOf(
+            "en" to "Background Music", "fa" to "موزیک پس‌زمینه", "sv" to "Bakgrundsmusik", "tr" to "Arka Plan Müziği",
+            "de" to "Hintergrundmusik", "fr" to "Musique de fond", "es" to "Música de fondo", "ru" to "Фоновая музыка",
+            "zh" to "背景音乐", "hi" to "बैकग्राउंड संगीत", "ar" to "موسيقى الخلفية"
+        ),
+        "settings_night_mode" to mapOf(
+            "en" to "Night Mode 🌙", "fa" to "حالت شب 🌙", "sv" to "Nattläge 🌙", "tr" to "Gece Modu 🌙",
+            "de" to "Nachtmodus 🌙", "fr" to "Mode nuit 🌙", "es" to "Modo noche 🌙", "ru" to "Ночной режим 🌙",
+            "zh" to "夜间模式 🌙", "hi" to "नाइट मोड 🌙", "ar" to "الوضع الليلي 🌙"
+        ),
+        "settings_parent_dashboard" to mapOf(
+            "en" to "Parent Dashboard", "fa" to "داشبورد والدین", "sv" to "Föräldrapanel", "tr" to "Ebeveyn Paneli",
+            "de" to "Elterndashboard", "fr" to "Tableau de bord parental", "es" to "Panel de padres", "ru" to "Панель родителей",
+            "zh" to "家长面板", "hi" to "पेरेंट डैशबोर्ड", "ar" to "لوحة الوالدين"
+        ),
+        "settings_golden_dreams" to mapOf(
+            "en" to "Golden Dreams", "fa" to "خواب‌های طلایی", "sv" to "Gyllene drömmar", "tr" to "Altın Rüyalar",
+            "de" to "Goldene Träume", "fr" to "Rêves dorés", "es" to "Sueños dorados", "ru" to "Золотые сны",
+            "zh" to "黄金梦境", "hi" to "सुनहरे सपने", "ar" to "أحلام ذهبية"
+        ),
+        "settings_record_instruction" to mapOf(
+            "en" to "To record your own voice for a word, open that word and tap the microphone icon.",
+            "fa" to "برای ضبط صدای خودتون برای هر کلمه، وارد همون کلمه بشید و روی آیکون میکروفون بزنید.",
+            "sv" to "För att spela in din egen röst för ett ord, öppna ordet och tryck på mikrofonikonen.",
+            "tr" to "Bir kelime için kendi sesinizi kaydetmek üzere o kelimeyi açın ve mikrofon simgesine dokunun.",
+            "de" to "Um deine eigene Stimme für ein Wort aufzunehmen, öffne das Wort und tippe auf das Mikrofon-Symbol.",
+            "fr" to "Pour enregistrer ta propre voix pour un mot, ouvre ce mot et touche l'icône du microphone.",
+            "es" to "Para grabar tu propia voz para una palabra, abre esa palabra y toca el ícono del micrófono.",
+            "ru" to "Чтобы записать свой голос для слова, откройте это слово и нажмите на значок микрофона.",
+            "zh" to "要为某个单词录制您自己的声音，请打开该单词并点击麦克风图标。",
+            "hi" to "किसी शब्द के लिए अपनी आवाज़ रिकॉर्ड करने के लिए, वह शब्द खोलें और माइक्रोफ़ोन आइकन पर टैप करें।",
+            "ar" to "لتسجيل صوتك لكلمة ما، افتح تلك الكلمة واضغط على أيقونة الميكروفون."
+        ),
     )
 
     /** ترجمه‌ی متن با کد کلید؛ اگه زبون پیدا نشد میره سراغ انگلیسی؛ اگه کلید هم پیدا نشد خود کلید برمی‌گرده */

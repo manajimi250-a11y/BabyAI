@@ -17,6 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.PhotoSize
+import com.example.babyai.data.SupportedLanguages
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.components.ParentalGateDialog
 import com.example.babyai.ui.theme.BabyGreen
@@ -70,41 +72,53 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
             IconButton(onClick = onBack) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
             }
-            Text(if (isFa) "تنظیمات" else "Settings", fontSize = 26.sp, fontWeight = FontWeight.Bold)
+            Text(UiStrings.t("settings_title", language), fontSize = 26.sp, fontWeight = FontWeight.Bold)
         }
 
         Spacer(Modifier.height(24.dp))
 
-        Text(if (isFa) "زبان" else "Language", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            FilterChip(
-                selected = language == "fa",
-                onClick = {
-                    language = "fa"
-                    scope.launch { prefs.setLanguage("fa") }
-                },
-                label = { Text("فارسی", fontWeight = FontWeight.Bold, fontSize = 16.sp) },
-                colors = chipColors
-            )
-            FilterChip(
-                selected = language == "en",
-                onClick = {
-                    language = "en"
-                    scope.launch { prefs.setLanguage("en") }
-                },
-                label = { Text("English", fontWeight = FontWeight.Bold, fontSize = 16.sp) },
-                colors = chipColors
-            )
+        Text(UiStrings.t("language_button", language), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        var languageMenuExpanded by remember { mutableStateOf(false) }
+        Box {
+            OutlinedButton(onClick = { languageMenuExpanded = true }) {
+                Text(
+                    "${SupportedLanguages.flags[language] ?: ""}  ${SupportedLanguages.displayNames[language] ?: language}",
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            DropdownMenu(
+                expanded = languageMenuExpanded,
+                onDismissRequest = { languageMenuExpanded = false }
+            ) {
+                SupportedLanguages.codes.forEach { code ->
+                    val label = SupportedLanguages.displayNames[code] ?: code
+                    val flag = SupportedLanguages.flags[code] ?: ""
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                "$flag  $label",
+                                fontWeight = if (language == code) FontWeight.Bold else FontWeight.Normal,
+                                color = if (language == code) SelectedBlue else Color.DarkGray
+                            )
+                        },
+                        onClick = {
+                            language = code
+                            scope.launch { prefs.setLanguage(code) }
+                            languageMenuExpanded = false
+                        }
+                    )
+                }
+            }
         }
 
         Spacer(Modifier.height(24.dp))
 
-        Text(if (isFa) "سایز عکس‌ها" else "Photo Size", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text(UiStrings.t("settings_photo_size", language), fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             listOf(
-                PhotoSize.SMALL to (if (isFa) "کوچک" else "Small"),
-                PhotoSize.MEDIUM to (if (isFa) "متوسط" else "Medium"),
-                PhotoSize.LARGE to (if (isFa) "بزرگ" else "Large")
+                PhotoSize.SMALL to UiStrings.t("photo_small", language),
+                PhotoSize.MEDIUM to UiStrings.t("photo_medium", language),
+                PhotoSize.LARGE to UiStrings.t("photo_large", language)
             ).forEach { (size, label) ->
                 FilterChip(
                     selected = photoSize == size,
@@ -120,7 +134,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
 
         Spacer(Modifier.height(24.dp))
 
-        Text(if (isFa) "سن فرزندتون" else "Child's Age", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        Text(UiStrings.t("settings_child_age", language), fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Row(verticalAlignment = Alignment.CenterVertically) {
             Slider(
                 value = childAge.toFloat(),
@@ -136,7 +150,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
                 colors = SliderDefaults.colors(thumbColor = SelectedBlue, activeTrackColor = SelectedBlue)
             )
             Text(
-                text = if (isFa) "$childAge سال" else "$childAge yrs",
+                text = "$childAge ${UiStrings.t("years_suffix", language)}",
                 fontWeight = FontWeight.Bold,
                 fontSize = 17.sp,
                 modifier = Modifier.padding(start = 12.dp)
@@ -151,7 +165,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = if (isFa) "قفل والدین" else "Parental Gate",
+                text = UiStrings.t("settings_parental_gate", language),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -173,7 +187,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = if (isFa) "موزیک پس‌زمینه" else "Background Music",
+                text = UiStrings.t("settings_music", language),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -195,7 +209,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = if (isFa) "حالت شب 🌙" else "Night Mode 🌙",
+                text = UiStrings.t("settings_night_mode", language),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -225,7 +239,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
                 Text("📊", fontSize = 28.sp)
                 Spacer(Modifier.width(12.dp))
                 Text(
-                    text = if (isFa) "داشبورد والدین" else "Parent Dashboard",
+                    text = UiStrings.t("settings_parent_dashboard", language),
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
@@ -249,7 +263,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
                 Text("🌙", fontSize = 28.sp)
                 Spacer(Modifier.width(12.dp))
                 Text(
-                    text = if (isFa) "خواب‌های طلایی" else "Golden Dreams",
+                    text = UiStrings.t("settings_golden_dreams", language),
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
@@ -269,10 +283,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
 
         Spacer(Modifier.height(24.dp))
         Text(
-            text = if (isFa)
-                "برای ضبط صدای خودتون برای هر کلمه، وارد همون کلمه بشید و روی آیکون میکروفون بزنید."
-            else
-                "To record your own voice for a word, open that word and tap the microphone icon.",
+            text = UiStrings.t("settings_record_instruction", language),
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium
         )
