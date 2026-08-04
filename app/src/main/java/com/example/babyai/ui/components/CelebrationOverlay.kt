@@ -48,20 +48,20 @@ fun CelebrationOverlay(
 ) {
     val context = LocalContext.current
 
-    // فقط فارسی صدای تشویق آماده داریم فعلاً
-    LaunchedEffect(Unit) {
-        if (language == "fa") {
-            val soundName = cheerSounds.random()
-            val resId = context.resources.getIdentifier(soundName, "raw", context.packageName)
-            if (resId != 0) {
-                try {
-                    val player = MediaPlayer.create(context, resId)
-                    player?.setOnCompletionListener { it.release() }
-                    player?.start()
-                } catch (_: Exception) {
-                }
+    fun playSound(name: String) {
+        val resId = context.resources.getIdentifier(name, "raw", context.packageName)
+        if (resId != 0) {
+            try {
+                val player = MediaPlayer.create(context, resId)
+                player?.setOnCompletionListener { it.release() }
+                player?.start()
+            } catch (_: Exception) {
             }
         }
+    }
+
+    LaunchedEffect(Unit) {
+        playSound("celebration_clap")
     }
 
     val infiniteTransition = rememberInfiniteTransition(label = "celebration")
