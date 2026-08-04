@@ -85,6 +85,9 @@ fun BalloonPopScreen(onBack: () -> Unit) {
         val age = prefs.childAge.first()
         gridSize = AgeScale.speedGridSizeForAge(age)
         targetCount = AgeScale.speedTargetsForAge(age)
+        delay(300)
+        ttsManager.speak(UiStrings.t("balloons_intro_speech", language))
+        delay(1800)
         startRound()
     }
 

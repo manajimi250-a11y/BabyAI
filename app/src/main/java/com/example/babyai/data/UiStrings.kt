@@ -421,8 +421,7 @@ object UiStrings {
         ),
 
         // LullabiesScreen
-        "lullabies_title" to mapOf(
-            "en" to "Golden Dreams 🌙", "fa" to "خواب‌های طلایی 🌙", "sv" to "Gyllene drömmar 🌙",
+        "lullabies_title" to mapOf(            "en" to "Golden Dreams 🌙", "fa" to "خواب‌های طلایی 🌙", "sv" to "Gyllene drömmar 🌙",
             "tr" to "Altın Rüyalar 🌙", "de" to "Goldene Träume 🌙", "fr" to "Rêves dorés 🌙",
             "es" to "Sueños dorados 🌙", "ru" to "Золотые сны 🌙", "zh" to "黄金梦境 🌙",
             "hi" to "सुनहरे सपने 🌙", "ar" to "أحلام ذهبية 🌙"
@@ -431,6 +430,18 @@ object UiStrings {
             "en" to "Sleep Timer", "fa" to "تایمر خواب", "sv" to "Sömntimer", "tr" to "Uyku Zamanlayıcısı",
             "de" to "Schlaf-Timer", "fr" to "Minuteur de sommeil", "es" to "Temporizador de sueño",
             "ru" to "Таймер сна", "zh" to "睡眠计时器", "hi" to "स्लीप टाइमर", "ar" to "مؤقت النوم"
+        ),
+        "next_button" to mapOf(
+            "en" to "Next →", "fa" to "بعدی →", "sv" to "Nästa →", "tr" to "Sonraki →",
+            "de" to "Weiter →", "fr" to "Suivant →", "es" to "Siguiente →", "ru" to "Далее →",
+            "zh" to "下一个 →", "hi" to "अगला →", "ar" to "← التالي"
+        ),
+        "balloons_intro_speech" to mapOf(
+            "en" to "Let's pop some balloons!", "fa" to "بیا بادکنک‌ها رو بترکونیم!",
+            "sv" to "Nu spränger vi några ballonger!", "tr" to "Hadi balonları patlatalım!",
+            "de" to "Lass uns ein paar Luftballons platzen lassen!", "fr" to "Allons faire éclater des ballons !",
+            "es" to "¡Vamos a reventar globos!", "ru" to "Давай лопать шарики!",
+            "zh" to "我们来戳气球吧！", "hi" to "चलो गुब्बारे फोड़ते हैं!", "ar" to "لنفرقع بعض البالونات!"
         ),
     )
 

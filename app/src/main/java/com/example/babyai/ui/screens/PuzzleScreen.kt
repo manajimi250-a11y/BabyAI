@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -36,6 +37,8 @@ import com.example.babyai.ui.components.CelebrationOverlay
 import com.example.babyai.ui.components.MascotCompanion
 import com.example.babyai.ui.components.RecordWordDialog
 import com.example.babyai.ui.theme.BabyGreen
+import com.example.babyai.ui.theme.BabyOrange
+import com.example.babyai.ui.theme.BabyYellow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -114,7 +117,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+                .background(Brush.verticalGradient(listOf(BabyYellow.copy(alpha = 0.35f), BabyOrange.copy(alpha = 0.25f))))
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

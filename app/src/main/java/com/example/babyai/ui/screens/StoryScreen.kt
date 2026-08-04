@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.audio.TtsManager
 import com.example.babyai.data.StoryRepository
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
@@ -161,11 +162,14 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                     }
                 },
                 enabled = canProceed,
-                modifier = Modifier.fillMaxWidth().height(56.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .windowInsetsPadding(WindowInsets.navigationBars),
                 shape = RoundedCornerShape(28.dp)
             ) {
                 Text(
-                    text = if (language == "fa") "بعدی →" else "Next →",
+                    text = UiStrings.t("next_button", language),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
