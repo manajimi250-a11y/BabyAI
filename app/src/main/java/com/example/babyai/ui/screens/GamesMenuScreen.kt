@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.components.SettingsIconButton
 import com.example.babyai.ui.theme.BabyBlue
@@ -65,72 +66,68 @@ fun GamesMenuScreen(
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "بازی‌ها 🎮" else "Games 🎮",
+                    text = UiStrings.t("games_title", language),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                com.example.babyai.ui.components.StarBadge()
-                Spacer(Modifier.width(4.dp))
-                SettingsIconButton(onSettingsClick = onSettingsClick)
-            }
+            SettingsIconButton(onSettingsClick = onSettingsClick)
         }
 
         Spacer(Modifier.height(20.dp))
 
         GameCard(
             emoji = "🧠",
-            title = if (language == "fa") "بازی حافظه" else "Memory Match",
+            title = UiStrings.t("game_memory", language),
             color = BabyGreen,
             onClick = onMemoryGameClick
         )
         Spacer(Modifier.height(14.dp))
         GameCard(
             emoji = "🔍",
-            title = if (language == "fa") "پیدا کن فرقشه" else "Odd One Out",
+            title = UiStrings.t("game_odd_one_out", language),
             color = BabyOrange,
             onClick = onOddOneOutClick
         )
         Spacer(Modifier.height(14.dp))
         GameCard(
             emoji = "🗂️",
-            title = if (language == "fa") "دسته‌بندی کن" else "Sort it out",
+            title = UiStrings.t("game_sorting", language),
             color = BabyBlue,
             onClick = onSortingGameClick
         )
         Spacer(Modifier.height(14.dp))
         GameCard(
             emoji = "🔢",
-            title = if (language == "fa") "بشمار چندتا!" else "Count them!",
+            title = UiStrings.t("game_counting", language),
             color = BabyPurple,
             onClick = onCountingGameClick
         )
         Spacer(Modifier.height(14.dp))
         GameCard(
             emoji = "🎧",
-            title = if (language == "fa") "گوش کن و لمس کن" else "Listen & Tap",
+            title = UiStrings.t("game_listen_tap", language),
             color = BabyPink,
             onClick = onListenAndTapClick
         )
         Spacer(Modifier.height(14.dp))
         GameCard(
             emoji = "⚡",
-            title = if (language == "fa") "لمس سریع" else "Speed Tap",
+            title = UiStrings.t("game_speed_tap", language),
             color = BabyYellow,
             onClick = onSpeedTapClick
         )
         Spacer(Modifier.height(14.dp))
         GameCard(
             emoji = "🧩",
-            title = if (language == "fa") "پازل کوچولو" else "Little Puzzle",
+            title = UiStrings.t("game_puzzle", language),
             color = BabyGreen,
             onClick = onPuzzleClick
         )
         Spacer(Modifier.height(14.dp))
         GameCard(
             emoji = "🎈",
-            title = if (language == "fa") "بادکنک‌ها" else "Balloons",
+            title = UiStrings.t("game_balloons", language),
             color = BabyOrange,
             onClick = onBalloonPopClick
         )

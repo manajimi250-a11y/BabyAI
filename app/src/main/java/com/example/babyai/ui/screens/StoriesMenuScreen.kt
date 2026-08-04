@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.Story
 import com.example.babyai.data.StoryRepository
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.components.SettingsIconButton
 import com.example.babyai.ui.theme.BabyBlue
@@ -56,16 +57,12 @@ fun StoriesMenuScreen(
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") "داستان‌ها 📖" else "Stories 📖",
+                    text = UiStrings.t("stories_title", language),
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                com.example.babyai.ui.components.StarBadge()
-                Spacer(Modifier.width(4.dp))
-                SettingsIconButton(onSettingsClick = onSettingsClick)
-            }
+            SettingsIconButton(onSettingsClick = onSettingsClick)
         }
 
         Spacer(Modifier.height(20.dp))

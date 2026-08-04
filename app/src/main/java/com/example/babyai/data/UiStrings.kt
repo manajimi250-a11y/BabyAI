@@ -63,6 +63,60 @@ object UiStrings {
             "zh" to "有趣的互动故事", "hi" to "मज़ेदार इंटरैक्टिव कहानियां",
             "ar" to "قصص تفاعلية ممتعة"
         ),
+
+        // GamesMenuScreen
+        "games_title" to mapOf(
+            "en" to "Games 🎮", "fa" to "بازی‌ها 🎮", "sv" to "Spel 🎮", "tr" to "Oyunlar 🎮",
+            "de" to "Spiele 🎮", "fr" to "Jeux 🎮", "es" to "Juegos 🎮", "ru" to "Игры 🎮",
+            "zh" to "游戏 🎮", "hi" to "खेल 🎮", "ar" to "الألعاب 🎮"
+        ),
+        "game_memory" to mapOf(
+            "en" to "Memory Match", "fa" to "بازی حافظه", "sv" to "Memory", "tr" to "Hafıza Oyunu",
+            "de" to "Memory-Spiel", "fr" to "Jeu de mémoire", "es" to "Juego de memoria", "ru" to "Игра на память",
+            "zh" to "记忆配对", "hi" to "मेमोरी गेम", "ar" to "لعبة الذاكرة"
+        ),
+        "game_odd_one_out" to mapOf(
+            "en" to "Odd One Out", "fa" to "پیدا کن فرقشه", "sv" to "Hitta skillnaden", "tr" to "Farklıyı Bul",
+            "de" to "Was passt nicht?", "fr" to "Trouve l'intrus", "es" to "Encuentra el diferente", "ru" to "Найди лишнее",
+            "zh" to "找不同", "hi" to "अलग खोजें", "ar" to "اكتشف المختلف"
+        ),
+        "game_sorting" to mapOf(
+            "en" to "Sort it out", "fa" to "دسته‌بندی کن", "sv" to "Sortera", "tr" to "Sınıflandır",
+            "de" to "Sortieren", "fr" to "Trie-les", "es" to "Clasifica", "ru" to "Сортируй",
+            "zh" to "分类整理", "hi" to "छाँटें", "ar" to "صنّف"
+        ),
+        "game_counting" to mapOf(
+            "en" to "Count them!", "fa" to "بشمار چندتا!", "sv" to "Räkna dem!", "tr" to "Say Bakalım!",
+            "de" to "Zähl sie!", "fr" to "Compte-les !", "es" to "¡Cuéntalos!", "ru" to "Посчитай!",
+            "zh" to "数一数！", "hi" to "गिनो!", "ar" to "عدّها!"
+        ),
+        "game_listen_tap" to mapOf(
+            "en" to "Listen & Tap", "fa" to "گوش کن و لمس کن", "sv" to "Lyssna & tryck", "tr" to "Dinle ve Dokun",
+            "de" to "Hören & Tippen", "fr" to "Écoute et touche", "es" to "Escucha y toca", "ru" to "Слушай и нажимай",
+            "zh" to "听音点击", "hi" to "सुनो और टैप करो", "ar" to "استمع والمس"
+        ),
+        "game_speed_tap" to mapOf(
+            "en" to "Speed Tap", "fa" to "لمس سریع", "sv" to "Snabbtryck", "tr" to "Hızlı Dokunuş",
+            "de" to "Schnelles Tippen", "fr" to "Touche rapide", "es" to "Toque rápido", "ru" to "Быстрое нажатие",
+            "zh" to "快速点击", "hi" to "तेज़ टैप", "ar" to "لمسة سريعة"
+        ),
+        "game_puzzle" to mapOf(
+            "en" to "Little Puzzle", "fa" to "پازل کوچولو", "sv" to "Litet pussel", "tr" to "Küçük Yapboz",
+            "de" to "Kleines Puzzle", "fr" to "Petit puzzle", "es" to "Pequeño rompecabezas", "ru" to "Маленький пазл",
+            "zh" to "小小拼图", "hi" to "छोटा पहेली खेल", "ar" to "أحجية صغيرة"
+        ),
+        "game_balloons" to mapOf(
+            "en" to "Balloons", "fa" to "بادکنک‌ها", "sv" to "Ballonger", "tr" to "Balonlar",
+            "de" to "Luftballons", "fr" to "Ballons", "es" to "Globos", "ru" to "Воздушные шары",
+            "zh" to "气球", "hi" to "गुब्बारे", "ar" to "بالونات"
+        ),
+
+        // StoriesMenuScreen
+        "stories_title" to mapOf(
+            "en" to "Stories 📖", "fa" to "داستان‌ها 📖", "sv" to "Sagor 📖", "tr" to "Masallar 📖",
+            "de" to "Märchen 📖", "fr" to "Histoires 📖", "es" to "Historias 📖", "ru" to "Сказки 📖",
+            "zh" to "故事 📖", "hi" to "कहानियां 📖", "ar" to "قصص 📖"
+        ),
     )
 
     /** ترجمه‌ی متن با کد کلید؛ اگه زبون پیدا نشد میره سراغ انگلیسی؛ اگه کلید هم پیدا نشد خود کلید برمی‌گرده */
