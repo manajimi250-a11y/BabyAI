@@ -36,9 +36,6 @@ import com.example.babyai.ui.theme.BabyPurple
 import com.example.babyai.ui.theme.BabyYellow
 
 private val celebrationSounds = listOf(
-    "celebration_cheer1",
-    "celebration_cheer2",
-    "celebration_cheer3",
     "celebration_clap"
 )
 

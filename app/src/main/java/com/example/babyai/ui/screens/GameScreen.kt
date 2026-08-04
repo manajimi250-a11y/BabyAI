@@ -62,7 +62,10 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
     }
 
     DisposableEffect(Unit) {
-        onDispose { ttsManager.shutdown() }
+        onDispose {
+            ttsManager.shutdown()
+            recordingManager.release()
+        }
     }
 
     if (category == null) return
