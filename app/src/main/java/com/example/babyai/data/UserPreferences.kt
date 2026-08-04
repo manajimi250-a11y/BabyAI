@@ -47,7 +47,8 @@ class UserPreferences(private val context: Context) {
         val PROFILES_LIST = stringPreferencesKey("profiles_list")
         val ACTIVE_PROFILE_ID = stringPreferencesKey("active_profile_id")
         val MUSIC_ENABLED = booleanPreferencesKey("music_enabled")
-        val NIGHT_MODE_ENABLED = booleanPreferencesKey("night_mode_enabled")        fun voiceSourceKey(wordId: String) = stringPreferencesKey("voice_source_$wordId")
+        val NIGHT_MODE_ENABLED = booleanPreferencesKey("night_mode_enabled")
+        fun voiceSourceKey(wordId: String) = stringPreferencesKey("voice_source_$wordId")
     }
 
     val language: Flow<String> = context.dataStore.data.map { it[Keys.LANGUAGE] ?: "en" }
