@@ -57,15 +57,12 @@ fun CategoryMenuScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .windowInsetsPadding(WindowInsets.statusBars)
             .padding(20.dp)
     ) {
-        Spacer(Modifier.height(10.dp))
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = buildString {
@@ -76,7 +73,7 @@ fun CategoryMenuScreen(
                 },
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.weight(1f).padding(top = 6.dp)
+                modifier = Modifier.weight(1f)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -155,7 +152,7 @@ private fun CategoryCard(category: Category, language: String, onClick: () -> Un
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                text = if (language == "fa") category.nameFa else category.nameEn,
+                text = category.name(language),
                 color = Color.White,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold

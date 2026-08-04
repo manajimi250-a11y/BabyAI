@@ -61,7 +61,19 @@ class TtsManager(private val context: Context) {
     }
 
     private fun applyLanguage(languageCode: String) {
-        val locale = if (languageCode == "fa") Locale("fa", "IR") else Locale.ENGLISH
+        val locale = when (languageCode) {
+            "fa" -> Locale("fa", "IR")
+            "sv" -> Locale("sv", "SE")
+            "tr" -> Locale("tr", "TR")
+            "de" -> Locale.GERMAN
+            "fr" -> Locale.FRENCH
+            "es" -> Locale("es", "ES")
+            "ru" -> Locale("ru", "RU")
+            "zh" -> Locale.SIMPLIFIED_CHINESE
+            "hi" -> Locale("hi", "IN")
+            "ar" -> Locale("ar", "SA")
+            else -> Locale.ENGLISH
+        }
         tts?.setLanguage(locale)
     }
 

@@ -81,7 +81,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
             }
             Text(
-                text = if (language == "fa") category.nameFa else category.nameEn,
+                text = category.name(language),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -123,7 +123,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
                             ) {
                                 // صدای فارسی از پیش‌ضبط‌شده پخش شد، نیازی به TTS نیست
                             } else {
-                                val text = if (language == "fa") word.nameFa else word.nameEn
+                                val text = word.name(language)
                                 ttsManager.speak(text)
                             }
 
@@ -222,7 +222,7 @@ private fun WordTile(
     val resId = remember(photoName) {
         context.resources.getIdentifier(photoName, "drawable", context.packageName)
     }
-    val displayName = if (language == "fa") word.nameFa else word.nameEn
+    val displayName = word.name(language)
 
     Card(
         modifier = Modifier

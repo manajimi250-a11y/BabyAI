@@ -3,6 +3,8 @@ package com.example.babyai.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -15,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.babyai.data.SupportedLanguages
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.theme.BabyOrange
 import kotlinx.coroutines.flow.first
@@ -37,8 +40,13 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
     }
 
     val bgResId = remember(language) {
-        val name = if (language == "fa") "welcome_bg_fa" else "welcome_bg"
-        context.resources.getIdentifier(name, "drawable", context.packageName)
+        val candidate = if (language == "en") "welcome_bg" else "welcome_bg_$language"
+        var id = context.resources.getIdentifier(candidate, "drawable", context.packageName)
+        if (id == 0) {
+            // اگه هنوز عکس این زبون ساخته نشده، برمی‌گرده به پس‌زمینه‌ی پیش‌فرض انگلیسی
+            id = context.resources.getIdentifier("welcome_bg", "drawable", context.packageName)
+        }
+        id
     }
 
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -53,40 +61,33 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
             )
         }
 
-        Row(
+        LazyRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 4.dp),
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(top = 16.dp, end = 16.dp)
+                .fillMaxWidth(0.7f)
         ) {
-            FilterChip(
-                selected = language == "fa",
-                onClick = {
-                    language = "fa"
-                    scope.launch { prefs.setLanguage("fa") }
-                },
-                label = { Text("فارسی", fontWeight = if (language == "fa") FontWeight.Bold else FontWeight.Normal) },
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = Color.White.copy(alpha = 0.9f),
-                    labelColor = Color.DarkGray,
-                    selectedContainerColor = BabyOrange,
-                    selectedLabelColor = Color.White
+            items(SupportedLanguages.codes) { code ->
+                val label = SupportedLanguages.displayNames[code] ?: code
+                FilterChip(
+                    selected = language == code,
+                    onClick = {
+                        language = code
+                        scope.launch { prefs.setLanguage(code) }
+                    },
+                    label = {
+                        Text(label, fontWeight = if (language == code) FontWeight.Bold else FontWeight.Normal)
+                    },
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = Color.White.copy(alpha = 0.9f),
+                        labelColor = Color.DarkGray,
+                        selectedContainerColor = BabyOrange,
+                        selectedLabelColor = Color.White
+                    )
                 )
-            )
-            FilterChip(
-                selected = language == "en",
-                onClick = {
-                    language = "en"
-                    scope.launch { prefs.setLanguage("en") }
-                },
-                label = { Text("English", fontWeight = if (language == "en") FontWeight.Bold else FontWeight.Normal) },
-                colors = FilterChipDefaults.filterChipColors(
-                    containerColor = Color.White.copy(alpha = 0.9f),
-                    labelColor = Color.DarkGray,
-                    selectedContainerColor = BabyOrange,
-                    selectedLabelColor = Color.White
-                )
-            )
+            }
         }
 
         // دکمه‌ی واقعی و شفاف، دقیقاً روی محل دکمه‌ی «Let's Start!» عکس
