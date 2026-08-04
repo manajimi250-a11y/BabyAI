@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,21 +48,37 @@ fun CelebrationOverlay(
     onBackToMenu: () -> Unit
 ) {
     val context = LocalContext.current
+    val clapPlayer = remember { mutableStateOf<MediaPlayer?>(null) }
 
-    fun playSound(name: String) {
-        val resId = context.resources.getIdentifier(name, "raw", context.packageName)
+    fun stopClap() {
+        clapPlayer.value?.let {
+            try {
+                if (it.isPlaying) it.stop()
+                it.release()
+            } catch (_: Exception) {
+            }
+        }
+        clapPlayer.value = null
+    }
+
+    LaunchedEffect(Unit) {
+        val resId = context.resources.getIdentifier("celebration_clap", "raw", context.packageName)
         if (resId != 0) {
             try {
                 val player = MediaPlayer.create(context, resId)
+                clapPlayer.value = player
                 player?.setOnCompletionListener { it.release() }
                 player?.start()
+                // فقط ۳ ثانیه از صدا کافیه
+                kotlinx.coroutines.delay(3000)
+                stopClap()
             } catch (_: Exception) {
             }
         }
     }
 
-    LaunchedEffect(Unit) {
-        playSound("celebration_clap")
+    DisposableEffect(Unit) {
+        onDispose { stopClap() }
     }
 
     val infiniteTransition = rememberInfiniteTransition(label = "celebration")

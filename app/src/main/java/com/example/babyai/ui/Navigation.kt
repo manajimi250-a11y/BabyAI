@@ -80,7 +80,7 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
         composable(Routes.PROFILE_SELECT) {
             ProfileSelectScreen(
                 onProfileChosen = {
-                    navController.navigate(Routes.MASCOT_SELECT) {
+                    navController.navigate(Routes.ACTIVITY_HUB) {
                         popUpTo(Routes.PROFILE_SELECT) { inclusive = true }
                     }
                 },
