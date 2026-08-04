@@ -20,6 +20,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -34,7 +35,12 @@ import com.example.babyai.ui.theme.BabyPink
 import com.example.babyai.ui.theme.BabyPurple
 import com.example.babyai.ui.theme.BabyYellow
 
-private val cheerSounds = listOf("celebration_cheer1", "celebration_cheer2", "celebration_cheer3")
+private val celebrationSounds = listOf(
+    "celebration_cheer1",
+    "celebration_cheer2",
+    "celebration_cheer3",
+    "celebration_clap"
+)
 
 /**
  * صفحه‌ی جشن تمام‌صفحه وقتی همه‌ی کلمات یه دسته یاد گرفته شدن.
@@ -47,41 +53,35 @@ fun CelebrationOverlay(
     onPlayAgain: () -> Unit,
     onBackToMenu: () -> Unit
 ) {
+    val infiniteTransition = rememberInfiniteTransition(label = "celebration")
     val context = LocalContext.current
-    val clapPlayer = remember { mutableStateOf<MediaPlayer?>(null) }
+    var celebrationPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
 
-    fun stopClap() {
-        clapPlayer.value?.let {
-            try {
-                if (it.isPlaying) it.stop()
-                it.release()
-            } catch (_: Exception) {
-            }
-        }
-        clapPlayer.value = null
-    }
-
+    // پخش یکی از صداهای تشویق (رندوم برای تنوع) وقتی جشن نمایش داده می‌شه
     LaunchedEffect(Unit) {
-        val resId = context.resources.getIdentifier("celebration_clap", "raw", context.packageName)
+        val soundName = celebrationSounds.random()
+        val resId = context.resources.getIdentifier(soundName, "raw", context.packageName)
         if (resId != 0) {
             try {
                 val player = MediaPlayer.create(context, resId)
-                clapPlayer.value = player
                 player?.setOnCompletionListener { it.release() }
                 player?.start()
-                // فقط ۳ ثانیه از صدا کافیه
-                kotlinx.coroutines.delay(3000)
-                stopClap()
-            } catch (_: Exception) {
+                celebrationPlayer = player
+            } catch (e: Exception) {
+                // اگه پخش شکست خورد، جشن بی‌صدا ادامه پیدا می‌کنه (مشکلی نیست)
             }
         }
     }
 
+    // وقتی از این صفحه خارج می‌شه (دوباره بازی کن / برگشت به منو)، صدا هم قطع بشه
     DisposableEffect(Unit) {
-        onDispose { stopClap() }
+        onDispose {
+            celebrationPlayer?.let {
+                if (it.isPlaying) it.stop()
+                it.release()
+            }
+        }
     }
-
-    val infiniteTransition = rememberInfiniteTransition(label = "celebration")
 
     val pulse by infiniteTransition.animateFloat(
         initialValue = 0.92f,
