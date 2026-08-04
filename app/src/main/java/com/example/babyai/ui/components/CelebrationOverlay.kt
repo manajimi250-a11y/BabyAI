@@ -1,5 +1,6 @@
 package com.example.babyai.ui.components
 
+import android.media.MediaPlayer
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -14,12 +15,16 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +32,8 @@ import com.example.babyai.ui.theme.BabyOrange
 import com.example.babyai.ui.theme.BabyPink
 import com.example.babyai.ui.theme.BabyPurple
 import com.example.babyai.ui.theme.BabyYellow
+
+private val cheerSounds = listOf("celebration_cheer1", "celebration_cheer2", "celebration_cheer3")
 
 /**
  * صفحه‌ی جشن تمام‌صفحه وقتی همه‌ی کلمات یه دسته یاد گرفته شدن.
@@ -39,6 +46,24 @@ fun CelebrationOverlay(
     onPlayAgain: () -> Unit,
     onBackToMenu: () -> Unit
 ) {
+    val context = LocalContext.current
+
+    // فقط فارسی صدای تشویق آماده داریم فعلاً
+    LaunchedEffect(Unit) {
+        if (language == "fa") {
+            val soundName = cheerSounds.random()
+            val resId = context.resources.getIdentifier(soundName, "raw", context.packageName)
+            if (resId != 0) {
+                try {
+                    val player = MediaPlayer.create(context, resId)
+                    player?.setOnCompletionListener { it.release() }
+                    player?.start()
+                } catch (_: Exception) {
+                }
+            }
+        }
+    }
+
     val infiniteTransition = rememberInfiniteTransition(label = "celebration")
 
     val pulse by infiniteTransition.animateFloat(
