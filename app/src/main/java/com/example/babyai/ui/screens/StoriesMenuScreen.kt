@@ -97,7 +97,7 @@ private fun StoryCard(story: Story, language: String, color: Color, onClick: () 
             Text(story.emoji, fontSize = 38.sp)
             Spacer(Modifier.width(16.dp))
             Text(
-                text = if (language == "fa") story.titleFa else story.titleEn,
+                text = story.title(language),
                 color = Color.White,
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Bold

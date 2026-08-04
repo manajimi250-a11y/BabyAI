@@ -62,7 +62,7 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                 ttsManager.speak(page.textFa)
             }
         } else {
-            ttsManager.speak(page.textEn)
+            ttsManager.speak(page.text(language))
         }
     }
 
@@ -72,18 +72,6 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
             val distractors = page.distractorWordIds.mapNotNull { WordRepository.wordById(it) }
             if (target != null) (distractors + target).shuffled() else emptyList()
         } ?: emptyList()
-    }
-
-    // اگه جواب درست بود، خودکار بعد از یه لحظه بره صفحه بعد
-    LaunchedEffect(answeredCorrectly) {
-        if (answeredCorrectly) {
-            kotlinx.coroutines.delay(700)
-            if (pageIndex + 1 >= story.pages.size) {
-                showCelebration = true
-            } else {
-                pageIndex += 1
-            }
-        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -98,8 +86,6 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                         )
                     )
                 )
-                .windowInsetsPadding(WindowInsets.navigationBars)
-                .windowInsetsPadding(WindowInsets.statusBars)
                 .padding(20.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -107,10 +93,9 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Text(
-                    text = if (language == "fa") story.titleFa else story.titleEn,
+                    text = story.title(language),
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(end = 72.dp)
+                    fontWeight = FontWeight.Bold
                 )
             }
 
@@ -121,9 +106,9 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.weight(0.3f))
 
-            Spacer(Modifier.height(70.dp))
+            Spacer(Modifier.height(20.dp))
 
             // حباب متن روایت داستان
             Card(
@@ -132,70 +117,58 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                 colors = CardDefaults.cardColors(containerColor = BabyYellow.copy(alpha = 0.25f))
             ) {
                 Text(
-                    text = if (language == "fa") page.textFa else page.textEn,
+                    text = page.text(language),
                     modifier = Modifier.padding(20.dp),
                     fontSize = 19.sp,
                     fontWeight = FontWeight.Medium
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(28.dp))
 
             if (choiceWords.isNotEmpty()) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(14.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(14.dp),
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    choiceWords.chunked(2).forEach { rowWords ->
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(14.dp),
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            rowWords.forEach { word ->
-                                StoryChoiceCard(
-                                    word = word,
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .aspectRatio(1f),
-                                    enabled = !answeredCorrectly,
-                                    onClick = {
-                                        if (word.id == page.targetWordId) {
-                                            answeredCorrectly = true
-                                            starsEarned += 1
-                                        }
-                                    }
-                                )
+                    choiceWords.forEach { word ->
+                        StoryChoiceCard(
+                            word = word,
+                            modifier = Modifier.weight(1f),
+                            enabled = !answeredCorrectly,
+                            onClick = {
+                                if (word.id == page.targetWordId) {
+                                    answeredCorrectly = true
+                                    starsEarned += 1
+                                }
                             }
-                            // اگه ردیف آخر فقط یه دونه بود، جای خالی نگه دار که وسط بمونه
-                            if (rowWords.size == 1) {
-                                Spacer(modifier = Modifier.weight(1f))
-                            }
-                        }
+                        )
                     }
                 }
-                Spacer(Modifier.height(12.dp))
             } else {
                 Spacer(Modifier.weight(1f))
+            }
 
-                Button(
-                    onClick = {
-                        if (pageIndex + 1 >= story.pages.size) {
-                            showCelebration = true
-                        } else {
-                            pageIndex += 1
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth().height(56.dp),
-                    shape = RoundedCornerShape(28.dp)
-                ) {
-                    Text(
-                        text = if (language == "fa") "بعدی →" else "Next →",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+            Spacer(Modifier.weight(1f))
+
+            val canProceed = choiceWords.isEmpty() || answeredCorrectly
+            Button(
+                onClick = {
+                    if (pageIndex + 1 >= story.pages.size) {
+                        showCelebration = true
+                    } else {
+                        pageIndex += 1
+                    }
+                },
+                enabled = canProceed,
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                shape = RoundedCornerShape(28.dp)
+            ) {
+                Text(
+                    text = if (language == "fa") "بعدی →" else "Next →",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
 
@@ -239,6 +212,7 @@ private fun StoryChoiceCard(word: Word, modifier: Modifier = Modifier, enabled: 
 
     Card(
         modifier = modifier
+            .aspectRatio(1f)
             .clip(RoundedCornerShape(18.dp))
             .clickable(enabled = enabled) { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
@@ -247,8 +221,7 @@ private fun StoryChoiceCard(word: Word, modifier: Modifier = Modifier, enabled: 
             Image(
                 painter = painterResource(id = resId),
                 contentDescription = word.nameEn,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                modifier = Modifier.fillMaxSize()
             )
         }
     }
