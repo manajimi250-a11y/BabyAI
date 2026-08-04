@@ -6,20 +6,25 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.example.babyai.data.SupportedLanguages
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.BabyAiNavHost
 import com.example.babyai.ui.theme.BabyAITheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -30,11 +35,17 @@ class MainActivity : ComponentActivity() {
             val context = LocalContext.current
             val prefs = remember { UserPreferences(context) }
             val nightMode by prefs.nightModeEnabled.collectAsState(initial = false)
+            val language by prefs.language.collectAsState(initial = "en")
+            val isRtl = language in SupportedLanguages.rtlLanguages
 
             BabyAITheme(nightMode = nightMode) {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    UsageTracker()
-                    BabyAiNavHost()
+                CompositionLocalProvider(
+                    LocalLayoutDirection provides if (isRtl) LayoutDirection.Rtl else LayoutDirection.Ltr
+                ) {
+                    Surface(modifier = Modifier.fillMaxSize()) {
+                        UsageTracker()
+                        BabyAiNavHost()
+                    }
                 }
             }
         }

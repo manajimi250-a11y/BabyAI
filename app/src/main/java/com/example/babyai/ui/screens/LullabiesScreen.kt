@@ -26,17 +26,45 @@ import com.example.babyai.data.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 
-private data class Lullaby(val resName: String, val titleFa: String, val titleEn: String)
+private data class Lullaby(val resName: String, val titles: Map<String, String>) {
+    fun title(lang: String): String = titles[lang] ?: titles["en"] ?: resName
+}
+
+private fun l(resName: String, vararg titles: Pair<String, String>) = Lullaby(resName, titles.toMap())
 
 private val lullabies = listOf(
-    Lullaby("lullaby_sweet_petals", "گلبرگ‌های شیرین", "Sweet Petals"),
-    Lullaby("lullaby_goodnight_garden", "باغ شب‌بخیر", "Goodnight Garden"),
-    Lullaby("lullaby_lalaei", "لالایی", "Lullaby"),
-    Lullaby("lullaby_soft_slumber", "خواب نرم", "Soft Slumber"),
-    Lullaby("lullaby_sweet_slumber", "خواب شیرین", "Sweet Slumber"),
-    Lullaby("lullaby_hushed_persian_night", "شب آرام", "Hushed Persian Night"),
-    Lullaby("lullaby_the_sleepy_world", "دنیای خواب‌آلود", "The Sleepy World"),
-    Lullaby("lullaby_petal_lullaby", "لالایی گلبرگ", "Petal Lullaby")
+    l("lullaby_sweet_petals",
+        "en" to "Sweet Petals", "fa" to "گلبرگ‌های شیرین", "sv" to "Söta kronblad", "tr" to "Tatlı Yapraklar",
+        "de" to "Süße Blütenblätter", "fr" to "Doux pétales", "es" to "Pétalos dulces", "ru" to "Сладкие лепестки",
+        "zh" to "甜蜜花瓣", "hi" to "मीठी पंखुड़ियाँ", "ar" to "بتلات حلوة"),
+    l("lullaby_goodnight_garden",
+        "en" to "Goodnight Garden", "fa" to "باغ شب‌بخیر", "sv" to "Godnattträdgården", "tr" to "İyi Geceler Bahçesi",
+        "de" to "Gute-Nacht-Garten", "fr" to "Le jardin bonne nuit", "es" to "Jardín de buenas noches", "ru" to "Сад спокойной ночи",
+        "zh" to "晚安花园", "hi" to "शुभरात्रि बगीचा", "ar" to "حديقة تصبح على خير"),
+    l("lullaby_lalaei",
+        "en" to "Lullaby", "fa" to "لالایی", "sv" to "Vaggvisa", "tr" to "Ninni",
+        "de" to "Schlaflied", "fr" to "Berceuse", "es" to "Canción de cuna", "ru" to "Колыбельная",
+        "zh" to "摇篮曲", "hi" to "लोरी", "ar" to "تهويدة"),
+    l("lullaby_soft_slumber",
+        "en" to "Soft Slumber", "fa" to "خواب نرم", "sv" to "Mjuk sömn", "tr" to "Yumuşak Uyku",
+        "de" to "Sanfter Schlummer", "fr" to "Doux sommeil", "es" to "Sueño suave", "ru" to "Мягкий сон",
+        "zh" to "轻柔睡眠", "hi" to "कोमल नींद", "ar" to "نوم هادئ"),
+    l("lullaby_sweet_slumber",
+        "en" to "Sweet Slumber", "fa" to "خواب شیرین", "sv" to "Söt sömn", "tr" to "Tatlı Uyku",
+        "de" to "Süßer Schlummer", "fr" to "Doux repos", "es" to "Dulce sueño", "ru" to "Сладкий сон",
+        "zh" to "甜蜜睡眠", "hi" to "मीठी नींद", "ar" to "نوم حلو"),
+    l("lullaby_hushed_persian_night",
+        "en" to "Hushed Persian Night", "fa" to "شب آرام", "sv" to "Tyst persisk natt", "tr" to "Sessiz İran Gecesi",
+        "de" to "Stille persische Nacht", "fr" to "Nuit persane silencieuse", "es" to "Noche persa tranquila", "ru" to "Тихая персидская ночь",
+        "zh" to "宁静波斯之夜", "hi" to "शांत फ़ारसी रात", "ar" to "ليلة فارسية هادئة"),
+    l("lullaby_the_sleepy_world",
+        "en" to "The Sleepy World", "fa" to "دنیای خواب‌آلود", "sv" to "Den sömniga världen", "tr" to "Uykulu Dünya",
+        "de" to "Die verschlafene Welt", "fr" to "Le monde endormi", "es" to "El mundo somnoliento", "ru" to "Сонный мир",
+        "zh" to "睡意朦胧的世界", "hi" to "नींद भरी दुनिया", "ar" to "العالم النعسان"),
+    l("lullaby_petal_lullaby",
+        "en" to "Petal Lullaby", "fa" to "لالایی گلبرگ", "sv" to "Kronbladsvaggvisa", "tr" to "Yaprak Ninnisi",
+        "de" to "Blütenblatt-Schlaflied", "fr" to "Berceuse des pétales", "es" to "Canción de cuna de pétalos", "ru" to "Колыбельная лепестков",
+        "zh" to "花瓣摇篮曲", "hi" to "पंखुड़ी लोरी", "ar" to "تهويدة البتلات"),
 )
 
 private val NightDeep = Color(0xFF141B3C)
@@ -156,7 +184,7 @@ fun LullabiesScreen(onBack: () -> Unit) {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = if (isFa) lullaby.titleFa else lullaby.titleEn,
+                            text = lullaby.title(language),
                             color = Color.White,
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Medium
