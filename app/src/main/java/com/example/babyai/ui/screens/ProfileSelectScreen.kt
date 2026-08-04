@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.MascotRepository
 import com.example.babyai.data.Profile
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.theme.BabyOrange
 import kotlinx.coroutines.flow.first
@@ -60,7 +61,7 @@ fun ProfileSelectScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = if (language == "fa") "کی بازی می‌کنه؟" else "Who's playing?",
+            text = UiStrings.t("profile_prompt", language),
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold
         )
@@ -94,12 +95,9 @@ fun ProfileSelectScreen(
     profileToDelete?.let { profile ->
         AlertDialog(
             onDismissRequest = { profileToDelete = null },
-            title = { Text(if (language == "fa") "حذف بازیکن؟" else "Delete player?") },
+            title = { Text(UiStrings.t("delete_player_title", language)) },
             text = {
-                Text(
-                    if (language == "fa") "پیشرفت «${profile.name}» برای همیشه پاک می‌شه."
-                    else "\"${profile.name}\"'s progress will be permanently deleted."
-                )
+                Text(UiStrings.t("delete_player_body", language).replace("{name}", profile.name))
             },
             confirmButton = {
                 TextButton(onClick = {
@@ -108,11 +106,11 @@ fun ProfileSelectScreen(
                         profiles = prefs.profilesList.first()
                         profileToDelete = null
                     }
-                }) { Text(if (language == "fa") "حذف کن" else "Delete") }
+                }) { Text(UiStrings.t("delete_confirm", language)) }
             },
             dismissButton = {
                 TextButton(onClick = { profileToDelete = null }) {
-                    Text(if (language == "fa") "انصراف" else "Cancel")
+                    Text(UiStrings.t("cancel_button", language))
                 }
             }
         )
@@ -151,13 +149,13 @@ private fun PlayerSlot(profile: Profile, onClick: () -> Unit, onDelete: () -> Un
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .size(40.dp)
+                    .size(28.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.error)
                     .clickable { onDelete() },
                 contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Filled.Close, contentDescription = "Delete", tint = Color.White, modifier = Modifier.size(24.dp))
+                Icon(Icons.Filled.Close, contentDescription = "Delete", tint = Color.White, modifier = Modifier.size(16.dp))
             }
         }
         Spacer(Modifier.height(8.dp))
@@ -188,7 +186,7 @@ private fun AddPlayerSlot(language: String, onClick: () -> Unit) {
         }
         Spacer(Modifier.height(8.dp))
         Text(
-            text = if (language == "fa") "افزودن" else "Add",
+            text = UiStrings.t("add_button", language),
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium
         )

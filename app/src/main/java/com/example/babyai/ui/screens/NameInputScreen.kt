@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.theme.BabyBlue
 import com.example.babyai.ui.theme.BabyOrange
@@ -54,7 +55,7 @@ fun NameInputScreen(onDone: () -> Unit) {
             Spacer(Modifier.height(20.dp))
 
             Text(
-                text = if (language == "fa") "دوست دارم اسمت رو بدونم!" else "I'd love to know your name!",
+                text = UiStrings.t("name_prompt", language),
                 fontSize = 26.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White,
@@ -71,7 +72,7 @@ fun NameInputScreen(onDone: () -> Unit) {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text(if (language == "fa") "اسم" else "Name") },
+                    label = { Text(UiStrings.t("name_label", language)) },
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -99,7 +100,7 @@ fun NameInputScreen(onDone: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(containerColor = BabyOrange)
             ) {
                 Text(
-                    text = if (language == "fa") "ادامه →" else "Continue →",
+                    text = UiStrings.t("continue_button", language),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.ExtraBold
                 )

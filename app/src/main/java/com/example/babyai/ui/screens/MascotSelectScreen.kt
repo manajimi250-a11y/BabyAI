@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.Mascot
 import com.example.babyai.data.MascotRepository
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -41,7 +42,7 @@ fun MascotSelectScreen(onMascotChosen: () -> Unit) {
     ) {
         Spacer(Modifier.height(32.dp))
         Text(
-            text = if (language == "fa") "دوستت رو انتخاب کن!" else "Choose your friend!",
+            text = UiStrings.t("mascot_prompt", language),
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary

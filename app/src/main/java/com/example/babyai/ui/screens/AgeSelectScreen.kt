@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.data.UiStrings
 import com.example.babyai.data.UserPreferences
 import com.example.babyai.ui.theme.BabyGreen
 import com.example.babyai.ui.theme.BabyOrange
@@ -60,7 +61,7 @@ fun AgeSelectScreen(onDone: () -> Unit) {
             Spacer(Modifier.height(32.dp))
 
             Text(
-                text = if (language == "fa") "چند سالته؟ 🎂" else "How old are you? 🎂",
+                text = UiStrings.t("age_prompt", language),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White
@@ -93,7 +94,7 @@ fun AgeSelectScreen(onDone: () -> Unit) {
                             Text(option.emoji, fontSize = 32.sp)
                             Spacer(Modifier.width(16.dp))
                             Text(
-                                text = if (language == "fa") "${option.age} سال" else "${option.age} years old",
+                                text = "${option.age} ${UiStrings.t("years_old_suffix", language)}",
                                 fontSize = 22.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = if (isSelected) Color.White else Color.Black
@@ -116,7 +117,7 @@ fun AgeSelectScreen(onDone: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
                 Text(
-                    text = if (language == "fa") "ادامه →" else "Continue →",
+                    text = UiStrings.t("continue_button", language),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = BabyPurple

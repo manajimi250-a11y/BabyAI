@@ -299,6 +299,85 @@ object UiStrings {
             "hi" to "किसी शब्द के लिए अपनी आवाज़ रिकॉर्ड करने के लिए, वह शब्द खोलें और माइक्रोफ़ोन आइकन पर टैप करें।",
             "ar" to "لتسجيل صوتك لكلمة ما، افتح تلك الكلمة واضغط على أيقونة الميكروفون."
         ),
+
+        // زیرساخت مشترک onboarding
+        "continue_button" to mapOf(
+            "en" to "Continue →", "fa" to "ادامه →", "sv" to "Fortsätt →", "tr" to "Devam Et →",
+            "de" to "Weiter →", "fr" to "Continuer →", "es" to "Continuar →", "ru" to "Продолжить →",
+            "zh" to "继续 →", "hi" to "जारी रखें →", "ar" to "← متابعة"
+        ),
+
+        // NameInputScreen
+        "name_prompt" to mapOf(
+            "en" to "I'd love to know your name!", "fa" to "دوست دارم اسمت رو بدونم!",
+            "sv" to "Jag skulle vilja veta ditt namn!", "tr" to "Adını bilmek isterim!",
+            "de" to "Ich würde gerne deinen Namen wissen!", "fr" to "J'aimerais connaître ton prénom !",
+            "es" to "¡Me encantaría saber tu nombre!", "ru" to "Я хочу узнать твоё имя!",
+            "zh" to "我想知道你的名字！", "hi" to "मैं तुम्हारा नाम जानना चाहता हूँ!",
+            "ar" to "أحب أن أعرف اسمك!"
+        ),
+        "name_label" to mapOf(
+            "en" to "Name", "fa" to "اسم", "sv" to "Namn", "tr" to "İsim", "de" to "Name",
+            "fr" to "Prénom", "es" to "Nombre", "ru" to "Имя", "zh" to "名字", "hi" to "नाम", "ar" to "الاسم"
+        ),
+
+        // AgeSelectScreen
+        "age_prompt" to mapOf(
+            "en" to "How old are you? 🎂", "fa" to "چند سالته؟ 🎂", "sv" to "Hur gammal är du? 🎂",
+            "tr" to "Kaç yaşındasın? 🎂", "de" to "Wie alt bist du? 🎂", "fr" to "Quel âge as-tu ? 🎂",
+            "es" to "¿Cuántos años tienes? 🎂", "ru" to "Сколько тебе лет? 🎂", "zh" to "你几岁了？🎂",
+            "hi" to "तुम्हारी उम्र क्या है? 🎂", "ar" to "كم عمرك؟ 🎂"
+        ),
+        "years_old_suffix" to mapOf(
+            "en" to "years old", "fa" to "سال", "sv" to "år gammal", "tr" to "yaşında",
+            "de" to "Jahre alt", "fr" to "ans", "es" to "años", "ru" to "лет",
+            "zh" to "岁", "hi" to "साल का", "ar" to "سنوات"
+        ),
+
+        // MascotSelectScreen
+        "mascot_prompt" to mapOf(
+            "en" to "Choose your friend!", "fa" to "دوستت رو انتخاب کن!", "sv" to "Välj din vän!",
+            "tr" to "Arkadaşını seç!", "de" to "Wähle deinen Freund!", "fr" to "Choisis ton ami !",
+            "es" to "¡Elige a tu amigo!", "ru" to "Выбери своего друга!", "zh" to "选择你的朋友！",
+            "hi" to "अपना दोस्त चुनो!", "ar" to "اختر صديقك!"
+        ),
+
+        // ProfileSelectScreen
+        "profile_prompt" to mapOf(
+            "en" to "Who's playing?", "fa" to "کی بازی می‌کنه؟", "sv" to "Vem spelar?", "tr" to "Kim oynuyor?",
+            "de" to "Wer spielt?", "fr" to "Qui joue ?", "es" to "¿Quién juega?", "ru" to "Кто играет?",
+            "zh" to "谁在玩？", "hi" to "कौन खेल रहा है?", "ar" to "من يلعب؟"
+        ),
+        "delete_player_title" to mapOf(
+            "en" to "Delete player?", "fa" to "حذف بازیکن؟", "sv" to "Ta bort spelare?", "tr" to "Oyuncu silinsin mi?",
+            "de" to "Spieler löschen?", "fr" to "Supprimer le joueur ?", "es" to "¿Eliminar jugador?",
+            "ru" to "Удалить игрока?", "zh" to "删除玩家？", "hi" to "खिलाड़ी हटाएं?", "ar" to "حذف اللاعب؟"
+        ),
+        "delete_player_body" to mapOf(
+            "en" to "{name}'s progress will be deleted forever.",
+            "fa" to "پیشرفت «{name}» برای همیشه پاک می‌شه.",
+            "sv" to "{name}s framsteg raderas för alltid.",
+            "tr" to "{name} adlı oyuncunun ilerlemesi kalıcı olarak silinecek.",
+            "de" to "Der Fortschritt von {name} wird dauerhaft gelöscht.",
+            "fr" to "Les progrès de {name} seront supprimés pour toujours.",
+            "es" to "El progreso de {name} se eliminará para siempre.",
+            "ru" to "Прогресс {name} будет удалён навсегда.",
+            "zh" to "{name}的进度将被永久删除。",
+            "hi" to "{name} की प्रगति हमेशा के लिए मिट जाएगी।",
+            "ar" to "سيتم حذف تقدم {name} إلى الأبد."
+        ),
+        "delete_confirm" to mapOf(
+            "en" to "Delete", "fa" to "حذف کن", "sv" to "Ta bort", "tr" to "Sil", "de" to "Löschen",
+            "fr" to "Supprimer", "es" to "Eliminar", "ru" to "Удалить", "zh" to "删除", "hi" to "हटाएं", "ar" to "حذف"
+        ),
+        "cancel_button" to mapOf(
+            "en" to "Cancel", "fa" to "انصراف", "sv" to "Avbryt", "tr" to "İptal", "de" to "Abbrechen",
+            "fr" to "Annuler", "es" to "Cancelar", "ru" to "Отмена", "zh" to "取消", "hi" to "रद्द करें", "ar" to "إلغاء"
+        ),
+        "add_button" to mapOf(
+            "en" to "Add", "fa" to "افزودن", "sv" to "Lägg till", "tr" to "Ekle", "de" to "Hinzufügen",
+            "fr" to "Ajouter", "es" to "Añadir", "ru" to "Добавить", "zh" to "添加", "hi" to "जोड़ें", "ar" to "إضافة"
+        ),
     )
 
     /** ترجمه‌ی متن با کد کلید؛ اگه زبون پیدا نشد میره سراغ انگلیسی؛ اگه کلید هم پیدا نشد خود کلید برمی‌گرده */
