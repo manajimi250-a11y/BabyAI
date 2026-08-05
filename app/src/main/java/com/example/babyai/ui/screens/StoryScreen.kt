@@ -88,6 +88,7 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                     )
                 )
                 .padding(20.dp)
+                .padding(bottom = 90.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack) {
@@ -151,33 +152,30 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
             }
 
             Spacer(Modifier.weight(1f))
+        }
 
-            val canProceed = choiceWords.isEmpty() || answeredCorrectly
-            Button(
-                onClick = {
-                    if (pageIndex + 1 >= story.pages.size) {
-                        showCelebration = true
-                    } else {
-                        pageIndex += 1
-                    }
-                },
-                enabled = canProceed,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                shape = RoundedCornerShape(28.dp)
-            ) {
-                Text(
-                    text = UiStrings.t("next_button", language),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Spacer(
-                Modifier
-                    .height(12.dp)
-                    .windowInsetsPadding(WindowInsets.navigationBars)
+        val canProceed = choiceWords.isEmpty() || answeredCorrectly
+        Button(
+            onClick = {
+                if (pageIndex + 1 >= story.pages.size) {
+                    showCelebration = true
+                } else {
+                    pageIndex += 1
+                }
+            },
+            enabled = canProceed,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(horizontal = 20.dp, vertical = 16.dp)
+                .fillMaxWidth()
+                .height(56.dp),
+            shape = RoundedCornerShape(28.dp)
+        ) {
+            Text(
+                text = UiStrings.t("next_button", language),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
             )
         }
 
