@@ -51,10 +51,10 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "One sunny morning, our friend went to visit a farm full of animals!",
                     "fa" to "یه روز آفتابی، دوست ما رفت به یه مزرعه پر از حیوانات!",
-                    "sv" to "En solig morgon besökte vår vän en bondgård full med djur!",
+                    "sv" to "En solig morgon gick vår vän till en bondgård full av djur!",
                     "tr" to "Güneşli bir sabah, arkadaşımız hayvanlarla dolu bir çiftliği ziyaret etti!",
                     "de" to "An einem sonnigen Morgen besuchte unser Freund einen Bauernhof voller Tiere!",
-                    "fr" to "Par un matin ensoleillé, notre ami est allé visiter une ferme pleine d'animaux !",
+                    "fr" to "Par une belle matinée ensoleillée, notre ami est allé visiter une ferme remplie d'animaux !",
                     "es" to "Una mañana soleada, ¡nuestro amigo fue a visitar una granja llena de animales!",
                     "ru" to "Одним солнечным утром наш друг отправился на ферму, полную животных!",
                     "zh" to "在一个阳光明媚的早晨，我们的朋友去参观了一个满是动物的农场！",
@@ -83,13 +83,13 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "Then a chicken came running by! Can you find the chicken?",
                     "fa" to "بعد یه مرغ دوان‌دوان اومد! می‌تونی مرغ رو پیدا کنی؟",
-                    "sv" to "Sedan kom en höna springande förbi! Kan du hitta hönan?",
+                    "sv" to "Sedan kom en höna springande! Kan du hitta hönan?",
                     "tr" to "Sonra bir tavuk koşarak geldi! Tavuğu bulabilir misin?",
                     "de" to "Dann kam ein Huhn vorbeigelaufen! Kannst du das Huhn finden?",
                     "fr" to "Puis une poule est passée en courant ! Peux-tu trouver la poule ?",
-                    "es" to "Luego una gallina pasó corriendo! ¿Puedes encontrar la gallina?",
+                    "es" to "¡Luego pasó una gallina corriendo! ¿Puedes encontrar la gallina?",
                     "ru" to "Потом мимо пробежала курица! Сможешь найти курицу?",
-                    "zh" to "然后一只鸡跑了过来！你能找到鸡吗？",
+                    "zh" to "然后，一只鸡跑了过来！你能找到这只鸡吗？",
                     "hi" to "फिर एक मुर्गी दौड़ती हुई आई! क्या तुम मुर्गी को ढूंढ सकते हो?",
                     "ar" to "ثم جاءت دجاجة تركض! هل يمكنك إيجاد الدجاجة؟"
                 )
@@ -115,13 +115,13 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "Last but not least, a fluffy sheep waved hi! Can you find the sheep?",
                     "fa" to "در آخر، یه گوسفند پشمالو دست تکون داد! می‌تونی گوسفند رو پیدا کنی؟",
-                    "sv" to "Sist men inte minst vinkade ett lurvigt får hej! Kan du hitta fåret?",
-                    "tr" to "Son olarak, tüylü bir koyun elini salladı! Koyunu bulabilir misin?",
+                    "sv" to "Sist vinkade ett fluffigt får hej! Kan du hitta fåret?",
+                    "tr" to "Son olarak, yumuşacık bir koyun el salladı! Koyunu bulabilir misin?",
                     "de" to "Zu guter Letzt winkte ein flauschiges Schaf! Kannst du das Schaf finden?",
                     "fr" to "Enfin, un mouton tout doux a fait coucou ! Peux-tu trouver le mouton ?",
-                    "es" to "Por último, ¡una oveja peluda saludó! ¿Puedes encontrar la oveja?",
+                    "es" to "Por último, ¡una ovejita esponjosa saludó! ¿Puedes encontrar la oveja?",
                     "ru" to "И наконец, пушистая овца помахала привет! Сможешь найти овцу?",
-                    "zh" to "最后，一只毛茸茸的绵羊挥手打招呼！你能找到绵羊吗？",
+                    "zh" to "最后，一只毛茸茸的绵羊向大家挥了挥手！你能找到绵羊吗？",
                     "hi" to "आखिर में, एक रोएंदार भेड़ ने हाथ हिलाया! क्या तुम भेड़ को ढूंढ सकते हो?",
                     "ar" to "وأخيراً، لوّح خروف كثيف الصوف بيده! هل يمكنك إيجاد الخروف؟"
                 )
@@ -134,9 +134,9 @@ object StoryRepository {
                     "tr" to "Çiftlikte ne harika bir gündü! Aferin sana!",
                     "de" to "Was für ein wunderbarer Tag auf dem Bauernhof! Gut gemacht!",
                     "fr" to "Quelle merveilleuse journée à la ferme ! Bravo !",
-                    "es" to "¡Qué día tan maravilloso en la granja! ¡Buen trabajo!",
+                    "es" to "¡Qué día tan bonito en la granja! ¡Muy bien!",
                     "ru" to "Какой прекрасный день на ферме! Молодец!",
-                    "zh" to "在农场度过了多么美好的一天！做得好！",
+                    "zh" to "农场的一天真开心！做得好！",
                     "hi" to "खेत में क्या शानदार दिन था! शाबाश!",
                     "ar" to "يا له من يوم رائع في المزرعة! أحسنت!"
                 )
@@ -174,7 +174,7 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "The first color was bright and warm. Can you find red?",
                     "fa" to "اولین رنگ گرم و روشن بود. می‌تونی قرمز رو پیدا کنی؟",
-                    "sv" to "Den första färgen var ljus och varm. Kan du hitta röd?",
+                    "sv" to "Den första färgen var klar och varm. Kan du hitta röd?",
                     "tr" to "İlk renk parlak ve sıcaktı. Kırmızıyı bulabilir misin?",
                     "de" to "Die erste Farbe war hell und warm. Kannst du Rot finden?",
                     "fr" to "La première couleur était vive et chaude. Peux-tu trouver le rouge ?",
@@ -193,8 +193,8 @@ object StoryRepository {
                     "sv" to "Sedan kom en färg som himlen. Kan du hitta blå?",
                     "tr" to "Sonra gökyüzü gibi bir renk geldi. Maviyi bulabilir misin?",
                     "de" to "Dann kam eine Farbe wie der Himmel. Kannst du Blau finden?",
-                    "fr" to "Puis vint une couleur comme le ciel. Peux-tu trouver le bleu ?",
-                    "es" to "Luego vino un color como el cielo. ¿Puedes encontrar el azul?",
+                    "fr" to "Ensuite, une couleur comme le ciel. Peux-tu trouver le bleu ?",
+                    "es" to "Después apareció un color como el cielo. ¿Puedes encontrar el azul?",
                     "ru" to "Затем появился цвет, как небо. Сможешь найти синий?",
                     "zh" to "接着出现了像天空一样的颜色。你能找到蓝色吗？",
                     "hi" to "फिर आकाश जैसा एक रंग आया। क्या तुम नीला रंग ढूंढ सकते हो?",
@@ -206,7 +206,7 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "Then a bright color like the sun. Can you find yellow?",
                     "fa" to "بعد یه رنگ روشن مثل خورشید. می‌تونی زرد رو پیدا کنی؟",
-                    "sv" to "Sedan en ljus färg som solen. Kan du hitta gul?",
+                    "sv" to "Därefter kom en färg som solen. Kan du hitta gul?",
                     "tr" to "Sonra güneş gibi parlak bir renk. Sarıyı bulabilir misin?",
                     "de" to "Dann eine helle Farbe wie die Sonne. Kannst du Gelb finden?",
                     "fr" to "Puis une couleur vive comme le soleil. Peux-tu trouver le jaune ?",
@@ -222,7 +222,7 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "Last, a color like fresh grass. Can you find green?",
                     "fa" to "در آخر، رنگی مثل چمن تازه. می‌تونی سبز رو پیدا کنی؟",
-                    "sv" to "Sist, en färg som färskt gräs. Kan du hitta grön?",
+                    "sv" to "Till sist en färg som friskt gräs. Kan du hitta grön?",
                     "tr" to "Son olarak, taze çimen gibi bir renk. Yeşili bulabilir misin?",
                     "de" to "Zuletzt eine Farbe wie frisches Gras. Kannst du Grün finden?",
                     "fr" to "Enfin, une couleur comme l'herbe fraîche. Peux-tu trouver le vert ?",
@@ -241,7 +241,7 @@ object StoryRepository {
                     "tr" to "Gökkuşağı güzel renklerle doluydu! Aferin sana!",
                     "de" to "Der Regenbogen war voller schöner Farben! Gut gemacht!",
                     "fr" to "L'arc-en-ciel était plein de belles couleurs ! Bravo !",
-                    "es" to "¡El arcoíris estaba lleno de hermosos colores! ¡Buen trabajo!",
+                    "es" to "¡El arcoíris estaba lleno de colores preciosos! ¡Muy bien!",
                     "ru" to "Радуга была полна прекрасных цветов! Молодец!",
                     "zh" to "彩虹充满了美丽的颜色！做得好！",
                     "hi" to "इंद्रधनुष सुंदर रंगों से भरा था! शाबाश!",
@@ -265,15 +265,15 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "Today the whole family came together for a big gathering!",
                     "fa" to "امروز کل خانواده برای یه مهمونی بزرگ دور هم جمع شدن!",
-                    "sv" to "Idag samlades hela familjen för en stor träff!",
-                    "tr" to "Bugün bütün aile büyük bir toplantı için bir araya geldi!",
-                    "de" to "Heute kam die ganze Familie zu einem großen Treffen zusammen!",
-                    "fr" to "Aujourd'hui, toute la famille s'est réunie pour un grand rassemblement !",
-                    "es" to "¡Hoy toda la familia se reunió para una gran reunión!",
+                    "sv" to "Idag samlades hela familjen för en stor familjeträff!",
+                    "tr" to "Bugün bütün aile büyük bir aile buluşması için bir araya geldi!",
+                    "de" to "Heute ist die ganze Familie zu einem großen Familientreffen zusammengekommen!",
+                    "fr" to "Aujourd'hui, toute la famille s'est réunie pour une grande fête !",
+                    "es" to "¡Hoy toda la familia se reunió para un gran encuentro!",
                     "ru" to "Сегодня вся семья собралась на большую встречу!",
-                    "zh" to "今天全家人聚在一起举行了一场大聚会！",
+                    "zh" to "今天全家人聚在一起，举行了一场热闹的家庭聚会！",
                     "hi" to "आज पूरा परिवार एक बड़े मिलन के लिए इकट्ठा हुआ!",
-                    "ar" to "اليوم اجتمعت العائلة كلها في لقاء كبير!"
+                    "ar" to "اليوم اجتمعت العائلة كلها في لقاءٍ عائلي كبير!"
                 )
             ),
             p(
@@ -281,13 +281,13 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "The one who baked cookies was so happy to see everyone. Can you find mom?",
                     "fa" to "کسی که کلوچه پخته بود از دیدن همه خیلی خوشحال بود. می‌تونی مامان رو پیدا کنی؟",
-                    "sv" to "Den som bakade kakor var så glad att se alla. Kan du hitta mamma?",
+                    "sv" to "Den som hade bakat kakor var så glad att träffa alla. Kan du hitta mamma?",
                     "tr" to "Kurabiye pişiren kişi herkesi görmekten çok mutluydu. Anneyi bulabilir misin?",
                     "de" to "Diejenige, die Kekse gebacken hat, war so glücklich, alle zu sehen. Kannst du Mama finden?",
                     "fr" to "Celle qui a fait des biscuits était si heureuse de voir tout le monde. Peux-tu trouver maman ?",
-                    "es" to "La que horneó galletas estaba muy feliz de ver a todos. ¿Puedes encontrar a mamá?",
+                    "es" to "Quien preparó las galletas estaba muy feliz de ver a todos. ¿Puedes encontrar a mamá?",
                     "ru" to "Та, кто испекла печенье, была так рада всех видеть. Сможешь найти маму?",
-                    "zh" to "烤饼干的人见到大家都很开心。你能找到妈妈吗？",
+                    "zh" to "烤饼干的是妈妈。你能找到妈妈吗？",
                     "hi" to "जिसने कुकीज़ बनाईं वह सबको देखकर बहुत खुश था। क्या तुम माँ को ढूंढ सकते हो?",
                     "ar" to "كانت من خبزت الكعك سعيدة جداً برؤية الجميع. هل يمكنك إيجاد ماما؟"
                 )
@@ -297,13 +297,13 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "Someone played games with everyone in the yard. Can you find dad?",
                     "fa" to "یه نفر توی حیاط با همه بازی می‌کرد. می‌تونی بابا رو پیدا کنی؟",
-                    "sv" to "Någon lekte lekar med alla på gården. Kan du hitta pappa?",
-                    "tr" to "Biri bahçede herkesle oyunlar oynadı. Babayı bulabilir misin?",
+                    "sv" to "Någon lekte med alla ute på gården. Kan du hitta pappa?",
+                    "tr" to "Biri bahçede herkesle oyun oynadı. Babayı bulabilir misin?",
                     "de" to "Jemand spielte mit allen im Garten. Kannst du Papa finden?",
                     "fr" to "Quelqu'un a joué à des jeux avec tout le monde dans la cour. Peux-tu trouver papa ?",
-                    "es" to "Alguien jugó juegos con todos en el patio. ¿Puedes encontrar a papá?",
+                    "es" to "Alguien estuvo jugando con todos en el patio. ¿Puedes encontrar a papá?",
                     "ru" to "Кто-то играл в игры со всеми во дворе. Сможешь найти папу?",
-                    "zh" to "有人在院子里和大家一起玩游戏。你能找到爸爸吗？",
+                    "zh" to "爸爸在院子里和大家一起玩游戏。你能找到爸爸吗？",
                     "hi" to "किसी ने आंगन में सबके साथ खेल खेले। क्या तुम पापा को ढूंढ सकते हो?",
                     "ar" to "لعب أحدهم ألعاباً مع الجميع في الفناء. هل يمكنك إيجاد بابا؟"
                 )
@@ -315,13 +315,13 @@ object StoryRepository {
                     "fa" to "یه نفر بهترین قصه‌های قدیمی رو تعریف کرد. می‌تونی مادربزرگ رو پیدا کنی؟",
                     "sv" to "Någon berättade de bästa gamla historierna. Kan du hitta mormor?",
                     "tr" to "Biri en güzel eski hikayeleri anlattı. Anneanneyi bulabilir misin?",
-                    "de" to "Jemand erzählte die besten alten Geschichten. Kannst du Oma finden?",
-                    "fr" to "Quelqu'un a raconté les meilleures vieilles histoires. Peux-tu trouver grand-mère ?",
-                    "es" to "Alguien contó las mejores historias antiguas. ¿Puedes encontrar a la abuela?",
+                    "de" to "Jemand erzählte die schönsten alten Geschichten. Kannst du Oma finden?",
+                    "fr" to "Quelqu'un a raconté de belles histoires d'autrefois. Peux-tu trouver grand-mère ?",
+                    "es" to "Alguien contó las historias más bonitas. ¿Puedes encontrar a la abuela?",
                     "ru" to "Кто-то рассказывал лучшие старые истории. Сможешь найти бабушку?",
-                    "zh" to "有人讲了最棒的老故事。你能找到奶奶吗？",
+                    "zh" to "奶奶讲了最好听的老故事。你能找到奶奶吗？",
                     "hi" to "किसी ने सबसे अच्छी पुरानी कहानियाँ सुनाईं। क्या तुम दादी को ढूंढ सकते हो?",
-                    "ar" to "روى أحدهم أفضل القصص القديمة. هل يمكنك إيجاد الجدة؟"
+                    "ar" to "روى أحدهم أجمل الحكايات القديمة. هل يمكنك إيجاد الجدة؟"
                 )
             ),
             p(
@@ -329,15 +329,15 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "And someone gave everyone the warmest hugs. Can you find grandpa?",
                     "fa" to "و یه نفر به همه گرم‌ترین بغل‌ها رو داد. می‌تونی پدربزرگ رو پیدا کنی؟",
-                    "sv" to "Och någon gav alla de varmaste kramarna. Kan du hitta morfar?",
-                    "tr" to "Ve biri herkese en sıcak kucaklamaları verdi. Dedeyi bulabilir misin?",
-                    "de" to "Und jemand gab allen die wärmsten Umarmungen. Kannst du Opa finden?",
-                    "fr" to "Et quelqu'un a fait les câlins les plus chaleureux à tout le monde. Peux-tu trouver grand-père ?",
-                    "es" to "Y alguien le dio a todos los abrazos más cálidos. ¿Puedes encontrar al abuelo?",
+                    "sv" to "Och någon gav alla de allra varmaste kramarna. Kan du hitta morfar?",
+                    "tr" to "Ve biri herkese sımsıcak sarıldı. Dedeyi bulabilir misin?",
+                    "de" to "Und jemand drückte alle ganz fest. Kannst du Opa finden?",
+                    "fr" to "Et quelqu'un a fait de gros câlins à tout le monde. Peux-tu trouver grand-père ?",
+                    "es" to "Y alguien les dio a todos los abrazos más calentitos. ¿Puedes encontrar al abuelo?",
                     "ru" to "А кто-то обнимал всех самыми тёплыми объятиями. Сможешь найти дедушку?",
-                    "zh" to "还有人给了大家最温暖的拥抱。你能找到爷爷吗？",
+                    "zh" to "爷爷给了大家一个个温暖的拥抱。你能找到爷爷吗？",
                     "hi" to "और किसी ने सबको सबसे गर्मजोशी भरा गले लगाया। क्या तुम दादा को ढूंढ सकते हो?",
-                    "ar" to "وأعطى أحدهم الجميع أدفأ العناقات. هل يمكنك إيجاد الجد؟"
+                    "ar" to "وعانق أحدهم الجميع بحرارة. هل يمكنك إيجاد الجد؟"
                 )
             ),
             p(
@@ -348,9 +348,9 @@ object StoryRepository {
                     "tr" to "Bu şimdiye kadarki en güzel aile günüydü! Aferin sana!",
                     "de" to "Es war der beste Familientag überhaupt! Gut gemacht!",
                     "fr" to "C'était la meilleure journée en famille de tous les temps ! Bravo !",
-                    "es" to "¡Fue el mejor día familiar de todos! ¡Buen trabajo!",
+                    "es" to "¡Fue el mejor día en familia! ¡Muy bien!",
                     "ru" to "Это был лучший семейный день! Молодец!",
-                    "zh" to "这是有史以来最棒的家庭日！做得好！",
+                    "zh" to "今天真是最棒的家庭日！做得好！",
                     "hi" to "यह अब तक का सबसे अच्छा पारिवारिक दिन था! शाबाश!",
                     "ar" to "لقد كان أفضل يوم عائلي على الإطلاق! أحسنت!"
                 )
@@ -391,9 +391,9 @@ object StoryRepository {
                     "tr" to "Renkli bir balık yanından yüzdü! Balığı bulabilir misin?",
                     "de" to "Ein bunter Fisch schwamm direkt vorbei! Kannst du den Fisch finden?",
                     "fr" to "Un poisson coloré a nagé juste à côté ! Peux-tu trouver le poisson ?",
-                    "es" to "¡Un pez colorido nadó justo al lado! ¿Puedes encontrar el pez?",
+                    "es" to "¡Un pez de colores pasó nadando muy cerca! ¿Puedes encontrar el pez?",
                     "ru" to "Мимо проплыла яркая рыбка! Сможешь найти рыбку?",
-                    "zh" to "一条五彩斑斓的鱼游了过来！你能找到鱼吗？",
+                    "zh" to "一条五彩斑斓的小鱼游了过来！你能找到小鱼吗？",
                     "hi" to "एक रंगीन मछली पास से तैर गई! क्या तुम मछली को ढूंढ सकते हो?",
                     "ar" to "سبحت سمكة ملونة بجانبه! هل يمكنك إيجاد السمكة؟"
                 )
@@ -405,13 +405,13 @@ object StoryRepository {
                     "fa" to "یه لاک‌پشت آروم توی آب شنا می‌کرد. می‌تونی لاک‌پشت رو پیدا کنی؟",
                     "sv" to "En lugn sköldpadda gled genom vattnet. Kan du hitta sköldpaddan?",
                     "tr" to "Sakin bir kaplumbağa suda süzülüyordu. Kaplumbağayı bulabilir misin?",
-                    "de" to "Eine sanfte Schildkröte glitt durchs Wasser. Kannst du die Schildkröte finden?",
+                    "de" to "Eine freundliche Schildkröte glitt durchs Wasser. Kannst du die Schildkröte finden?",
                     "fr" to "Une douce tortue glissait dans l'eau. Peux-tu trouver la tortue ?",
-                    "es" to "Una tortuga tranquila se deslizaba por el agua. ¿Puedes encontrar la tortuga?",
+                    "es" to "Una tortuga nadaba tranquilamente. ¿Puedes encontrar la tortuga?",
                     "ru" to "Спокойная черепаха плавно скользила по воде. Сможешь найти черепаху?",
-                    "zh" to "一只温和的海龟在水中滑行。你能找到海龟吗？",
+                    "zh" to "一只温柔的海龟在水中悠闲地游着。你能找到海龟吗？",
                     "hi" to "एक शांत कछुआ पानी में तैर रहा था। क्या तुम कछुए को ढूंढ सकते हो?",
-                    "ar" to "انزلقت سلحفاة هادئة عبر الماء. هل يمكنك إيجاد السلحفاة؟"
+                    "ar" to "انزلقت سلحفاة لطيفة عبر الماء. هل يمكنك إيجاد السلحفاة؟"
                 )
             ),
             p(
@@ -419,13 +419,13 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "A duck was paddling happily on top of the waves. Can you find the duck?",
                     "fa" to "یه اردک با خوشحالی روی موج‌ها شنا می‌کرد. می‌تونی اردک رو پیدا کنی؟",
-                    "sv" to "En anka paddlade glatt ovanpå vågorna. Kan du hitta ankan?",
+                    "sv" to "En anka simmade glatt på vågorna. Kan du hitta ankan?",
                     "tr" to "Bir ördek dalgaların üzerinde mutlulukla yüzüyordu. Ördeği bulabilir misin?",
                     "de" to "Eine Ente paddelte fröhlich auf den Wellen. Kannst du die Ente finden?",
                     "fr" to "Un canard pagayait joyeusement sur les vagues. Peux-tu trouver le canard ?",
-                    "es" to "Un pato remaba felizmente sobre las olas. ¿Puedes encontrar el pato?",
+                    "es" to "Un pato nadaba feliz sobre las olas. ¿Puedes encontrar el pato?",
                     "ru" to "Утка радостно плыла по волнам. Сможешь найти утку?",
-                    "zh" to "一只鸭子快乐地在浪花上划水。你能找到鸭子吗？",
+                    "zh" to "一只鸭子开心地在水面上游着。你能找到鸭子吗？",
                     "hi" to "एक बत्तख खुशी से लहरों के ऊपर तैर रही थी। क्या तुम बत्तख को ढूंढ सकते हो?",
                     "ar" to "كانت بطة تجدف بسعادة فوق الأمواج. هل يمكنك إيجاد البطة؟"
                 )
@@ -453,9 +453,9 @@ object StoryRepository {
                     "tr" to "Deniz altında ne muhteşem bir maceraydı! Aferin sana!",
                     "de" to "Was für ein tolles Abenteuer unter dem Meer! Gut gemacht!",
                     "fr" to "Quelle aventure incroyable sous la mer ! Bravo !",
-                    "es" to "¡Qué aventura tan increíble bajo el mar! ¡Buen trabajo!",
+                    "es" to "¡Qué aventura tan increíble bajo el mar! ¡Muy bien!",
                     "ru" to "Какое удивительное приключение под водой! Молодец!",
-                    "zh" to "多么精彩的海底冒险啊！做得好！",
+                    "zh" to "海底探险真精彩！做得好！",
                     "hi" to "समुद्र के नीचे क्या अद्भुत रोमांच था! शाबाश!",
                     "ar" to "يا لها من مغامرة رائعة تحت البحر! أحسنت!"
                 )
@@ -476,13 +476,13 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "Our friend put on their explorer hat to go looking for shapes!",
                     "fa" to "دوست ما کلاه کاوشگریش رو گذاشت تا دنبال شکل‌ها بگرده!",
-                    "sv" to "Vår vän tog på sig upptäckarhatten för att leta efter former!",
+                    "sv" to "Vår vän tog på sig sin upptäckarhatt för att leta efter former!",
                     "tr" to "Arkadaşımız şekilleri aramak için kaşif şapkasını taktı!",
                     "de" to "Unser Freund setzte den Entdeckerhut auf, um nach Formen zu suchen!",
                     "fr" to "Notre ami a mis son chapeau d'explorateur pour chercher des formes !",
                     "es" to "¡Nuestro amigo se puso el sombrero de explorador para buscar formas!",
                     "ru" to "Наш друг надел шляпу исследователя, чтобы искать формы!",
-                    "zh" to "我们的朋友戴上探险帽去寻找形状啦！",
+                    "zh" to "我们的朋友戴上探险帽，出发去寻找各种形状啦！",
                     "hi" to "हमारे दोस्त ने आकृतियाँ खोजने के लिए अपनी खोजी टोपी पहनी!",
                     "ar" to "ارتدى صديقنا قبعة المستكشف للبحث عن الأشكال!"
                 )
@@ -498,7 +498,7 @@ object StoryRepository {
                     "fr" to "D'abord, une forme ronde a roulé. Peux-tu trouver le cercle ?",
                     "es" to "Primero, una forma redonda pasó rodando. ¿Puedes encontrar el círculo?",
                     "ru" to "Сначала мимо прокатилась круглая фигура. Сможешь найти круг?",
-                    "zh" to "首先，一个圆形滚了过来。你能找到圆形吗？",
+                    "zh" to "首先，一个圆滚滚的圆形滚了过来。你能找到圆形吗？",
                     "hi" to "पहले, एक गोल आकृति लुढ़कती हुई आई। क्या तुम वृत्त ढूंढ सकते हो?",
                     "ar" to "أولاً، تدحرج شكل دائري. هل يمكنك إيجاد الدائرة؟"
                 )
@@ -528,7 +528,7 @@ object StoryRepository {
                     "tr" to "Sonra üç sivri köşeli bir şekil ortaya çıktı. Üçgeni bulabilir misin?",
                     "de" to "Als Nächstes tauchte eine Form mit drei spitzen Ecken auf. Kannst du das Dreieck finden?",
                     "fr" to "Ensuite, une forme à trois coins pointus est apparue. Peux-tu trouver le triangle ?",
-                    "es" to "Luego, apareció una forma con tres esquinas puntiagudas. ¿Puedes encontrar el triángulo?",
+                    "es" to "Luego apareció una forma con tres puntas. ¿Puedes encontrar el triángulo?",
                     "ru" to "Затем появилась фигура с тремя острыми углами. Сможешь найти треугольник?",
                     "zh" to "接着出现了一个有三个尖角的形状。你能找到三角形吗？",
                     "hi" to "फिर तीन नुकीले कोनों वाली एक आकृति दिखी। क्या तुम त्रिभुज ढूंढ सकते हो?",
@@ -540,13 +540,13 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "Last, a sparkly shape twinkled in the sky. Can you find the star?",
                     "fa" to "در آخر، یه شکل درخشان توی آسمون چشمک زد. می‌تونی ستاره رو پیدا کنی؟",
-                    "sv" to "Sist blinkade en gnistrande form på himlen. Kan du hitta stjärnan?",
+                    "sv" to "Till sist glittrade en stjärnform på himlen. Kan du hitta stjärnan?",
                     "tr" to "Son olarak, parıldayan bir şekil gökyüzünde parladı. Yıldızı bulabilir misin?",
                     "de" to "Zuletzt funkelte eine glitzernde Form am Himmel. Kannst du den Stern finden?",
                     "fr" to "Enfin, une forme scintillante a brillé dans le ciel. Peux-tu trouver l'étoile ?",
                     "es" to "Por último, una forma brillante centelleó en el cielo. ¿Puedes encontrar la estrella?",
                     "ru" to "Наконец, в небе засверкала блестящая фигура. Сможешь найти звезду?",
-                    "zh" to "最后，天空中闪烁着一个闪亮的形状。你能找到星星吗？",
+                    "zh" to "最后，一颗闪亮的星星在天空中眨着眼。你能找到星星吗？",
                     "hi" to "आखिर में, आकाश में एक चमकदार आकृति टिमटिमाई। क्या तुम तारा ढूंढ सकते हो?",
                     "ar" to "أخيراً، تلألأ شكل بريق في السماء. هل يمكنك إيجاد النجمة؟"
                 )
@@ -555,13 +555,13 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "What a fun day finding shapes everywhere! Great job!",
                     "fa" to "چه روز باحالی بود، شکل‌ها رو همه‌جا پیدا کردیم! آفرین بهت!",
-                    "sv" to "Vilken rolig dag att hitta former överallt! Bra jobbat!",
+                    "sv" to "Vilken rolig dag vi hade när vi hittade former överallt! Bra jobbat!",
                     "tr" to "Her yerde şekiller bulmak ne eğlenceli bir gündü! Aferin sana!",
                     "de" to "Was für ein lustiger Tag, überall Formen zu finden! Gut gemacht!",
                     "fr" to "Quelle journée amusante à trouver des formes partout ! Bravo !",
-                    "es" to "¡Qué día tan divertido encontrando formas por todas partes! ¡Buen trabajo!",
+                    "es" to "¡Qué divertido fue encontrar formas por todas partes! ¡Muy bien!",
                     "ru" to "Какой весёлый день, находить формы повсюду! Молодец!",
-                    "zh" to "到处寻找形状的一天真有趣！做得好！",
+                    "zh" to "今天到处寻找形状，真好玩！做得好！",
                     "hi" to "हर जगह आकृतियाँ ढूंढने का कितना मज़ेदार दिन था! शाबाश!",
                     "ar" to "يا له من يوم ممتع في إيجاد الأشكال في كل مكان! أحسنت!"
                 )
@@ -601,7 +601,7 @@ object StoryRepository {
                     "sv" to "Mamma bäddade in alla med en varm filt. Kan du hitta mamma?",
                     "tr" to "Anne herkesi sıcak bir battaniyeyle yatırdı. Anneyi bulabilir misin?",
                     "de" to "Mama deckte alle mit einer warmen Decke zu. Kannst du Mama finden?",
-                    "fr" to "Maman a bordé tout le monde avec une couverture chaude. Peux-tu trouver maman ?",
+                    "fr" to "Maman a bien bordé tout le monde avec une couverture toute douce. Peux-tu trouver maman ?",
                     "es" to "Mamá arropó a todos con una manta calentita. ¿Puedes encontrar a mamá?",
                     "ru" to "Мама укутала всех тёплым одеялом. Сможешь найти маму?",
                     "zh" to "妈妈用温暖的毯子给大家盖好被子。你能找到妈妈吗？",
@@ -615,9 +615,9 @@ object StoryRepository {
                     "en" to "Dad read a bedtime story in a soft, sleepy voice. Can you find dad?",
                     "fa" to "بابا با صدای آروم و خواب‌آلود یه قصه‌ی شب خوند. می‌تونی بابا رو پیدا کنی؟",
                     "sv" to "Pappa läste en godnattsaga med en mjuk, sömnig röst. Kan du hitta pappa?",
-                    "tr" to "Baba yumuşak, uykulu bir sesle bir uyku hikayesi okudu. Babayı bulabilir misin?",
+                    "tr" to "Baba yumuşacık, uykulu bir sesle bir uyku masalı okudu. Babayı bulabilir misin?",
                     "de" to "Papa las mit sanfter, schläfriger Stimme eine Gutenachtgeschichte. Kannst du Papa finden?",
-                    "fr" to "Papa a lu une histoire du soir d'une voix douce et endormie. Peux-tu trouver papa ?",
+                    "fr" to "Papa a lu une histoire du soir d'une voix toute douce. Peux-tu trouver papa ?",
                     "es" to "Papá leyó un cuento antes de dormir con una voz suave y somnolienta. ¿Puedes encontrar a papá?",
                     "ru" to "Папа читал сказку на ночь тихим, сонным голосом. Сможешь найти папу?",
                     "zh" to "爸爸用轻柔、困倦的声音读了一个睡前故事。你能找到爸爸吗？",
@@ -630,7 +630,7 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "Grandma hummed a soft lullaby by the bed. Can you find grandma?",
                     "fa" to "مادربزرگ کنار تخت یه لالایی آروم زمزمه کرد. می‌تونی مادربزرگ رو پیدا کنی؟",
-                    "sv" to "Mormor nynnade en mjuk vaggvisa vid sängen. Kan du hitta mormor?",
+                    "sv" to "Mormor nynnade en lugn vaggvisa vid sängen. Kan du hitta mormor?",
                     "tr" to "Anneanne yatağın yanında yumuşak bir ninni mırıldandı. Anneanneyi bulabilir misin?",
                     "de" to "Oma summte am Bett ein sanftes Schlaflied. Kannst du Oma finden?",
                     "fr" to "Grand-mère a fredonné une douce berceuse près du lit. Peux-tu trouver grand-mère ?",
@@ -647,12 +647,12 @@ object StoryRepository {
                     "en" to "Grandpa turned off the lights and whispered sweet dreams. Can you find grandpa?",
                     "fa" to "پدربزرگ چراغ‌ها رو خاموش کرد و آروم گفت خواب‌های خوش. می‌تونی پدربزرگ رو پیدا کنی؟",
                     "sv" to "Morfar släckte lamporna och viskade sov gott. Kan du hitta morfar?",
-                    "tr" to "Dede ışıkları kapattı ve tatlı rüyalar diye fısıldadı. Dedeyi bulabilir misin?",
+                    "tr" to "Dede ışıkları kapattı ve \"Tatlı rüyalar.\" diye fısıldadı. Dedeyi bulabilir misin?",
                     "de" to "Opa schaltete das Licht aus und flüsterte süße Träume. Kannst du Opa finden?",
-                    "fr" to "Grand-père a éteint les lumières et a chuchoté fais de beaux rêves. Peux-tu trouver grand-père ?",
-                    "es" to "El abuelo apagó las luces y susurró dulces sueños. ¿Puedes encontrar al abuelo?",
+                    "fr" to "Grand-père a éteint les lumières et a chuchoté : « Fais de beaux rêves. » Peux-tu trouver grand-père ?",
+                    "es" to "El abuelo apagó las luces y susurró: «Dulces sueños». ¿Puedes encontrar al abuelo?",
                     "ru" to "Дедушка выключил свет и прошептал сладких снов. Сможешь найти дедушку?",
-                    "zh" to "爷爷关了灯，轻声说了声好梦。你能找到爷爷吗？",
+                    "zh" to "爷爷关上灯，轻声说：\"做个好梦。\"你能找到爷爷吗？",
                     "hi" to "दादा ने बत्तियाँ बंद कीं और धीरे से मीठे सपनों की कामना की। क्या तुम दादा को ढूंढ सकते हो?",
                     "ar" to "أطفأ الجد الأنوار وهمس بأحلام سعيدة. هل يمكنك إيجاد الجد؟"
                 )
@@ -661,11 +661,11 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "The whole family said goodnight under the twinkling stars! Sweet dreams!",
                     "fa" to "کل خانواده زیر ستاره‌های چشمک‌زن شب‌بخیر گفتن! خواب‌های شیرین!",
-                    "sv" to "Hela familjen sa god natt under de blinkande stjärnorna! Sov gott!",
+                    "sv" to "Hela familjen sa god natt under de tindrande stjärnorna! Sov gott!",
                     "tr" to "Bütün aile parıldayan yıldızların altında iyi geceler dedi! Tatlı rüyalar!",
                     "de" to "Die ganze Familie sagte unter den funkelnden Sternen gute Nacht! Süße Träume!",
                     "fr" to "Toute la famille a dit bonne nuit sous les étoiles scintillantes ! Fais de beaux rêves !",
-                    "es" to "¡Toda la familia dijo buenas noches bajo las estrellas titilantes! ¡Dulces sueños!",
+                    "es" to "¡Toda la familia dio las buenas noches bajo las estrellas brillantes! ¡Dulces sueños!",
                     "ru" to "Вся семья пожелала спокойной ночи под мерцающими звёздами! Сладких снов!",
                     "zh" to "全家人在闪烁的星星下互道晚安！做个好梦！",
                     "hi" to "पूरे परिवार ने टिमटिमाते सितारों के नीचे शुभरात्रि कही! मीठे सपने!",
@@ -679,8 +679,8 @@ object StoryRepository {
         id = "little_animals_home",
         titles = mapOf(
             "en" to "Little Animals' Home", "fa" to "خونه‌ی حیوانات کوچولو", "sv" to "De små djurens hem", "tr" to "Küçük Hayvanların Evi",
-            "de" to "Zuhause der kleinen Tiere", "fr" to "La maison des petits animaux", "es" to "El hogar de los animalitos", "ru" to "Дом маленьких зверят",
-            "zh" to "小动物之家", "hi" to "छोटे जानवरों का घर", "ar" to "منزل الحيوانات الصغيرة"
+            "de" to "Das Zuhause der kleinen Tiere", "fr" to "La maison des petits animaux", "es" to "El hogar de los animalitos", "ru" to "Дом маленьких зверят",
+            "zh" to "小动物之家", "hi" to "छोटे जानवरों का घर", "ar" to "بيت الحيوانات الصغيرة"
         ),
         emoji = "🏡",
         pages = listOf(
@@ -694,7 +694,7 @@ object StoryRepository {
                     "fr" to "Notre ami a visité une maison douillette où vivaient plein de petits animaux !",
                     "es" to "¡Nuestro amigo visitó un hogar acogedor donde vivían juntos muchos animalitos!",
                     "ru" to "Наш друг посетил уютный дом, где вместе жило много маленьких зверят!",
-                    "zh" to "我们的朋友拜访了一个温馨的家，里面住着好多小动物！",
+                    "zh" to "我们的朋友来到一个温馨的小家，许多小动物都住在这里！",
                     "hi" to "हमारा दोस्त एक आरामदायक घर गया जहाँ बहुत से छोटे जानवर साथ रहते थे!",
                     "ar" to "زار صديقنا منزلاً دافئاً يعيش فيه الكثير من الحيوانات الصغيرة معاً!"
                 )
@@ -703,14 +703,14 @@ object StoryRepository {
                 targetWordId = "dog", distractorWordIds = listOf("cat", "rabbit"),
                 texts = *arrayOf(
                     "en" to "A friendly puppy wagged its tail at the door. Can you find the dog?",
-                    "fa" to "یه توله‌سگ مهربون دم درب دمش رو تکون داد. می‌تونی سگ رو پیدا کنی؟",
-                    "sv" to "En vänlig valp viftade på svansen vid dörren. Kan du hitta hunden?",
+                    "fa" to "یه توله‌سگ مهربون دمِ در دمش رو تکون داد. می‌تونی سگ رو پیدا کنی؟",
+                    "sv" to "En glad liten valp viftade på svansen vid dörren. Kan du hitta hunden?",
                     "tr" to "Kapıda dost canlısı bir yavru köpek kuyruğunu salladı. Köpeği bulabilir misin?",
                     "de" to "Ein freundlicher Welpe wedelte an der Tür mit dem Schwanz. Kannst du den Hund finden?",
                     "fr" to "Un chiot amical remuait la queue à la porte. Peux-tu trouver le chien ?",
-                    "es" to "Un cachorro amistoso movía la cola en la puerta. ¿Puedes encontrar al perro?",
+                    "es" to "Un cachorro muy simpático movía la cola junto a la puerta. ¿Puedes encontrar al perro?",
                     "ru" to "Дружелюбный щенок вилял хвостом у двери. Сможешь найти собаку?",
-                    "zh" to "一只友好的小狗在门口摇着尾巴。你能找到狗吗？",
+                    "zh" to "一只友好的小狗在门口摇着尾巴。你能找到小狗吗？",
                     "hi" to "एक दोस्ताना पिल्ला दरवाज़े पर पूंछ हिला रहा था। क्या तुम कुत्ते को ढूंढ सकते हो?",
                     "ar" to "لوّح جرو ودود بذيله عند الباب. هل يمكنك إيجاد الكلب؟"
                 )
@@ -736,11 +736,11 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "A fluffy rabbit hopped around looking for carrots. Can you find the rabbit?",
                     "fa" to "یه خرگوش پشمالو دنبال هویج این‌ور اون‌ور می‌پرید. می‌تونی خرگوش رو پیدا کنی؟",
-                    "sv" to "En luden kanin hoppade omkring och letade efter morötter. Kan du hitta kaninen?",
+                    "sv" to "En fluffig kanin hoppade runt och letade efter morötter. Kan du hitta kaninen?",
                     "tr" to "Tüylü bir tavşan havuç ararken zıplayıp duruyordu. Tavşanı bulabilir misin?",
                     "de" to "Ein flauschiges Kaninchen hüpfte auf der Suche nach Karotten herum. Kannst du das Kaninchen finden?",
                     "fr" to "Un lapin tout doux sautillait à la recherche de carottes. Peux-tu trouver le lapin ?",
-                    "es" to "Un conejo peludo saltaba buscando zanahorias. ¿Puedes encontrar al conejo?",
+                    "es" to "Un conejito esponjoso iba saltando mientras buscaba zanahorias. ¿Puedes encontrar al conejo?",
                     "ru" to "Пушистый кролик прыгал в поисках морковки. Сможешь найти кролика?",
                     "zh" to "一只毛茸茸的兔子跳来跳去找胡萝卜。你能找到兔子吗？",
                     "hi" to "एक रोएंदार खरगोश गाजर ढूंढते हुए उछल-कूद कर रहा था। क्या तुम खरगोश को ढूंढ सकते हो?",
@@ -752,15 +752,15 @@ object StoryRepository {
                 texts = *arrayOf(
                     "en" to "A little chicken pecked happily at some seeds. Can you find the chicken?",
                     "fa" to "یه جوجه‌مرغ کوچولو با خوشحالی دونه‌ها رو نوک می‌زد. می‌تونی مرغ رو پیدا کنی؟",
-                    "sv" to "En liten höna pickade glatt på några frön. Kan du hitta hönan?",
+                    "sv" to "En liten höna pickade glatt på frön. Kan du hitta hönan?",
                     "tr" to "Küçük bir tavuk mutlulukla tohumları gagalıyordu. Tavuğu bulabilir misin?",
-                    "de" to "Ein kleines Huhn pickte fröhlich nach ein paar Samen. Kannst du das Huhn finden?",
+                    "de" to "Ein kleines Huhn pickte fröhlich Körner. Kannst du das Huhn finden?",
                     "fr" to "Une petite poule picorait joyeusement des graines. Peux-tu trouver la poule ?",
-                    "es" to "Una pequeña gallina picoteaba felizmente algunas semillas. ¿Puedes encontrar la gallina?",
+                    "es" to "Una gallinita picoteaba unas semillas muy contenta. ¿Puedes encontrar la gallina?",
                     "ru" to "Маленькая курочка радостно клевала зёрнышки. Сможешь найти курицу?",
-                    "zh" to "一只小鸡开心地啄着种子。你能找到鸡吗？",
+                    "zh" to "一只小鸡开心地啄着小种子。你能找到小鸡吗？",
                     "hi" to "एक छोटी मुर्गी खुशी से बीज चुग रही थी। क्या तुम मुर्गी को ढूंढ सकते हो?",
-                    "ar" to "نقرت دجاجة صغيرة الحبوب بسعادة. هل يمكنك إيجاد الدجاجة؟"
+                    "ar" to "كانت دجاجة صغيرة تنقر الحبوب بسعادة. هل يمكنك إيجاد الدجاجة؟"
                 )
             ),
             p(
@@ -771,9 +771,9 @@ object StoryRepository {
                     "tr" to "Tüm küçük hayvanlar sıcak evlerinde birlikte mutluydu! Aferin sana!",
                     "de" to "Alle kleinen Tiere waren zusammen glücklich in ihrem gemütlichen Zuhause! Gut gemacht!",
                     "fr" to "Tous les petits animaux étaient heureux ensemble dans leur maison douillette ! Bravo !",
-                    "es" to "¡Todos los animalitos estaban felices juntos en su hogar acogedor! ¡Buen trabajo!",
+                    "es" to "¡Todos los animalitos estaban muy felices juntos en su acogedor hogar! ¡Muy bien!",
                     "ru" to "Все маленькие зверята были счастливы вместе в своём уютном доме! Молодец!",
-                    "zh" to "所有的小动物都在温馨的家里快乐地在一起！做得好！",
+                    "zh" to "所有小动物都幸福地生活在温馨的家里！做得好！",
                     "hi" to "सभी छोटे जानवर अपने आरामदायक घर में साथ खुश थे! शाबाश!",
                     "ar" to "كانت كل الحيوانات الصغيرة سعيدة معاً في منزلها الدافئ! أحسنت!"
                 )
