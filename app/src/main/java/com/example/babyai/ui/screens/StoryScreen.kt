@@ -164,8 +164,7 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                 enabled = canProceed,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
-                    .windowInsetsPadding(WindowInsets.navigationBars),
+                    .height(56.dp),
                 shape = RoundedCornerShape(28.dp)
             ) {
                 Text(
@@ -174,6 +173,12 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
                     fontWeight = FontWeight.Bold
                 )
             }
+
+            Spacer(
+                Modifier
+                    .height(12.dp)
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+            )
         }
 
         com.example.babyai.ui.components.BackgroundMusicController(
