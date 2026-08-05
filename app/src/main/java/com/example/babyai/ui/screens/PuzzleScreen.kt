@@ -268,6 +268,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
 
         if (showRecordGate) {
             ParentalGateDialog(
+                language = language,
                 onSuccess = {
                     showRecordGate = false
                     showRecordDialog = true

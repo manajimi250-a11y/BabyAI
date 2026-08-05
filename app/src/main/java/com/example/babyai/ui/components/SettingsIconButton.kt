@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
  * قفل والدین همیشه فعاله و قابل غیرفعال‌سازی نیست.
  */
 @Composable
-fun SettingsIconButton(modifier: Modifier = Modifier, onSettingsClick: () -> Unit) {
+fun SettingsIconButton(modifier: Modifier = Modifier, language: String = "en", onSettingsClick: () -> Unit) {
     var showGate by remember { mutableStateOf(false) }
 
     IconButton(modifier = modifier, onClick = { showGate = true }) {
@@ -21,6 +21,7 @@ fun SettingsIconButton(modifier: Modifier = Modifier, onSettingsClick: () -> Uni
 
     if (showGate) {
         ParentalGateDialog(
+            language = language,
             onSuccess = {
                 showGate = false
                 onSettingsClick()

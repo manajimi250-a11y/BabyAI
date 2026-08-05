@@ -265,6 +265,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
 
         if (showLullabyGate) {
             ParentalGateDialog(
+                language = language,
                 onSuccess = {
                     showLullabyGate = false
                     onLullabiesClick()
@@ -275,6 +276,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
 
         if (showDashboardGate) {
             ParentalGateDialog(
+                language = language,
                 onSuccess = {
                     showDashboardGate = false
                     onParentDashboardClick()

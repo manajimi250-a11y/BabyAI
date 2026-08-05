@@ -204,6 +204,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
     }
     pendingRecordingWord?.let { word ->
         ParentalGateDialog(
+            language = language,
             onSuccess = {
                 pendingRecordingWord = null
                 recordingWord = word

@@ -130,6 +130,7 @@ fun CategoryMenuScreen(
         }
         if (gateEnabled) {
             ParentalGateDialog(
+                language = language,
                 onSuccess = {
                     showGate = false
                     onSettingsClick()

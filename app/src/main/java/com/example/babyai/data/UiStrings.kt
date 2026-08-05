@@ -279,6 +279,37 @@ object UiStrings {
             "hi" to "आपके बच्चे की सुरक्षा के लिए पेरेंटल गेट हमेशा चालू रहता है",
             "ar" to "بوابة الوالدين مفعّلة دائماً لحماية طفلك"
         ),
+
+        // ParentalGateDialog
+        "gate_title" to mapOf(
+            "en" to "Parent Verification", "fa" to "تأیید والدین", "sv" to "Föräldraverifiering", "tr" to "Ebeveyn Doğrulaması",
+            "de" to "Elternbestätigung", "fr" to "Vérification parentale", "es" to "Verificación de padres", "ru" to "Подтверждение родителя",
+            "zh" to "家长验证", "hi" to "अभिभावक सत्यापन", "ar" to "التحقق من الوالدين"
+        ),
+        "gate_prompt" to mapOf(
+            "en" to "To continue, please solve this sum:", "fa" to "برای ادامه، این جمع رو حل کنید:",
+            "sv" to "För att fortsätta, lös denna summa:", "tr" to "Devam etmek için bu toplamı çözün:",
+            "de" to "Um fortzufahren, löse bitte diese Summe:", "fr" to "Pour continuer, résolvez cette addition :",
+            "es" to "Para continuar, resuelve esta suma:", "ru" to "Чтобы продолжить, решите этот пример:",
+            "zh" to "要继续，请解出这道题：", "hi" to "जारी रखने के लिए, कृपया यह जोड़ हल करें:",
+            "ar" to "للمتابعة، يرجى حل هذا الجمع:"
+        ),
+        "gate_answer_label" to mapOf(
+            "en" to "Answer", "fa" to "جواب", "sv" to "Svar", "tr" to "Cevap", "de" to "Antwort",
+            "fr" to "Réponse", "es" to "Respuesta", "ru" to "Ответ", "zh" to "答案", "hi" to "उत्तर", "ar" to "الإجابة"
+        ),
+        "gate_wrong_answer" to mapOf(
+            "en" to "That's not right, try again.", "fa" to "جواب درست نیست، دوباره امتحان کنید.",
+            "sv" to "Det stämmer inte, försök igen.", "tr" to "Bu doğru değil, tekrar deneyin.",
+            "de" to "Das ist nicht richtig, versuche es erneut.", "fr" to "Ce n'est pas correct, réessayez.",
+            "es" to "Eso no es correcto, inténtalo de nuevo.", "ru" to "Это неверно, попробуйте снова.",
+            "zh" to "不对哦，再试一次。", "hi" to "यह सही नहीं है, फिर कोशिश करें।",
+            "ar" to "هذا غير صحيح، حاول مرة أخرى."
+        ),
+        "gate_confirm" to mapOf(
+            "en" to "Confirm", "fa" to "تأیید", "sv" to "Bekräfta", "tr" to "Onayla", "de" to "Bestätigen",
+            "fr" to "Confirmer", "es" to "Confirmar", "ru" to "Подтвердить", "zh" to "确认", "hi" to "पुष्टि करें", "ar" to "تأكيد"
+        ),
         "settings_music" to mapOf(
             "en" to "Background Music", "fa" to "موزیک پس‌زمینه", "sv" to "Bakgrundsmusik", "tr" to "Arka Plan Müziği",
             "de" to "Hintergrundmusik", "fr" to "Musique de fond", "es" to "Música de fondo", "ru" to "Фоновая музыка",

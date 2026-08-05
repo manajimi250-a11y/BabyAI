@@ -92,6 +92,7 @@ fun ActivityHubScreen(
     }
 
     SettingsIconButton(
+        language = language,
         modifier = Modifier
             .align(Alignment.TopEnd)
             .windowInsetsPadding(WindowInsets.statusBars)

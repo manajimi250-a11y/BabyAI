@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.babyai.data.UiStrings
 import kotlin.random.Random
 
 /**
@@ -16,6 +17,7 @@ import kotlin.random.Random
  */
 @Composable
 fun ParentalGateDialog(
+    language: String = "en",
     onSuccess: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -26,10 +28,10 @@ fun ParentalGateDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("تأیید والدین") },
+        title = { Text(UiStrings.t("gate_title", language)) },
         text = {
             Column {
-                Text("برای ادامه، این جمع رو حل کنید:")
+                Text(UiStrings.t("gate_prompt", language))
                 Spacer(Modifier.height(12.dp))
                 Text(
                     text = "$a + $b = ?",
@@ -43,13 +45,13 @@ fun ParentalGateDialog(
                         answer = it
                         showError = false
                     },
-                    label = { Text("جواب") },
+                    label = { Text(UiStrings.t("gate_answer_label", language)) },
                     singleLine = true,
                     isError = showError
                 )
                 if (showError) {
                     Text(
-                        text = "جواب درست نیست، دوباره امتحان کنید.",
+                        text = UiStrings.t("gate_wrong_answer", language),
                         color = MaterialTheme.colorScheme.error,
                         fontSize = 13.sp
                     )
@@ -63,10 +65,10 @@ fun ParentalGateDialog(
                 } else {
                     showError = true
                 }
-            }) { Text("تأیید") }
+            }) { Text(UiStrings.t("gate_confirm", language)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("انصراف") }
+            TextButton(onClick = onDismiss) { Text(UiStrings.t("cancel_button", language)) }
         }
     )
 }

@@ -201,6 +201,7 @@ fun MemoryGameScreen(onBack: () -> Unit) {
 
         pendingRecordingWordId?.let { wordId ->
             ParentalGateDialog(
+                language = language,
                 onSuccess = {
                     pendingRecordingWordId = null
                     recordingWordId = wordId

@@ -71,7 +71,7 @@ fun GamesMenuScreen(
                     fontWeight = FontWeight.Bold
                 )
             }
-            SettingsIconButton(onSettingsClick = onSettingsClick)
+            SettingsIconButton(language = language, onSettingsClick = onSettingsClick)
         }
 
         Spacer(Modifier.height(20.dp))
