@@ -48,7 +48,7 @@ fun BackgroundMusicController(trackName: String, modifier: Modifier = Modifier) 
         modifier = modifier
             .size(44.dp)
             .clip(CircleShape)
-            .background(Color.Black.copy(alpha = 0.25f))
+            .background(Color.Black.copy(alpha = 0.45f))
             .clickable {
                 muted = !muted
                 musicManager.setMuted(muted)

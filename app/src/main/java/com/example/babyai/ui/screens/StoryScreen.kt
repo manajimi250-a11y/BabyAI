@@ -181,7 +181,7 @@ fun StoryScreen(storyId: String, onBack: () -> Unit) {
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(20.dp)
+                .padding(bottom = 90.dp, start = 20.dp)
         )
 
         MascotCompanion(
