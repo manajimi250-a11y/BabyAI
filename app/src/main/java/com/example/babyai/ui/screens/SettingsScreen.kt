@@ -1,5 +1,8 @@
 package com.example.babyai.ui.screens
 
+import android.content.Intent
+import android.net.Uri
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -290,6 +293,18 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
             text = UiStrings.t("settings_record_instruction", language),
             fontSize = 15.sp,
             fontWeight = FontWeight.Medium
+        )
+
+        Spacer(Modifier.height(20.dp))
+        Text(
+            text = UiStrings.t("settings_privacy_policy", language),
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Medium,
+            color = SelectedBlue,
+            modifier = Modifier.clickable {
+                val url = "https://motala40-lgtm.github.io/BabyAI/"
+                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            }
         )
     }
 }

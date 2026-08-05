@@ -279,6 +279,11 @@ object UiStrings {
             "hi" to "आपके बच्चे की सुरक्षा के लिए पेरेंटल गेट हमेशा चालू रहता है",
             "ar" to "بوابة الوالدين مفعّلة دائماً لحماية طفلك"
         ),
+        "settings_privacy_policy" to mapOf(
+            "en" to "Privacy Policy", "fa" to "حریم خصوصی", "sv" to "Integritetspolicy", "tr" to "Gizlilik Politikası",
+            "de" to "Datenschutzerklärung", "fr" to "Politique de confidentialité", "es" to "Política de privacidad",
+            "ru" to "Политика конфиденциальности", "zh" to "隐私政策", "hi" to "गोपनीयता नीति", "ar" to "سياسة الخصوصية"
+        ),
 
         // ParentalGateDialog
         "gate_title" to mapOf(
