@@ -30,6 +30,7 @@ import com.example.babyai.data.VoiceSource
 import com.example.babyai.data.WordRepository
 import com.example.babyai.ui.components.CelebrationOverlay
 import com.example.babyai.ui.components.MascotCompanion
+import com.example.babyai.ui.components.ParentalGateDialog
 import com.example.babyai.ui.components.RecordWordDialog
 import com.example.babyai.ui.theme.BabyGreen
 import kotlinx.coroutines.delay
@@ -73,6 +74,7 @@ fun MemoryGameScreen(onBack: () -> Unit) {
     var showCelebration by remember { mutableStateOf(false) }
     var pairCount by remember { mutableStateOf(4) }
     var recordingWordId by remember { mutableStateOf<String?>(null) }
+    var pendingRecordingWordId by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
         language = prefs.language.first()
@@ -162,7 +164,7 @@ fun MemoryGameScreen(onBack: () -> Unit) {
                                 scope.launch { playCardSound(card.wordId) }
                             }
                         },
-                        onLongPress = { recordingWordId = card.wordId }
+                        onLongPress = { pendingRecordingWordId = card.wordId }
                     )
                 }
             }
@@ -194,6 +196,16 @@ fun MemoryGameScreen(onBack: () -> Unit) {
                     cards = buildShuffledCards(pairCount)
                 },
                 onBackToMenu = onBack
+            )
+        }
+
+        pendingRecordingWordId?.let { wordId ->
+            ParentalGateDialog(
+                onSuccess = {
+                    pendingRecordingWordId = null
+                    recordingWordId = wordId
+                },
+                onDismiss = { pendingRecordingWordId = null }
             )
         }
 

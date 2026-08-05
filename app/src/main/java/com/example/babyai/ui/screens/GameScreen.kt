@@ -34,6 +34,7 @@ import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
 import com.example.babyai.ui.components.CelebrationOverlay
 import com.example.babyai.ui.components.MascotCompanion
+import com.example.babyai.ui.components.ParentalGateDialog
 import com.example.babyai.ui.components.RecordWordDialog
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -49,6 +50,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
     var discovered by remember { mutableStateOf(setOf<String>()) }
     var activeWord by remember { mutableStateOf<Word?>(null) }
     var recordingWord by remember { mutableStateOf<Word?>(null) }
+    var pendingRecordingWord by remember { mutableStateOf<Word?>(null) }
     var showCelebration by remember { mutableStateOf(false) }
     var starsEarnedThisRound by remember { mutableStateOf(0) }
     var photoSize by remember { mutableStateOf(PhotoSize.MEDIUM) }
@@ -140,7 +142,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
                             }
                         }
                     },
-                    onLongPress = { recordingWord = word }
+                    onLongPress = { pendingRecordingWord = word }
                 )
             }
         }
@@ -198,6 +200,15 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
                 starsEarnedThisRound = 0
             },
             onBackToMenu = onBackToMenu
+        )
+    }
+    pendingRecordingWord?.let { word ->
+        ParentalGateDialog(
+            onSuccess = {
+                pendingRecordingWord = null
+                recordingWord = word
+            },
+            onDismiss = { pendingRecordingWord = null }
         )
     }
     recordingWord?.let { word ->

@@ -38,16 +38,15 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
 
     var language by remember { mutableStateOf("fa") }
     var photoSize by remember { mutableStateOf(PhotoSize.MEDIUM) }
-    var parentalGateEnabled by remember { mutableStateOf(false) }
     var childAge by remember { mutableStateOf(2) }
     var musicEnabled by remember { mutableStateOf(true) }
     var nightModeEnabled by remember { mutableStateOf(false) }
     var showLullabyGate by remember { mutableStateOf(false) }
+    var showDashboardGate by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         language = prefs.language.first()
         photoSize = prefs.photoSize.first()
-        parentalGateEnabled = prefs.parentalGateEnabled.first()
         childAge = prefs.childAge.first()
         musicEnabled = prefs.musicEnabled.first()
         nightModeEnabled = prefs.nightModeEnabled.first()
@@ -161,21 +160,14 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            Text("🔒", fontSize = 20.sp)
+            Spacer(Modifier.width(8.dp))
             Text(
-                text = UiStrings.t("settings_parental_gate", language),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Switch(
-                checked = parentalGateEnabled,
-                onCheckedChange = {
-                    parentalGateEnabled = it
-                    scope.launch { prefs.setParentalGateEnabled(it) }
-                },
-                colors = SwitchDefaults.colors(checkedTrackColor = SelectedBlue)
+                text = UiStrings.t("settings_parental_gate_always_on", language),
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium
             )
         }
 
@@ -228,7 +220,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onParentDashboardClick() },
+                .clickable { showDashboardGate = true },
             shape = RoundedCornerShape(18.dp),
             colors = CardDefaults.cardColors(containerColor = BabyGreen)
         ) {
@@ -278,6 +270,16 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
                     onLullabiesClick()
                 },
                 onDismiss = { showLullabyGate = false }
+            )
+        }
+
+        if (showDashboardGate) {
+            ParentalGateDialog(
+                onSuccess = {
+                    showDashboardGate = false
+                    onParentDashboardClick()
+                },
+                onDismiss = { showDashboardGate = false }
             )
         }
 

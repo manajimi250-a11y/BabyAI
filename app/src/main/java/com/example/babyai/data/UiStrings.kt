@@ -266,6 +266,19 @@ object UiStrings {
             "de" to "Elternsperre", "fr" to "Verrou parental", "es" to "Control parental", "ru" to "Родительский контроль",
             "zh" to "家长锁", "hi" to "पेरेंटल गेट", "ar" to "بوابة الوالدين"
         ),
+        "settings_parental_gate_always_on" to mapOf(
+            "en" to "Parental Gate is always on to protect your child",
+            "fa" to "قفل والدین همیشه فعاله تا از فرزندتون محافظت کنه",
+            "sv" to "Föräldralåset är alltid på för att skydda ditt barn",
+            "tr" to "Ebeveyn kilidi çocuğunuzu korumak için her zaman açıktır",
+            "de" to "Die Elternsperre ist immer aktiv, um dein Kind zu schützen",
+            "fr" to "Le verrou parental est toujours activé pour protéger votre enfant",
+            "es" to "El control parental siempre está activado para proteger a tu hijo",
+            "ru" to "Родительский контроль всегда включён для защиты вашего ребёнка",
+            "zh" to "家长锁始终开启，以保护您的孩子",
+            "hi" to "आपके बच्चे की सुरक्षा के लिए पेरेंटल गेट हमेशा चालू रहता है",
+            "ar" to "بوابة الوالدين مفعّلة دائماً لحماية طفلك"
+        ),
         "settings_music" to mapOf(
             "en" to "Background Music", "fa" to "موزیک پس‌زمینه", "sv" to "Bakgrundsmusik", "tr" to "Arka Plan Müziği",
             "de" to "Hintergrundmusik", "fr" to "Musique de fond", "es" to "Música de fondo", "ru" to "Фоновая музыка",

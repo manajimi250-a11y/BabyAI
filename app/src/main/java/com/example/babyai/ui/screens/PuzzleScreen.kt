@@ -35,6 +35,7 @@ import com.example.babyai.data.Word
 import com.example.babyai.data.WordRepository
 import com.example.babyai.ui.components.CelebrationOverlay
 import com.example.babyai.ui.components.MascotCompanion
+import com.example.babyai.ui.components.ParentalGateDialog
 import com.example.babyai.ui.components.RecordWordDialog
 import com.example.babyai.ui.theme.BabyGreen
 import com.example.babyai.ui.theme.BabyOrange
@@ -64,6 +65,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
     var selectedIndex by remember { mutableStateOf<Int?>(null) }
     var showCelebration by remember { mutableStateOf(false) }
     var showRecordDialog by remember { mutableStateOf(false) }
+    var showRecordGate by remember { mutableStateOf(false) }
 
     fun startPuzzle() {
         puzzleWord = pickPuzzleWord()
@@ -131,7 +133,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
                 )
-                IconButton(onClick = { showRecordDialog = true }) {
+                IconButton(onClick = { showRecordGate = true }) {
                     Icon(Icons.Filled.Mic, contentDescription = "Record")
                 }
             }
@@ -261,6 +263,16 @@ fun PuzzleScreen(onBack: () -> Unit) {
                     startPuzzle()
                 },
                 onBackToMenu = onBack
+            )
+        }
+
+        if (showRecordGate) {
+            ParentalGateDialog(
+                onSuccess = {
+                    showRecordGate = false
+                    showRecordDialog = true
+                },
+                onDismiss = { showRecordGate = false }
             )
         }
 
