@@ -120,12 +120,6 @@ fun RecordWordDialog(
                         Icon(Icons.Filled.Delete, contentDescription = "حذف")
                     }
                 }
-
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    text = if (hasRecording) "این کلمه با صدای شما پخش می‌شه ✅" else "هنوز صدایی ضبط نشده؛ صدای پیش‌فرض پخش می‌شه",
-                    style = MaterialTheme.typography.bodySmall
-                )
             }
         },
         confirmButton = {
