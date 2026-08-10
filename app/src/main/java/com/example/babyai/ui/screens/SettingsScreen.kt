@@ -302,7 +302,7 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
             fontWeight = FontWeight.Medium,
             color = SelectedBlue,
             modifier = Modifier.clickable {
-                val url = "https://motala40-lgtm.github.io/BabyAI/"
+                val url = "https://manajimi250-a11y.github.io/BabyAI/"
                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
             }
         )
