@@ -1,11 +1,13 @@
 package com.example.babyai.ui.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.babyai.data.UiStrings
@@ -47,7 +49,8 @@ fun ParentalGateDialog(
                     },
                     label = { Text(UiStrings.t("gate_answer_label", language)) },
                     singleLine = true,
-                    isError = showError
+                    isError = showError,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
                 if (showError) {
                     Text(

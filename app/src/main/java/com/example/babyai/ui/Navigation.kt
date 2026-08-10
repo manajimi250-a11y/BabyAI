@@ -108,9 +108,11 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
         composable(Routes.AGE_SELECT) {
             AgeSelectScreen(
                 onDone = {
-                    scope.launch { prefs.saveCurrentAsProfile() }
-                    navController.navigate(Routes.MASCOT_SELECT) {
-                        popUpTo(Routes.NAME_INPUT) { inclusive = true }
+                    scope.launch {
+                        prefs.saveCurrentAsProfile()
+                        navController.navigate(Routes.MASCOT_SELECT) {
+                            popUpTo(Routes.NAME_INPUT) { inclusive = true }
+                        }
                     }
                 }
             )
@@ -119,8 +121,10 @@ fun BabyAiNavHost(navController: NavHostController = rememberNavController()) {
         composable(Routes.MASCOT_SELECT) {
             MascotSelectScreen(
                 onMascotChosen = {
-                    scope.launch { prefs.saveCurrentAsProfile() }
-                    navController.navigate(Routes.ACTIVITY_HUB)
+                    scope.launch {
+                        prefs.saveCurrentAsProfile()
+                        navController.navigate(Routes.ACTIVITY_HUB)
+                    }
                 }
             )
         }

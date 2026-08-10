@@ -151,7 +151,8 @@ fun MemoryGameScreen(onBack: () -> Unit) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(columns),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.weight(1f)
             ) {
                 items(cards) { card ->
                     val isFaceUp = card.cardId in flippedIds || card.cardId in matchedIds

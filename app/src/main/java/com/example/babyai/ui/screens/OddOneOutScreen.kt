@@ -123,7 +123,8 @@ fun OddOneOutScreen(onBack: () -> Unit) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(14.dp),
-                verticalArrangement = Arrangement.spacedBy(14.dp)
+                verticalArrangement = Arrangement.spacedBy(14.dp),
+                modifier = Modifier.weight(1f)
             ) {
                 items(currentRound.options.size) { index ->
                     val (word, photo) = currentRound.options[index]

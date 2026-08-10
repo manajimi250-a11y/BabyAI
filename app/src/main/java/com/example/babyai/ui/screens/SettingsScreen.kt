@@ -146,8 +146,8 @@ fun SettingsScreen(onBack: () -> Unit, onParentDashboardClick: () -> Unit, onLul
                 onValueChangeFinished = {
                     scope.launch { prefs.setChildAge(childAge) }
                 },
-                valueRange = 1f..4f,
-                steps = 2,
+                valueRange = 2f..6f,
+                steps = 3,
                 modifier = Modifier.weight(1f),
                 colors = SliderDefaults.colors(thumbColor = SelectedBlue, activeTrackColor = SelectedBlue)
             )
