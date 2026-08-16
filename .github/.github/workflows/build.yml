@@ -31,20 +31,31 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 3
 
+      - name: Check if release secrets exist
+        env:
+          KEYSTORE_B64: ${{ secrets.BABYAI_KEYSTORE_BASE64 }}
+        run: echo "has_keystore=${{ env.KEYSTORE_B64 != '' }}" >> "$GITHUB_ENV"
+
       - name: Decode release keystore
-        if: ${{ secrets.BABYAI_KEYSTORE_BASE64 != '' }}
-        run: echo "${{ secrets.BABYAI_KEYSTORE_BASE64 }}" | base64 -d > app/babyai-release.jks
+        if: env.has_keystore == 'true'
+        env:
+          KEYSTORE_B64: ${{ secrets.BABYAI_KEYSTORE_BASE64 }}
+        run: echo "$KEYSTORE_B64" | base64 -d > app/babyai-release.jks
 
       - name: Build signed release APK
-        if: ${{ secrets.BABYAI_KEYSTORE_BASE64 != '' }}
+        if: env.has_keystore == 'true'
+        env:
+          BABYAI_STORE_PASSWORD: ${{ secrets.BABYAI_STORE_PASSWORD }}
+          BABYAI_KEY_ALIAS: ${{ secrets.BABYAI_KEY_ALIAS }}
+          BABYAI_KEY_PASSWORD: ${{ secrets.BABYAI_KEY_PASSWORD }}
         run: |
           gradle assembleRelease --stacktrace --no-build-cache \
-            -PBABYAI_STORE_PASSWORD=${{ secrets.BABYAI_STORE_PASSWORD }} \
-            -PBABYAI_KEY_ALIAS=${{ secrets.BABYAI_KEY_ALIAS }} \
-            -PBABYAI_KEY_PASSWORD=${{ secrets.BABYAI_KEY_PASSWORD }}
+            -PBABYAI_STORE_PASSWORD="$BABYAI_STORE_PASSWORD" \
+            -PBABYAI_KEY_ALIAS="$BABYAI_KEY_ALIAS" \
+            -PBABYAI_KEY_PASSWORD="$BABYAI_KEY_PASSWORD"
 
       - name: Upload release APK artifact
-        if: ${{ secrets.BABYAI_KEYSTORE_BASE64 != '' }}
+        if: env.has_keystore == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: baby-ai-release-apk
