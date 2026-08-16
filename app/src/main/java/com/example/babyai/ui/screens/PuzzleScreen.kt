@@ -282,6 +282,7 @@ fun PuzzleScreen(onBack: () -> Unit) {
                 word = puzzleWord.first,
                 recordingManager = recordingManager,
                 prefs = prefs,
+                language = language,
                 onDismiss = { showRecordDialog = false }
             )
         }

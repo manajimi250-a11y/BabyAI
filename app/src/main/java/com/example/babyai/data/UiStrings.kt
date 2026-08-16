@@ -284,6 +284,15 @@ object UiStrings {
             "de" to "Datenschutzerklärung", "fr" to "Politique de confidentialité", "es" to "Política de privacidad",
             "ru" to "Политика конфиденциальности", "zh" to "隐私政策", "hi" to "गोपनीयता नीति", "ar" to "سياسة الخصوصية"
         ),
+        "record_dialog_title" to mapOf(
+            "en" to "Record voice for", "fa" to "ضبط صدا برای", "sv" to "Spela in röst för", "tr" to "Ses kaydet:",
+            "de" to "Stimme aufnehmen für", "fr" to "Enregistrer la voix pour", "es" to "Grabar voz para",
+            "ru" to "Записать голос для", "zh" to "录制语音：", "hi" to "आवाज़ रिकॉर्ड करें:", "ar" to "سجّل الصوت لـ"
+        ),
+        "record_dialog_close" to mapOf(
+            "en" to "Close", "fa" to "بستن", "sv" to "Stäng", "tr" to "Kapat", "de" to "Schließen",
+            "fr" to "Fermer", "es" to "Cerrar", "ru" to "Закрыть", "zh" to "关闭", "hi" to "बंद करें", "ar" to "إغلاق"
+        ),
 
         // ParentalGateDialog
         "gate_title" to mapOf(

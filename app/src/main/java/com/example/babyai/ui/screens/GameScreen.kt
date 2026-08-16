@@ -217,6 +217,7 @@ fun GameScreen(categoryId: String, onBackToMenu: () -> Unit) {
             word = word,
             recordingManager = recordingManager,
             prefs = prefs,
+            language = language,
             onDismiss = { recordingWord = null }
         )
     }

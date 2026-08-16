@@ -217,6 +217,7 @@ fun MemoryGameScreen(onBack: () -> Unit) {
                     word = word,
                     recordingManager = recordingManager,
                     prefs = prefs,
+                    language = language,
                     onDismiss = { recordingWordId = null }
                 )
             }

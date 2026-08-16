@@ -14,6 +14,12 @@ android {
             keyAlias = "androiddebugkey"
             keyPassword = "android"
         }
+        create("release") {
+            storeFile = file("babyai-release.jks")
+            storePassword = project.findProperty("BABYAI_STORE_PASSWORD") as String? ?: ""
+            keyAlias = project.findProperty("BABYAI_KEY_ALIAS") as String? ?: ""
+            keyPassword = project.findProperty("BABYAI_KEY_PASSWORD") as String? ?: ""
+        }
     }
 
     defaultConfig {
@@ -27,6 +33,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 

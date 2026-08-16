@@ -8,3 +8,5 @@
 .externalNativeBuild
 .cxx
 *.apk
+app/babyai-release.jks
+*.jks
