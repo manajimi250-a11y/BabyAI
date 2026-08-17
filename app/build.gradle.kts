@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.babyai"
+    namespace = "com.newlifetech.babyhey"
     compileSdk = 34
 
     signingConfigs {
@@ -23,7 +23,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.babyai"
+        applicationId = "com.newlifetech.babyhey"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
